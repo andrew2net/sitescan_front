@@ -1,5 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe "main/index.html.slim", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe 'main/index.html.slim', type: :view do
+  context 'when got home page' do
+    it 'should display year in the footer' do
+      render
+      expect(rendered).to have_content '2016'
+    end
+  end
 end

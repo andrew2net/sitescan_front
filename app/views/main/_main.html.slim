@@ -1,0 +1,9 @@
+div layout='row' layout-align='center start'
+  h1.md-headline Популярные категории
+div layout='row' layout-padding=true layout-margin=true layout-wrap=true layout-align='center stretch'
+  md-whiteframe.md-whiteframe-2dp [flex-xs='55' flex-sm='30' flex-md='20' flex-lg='15' flex-xl='10' layout='column'
+    ng-repeat='category in categories']
+    div style='height:140px' layout='row' layout-align='center center'
+      img ng-src='{{category.img_src}}'
+    div style='height:30px' layout='row' layout-align='center center'
+      h2.md-caption ng-bind='category.name'

@@ -1,7 +1,11 @@
-div layout='column' ng-controller='MainCtrl'
+div layout='column'
   div layout='row' layout-align='center start'
-    md-input-container.md-block flex='40'
-      input type='text' placeholder='Найти...'
+    md-input-container.md-block flex-xs='70' flex-sm='60' flex-md='50' flex-lg='45' flex-xl='40'
+      input type='text' placeholder='Поиск...'
     md-button.md-icon-button style='top:15px'
-      md-icon.material-icons' search
-  div layout='row'
+      md-icon.material-icons search
+  div ng-view=true
+footer layout='row'
+  div.md-body-1 flex='80' flex-offset='10'
+    md-divider
+    div layout='column' &copy; 2016
