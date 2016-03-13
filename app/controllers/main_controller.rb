@@ -3,10 +3,15 @@ class MainController < ApplicationController
   end
 
   def categories
-    render json: Category.popular.map {|category| { name: category.name,img_src: category.image.url(:thumb)}}
+    render json: SitescanCommon::Category.popular.map {|category| category.data}
   end
 
-  def main
-    render partial: 'main'
+  def view
+    render partial: params[:template]
+  end
+
+  def catalog
+    category = SitescanCommon::Category.find_by path: params[:path]
+    render json: category.catalog
   end
 end

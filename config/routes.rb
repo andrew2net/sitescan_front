@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'main/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -9,11 +8,16 @@ Rails.application.routes.draw do
 
   scope :api do
     get :popular_categories, to: 'main#categories'
+    get 'catalog', to: 'main#catalog'
   end
 
-  scope :views do
-    get 'main', to: 'main#main'
-  end
+  get 'views/:template', to: 'main#view'
+
+  match '*path', to: 'main#index', via: :all
+
+  # scope :views do
+  #   get 'main', to: 'main#main'
+  # end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

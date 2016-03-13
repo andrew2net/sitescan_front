@@ -5,5 +5,6 @@ RSpec.feature 'Visit main page', js: true do
     create :category
     visit '/'
     expect(page).to have_content 'Electronics'
+    find(:xpath, '//a[1]').click
   end
 end

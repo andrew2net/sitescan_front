@@ -9,10 +9,18 @@ RSpec.describe MainController, type: :controller do
     end
   end
 
-  describe 'GET #main' do
+  describe 'GET #view' do
     it 'should return success' do
-      get :main
+      get :view, template: 'main'
       expect(response).to have_http_status :success
+    end
+  end
+
+  describe 'GET #catalog' do
+    it 'should return products in category' do
+      create :category_with_products
+      get :catalog, path: 'electronics'
+      expect(response.body).to have_content 'Iphone 6s'
     end
   end
 end

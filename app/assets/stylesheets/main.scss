@@ -1,4 +1,23 @@
-md-whiteframe img{
+md-whiteframe img {
   max-height: 100px;
-  max-width: 100px !important;
+}
+
+.product-line md-whiteframe {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  div {
+    h4 {
+      margin: 5px 0
+    }
+    h6 {
+      margin: 0 0 10px;
+    }
+  }
+  img {
+    max-height: 200px;
+  }
+}
+
+md-input-container.search .md-errors-spacer {
+  display: none;
 }
