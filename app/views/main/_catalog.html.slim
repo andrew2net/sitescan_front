@@ -1,11 +1,23 @@
 div flex-offset-xs='5' flex-offset='10' flex-xs='90' flex='80'
+
   h1.md-headline [layout layout-align-xs='center start' ng-bind='category']
-  a.product-line
-    md-whiteframe.md-whiteframe-1dp [layout-xs='column' layout='row' ng-repeat='product in products'  layout-margin]
-      h4 [hide-gt-xs layout layout-align-xs='center start' ng-bind='product.name']
-      div [flex-xs=90 flex-sm=45 flex-md=30 flex-lg=25 flex-xl=20 layout-align='center center' layout]
-        img ng-src='{{product.img_src}}'
-      div layout='column'
-        h4 [hide-xs ng-bind='product.name']
-        h6.md-body-2 layout=true layout-align-xs='center start' от {{ product.price | currency }}
-        div.md-caption [hide-xs ng-repeat='attr in product.attrs'] {{attr.name}}: {{attr.value}}{{attr.unit}}
+
+  div [layout='row']
+    div.product-line [layout='row' layout-align='start start' layout-wrap flex=70]
+
+      md-whiteframe.md-whiteframe-1dp [class="catalog-product" layout-xs='column'
+          layout='row' ng-repeat='product in products' layout-margin
+          flex-xs=100 flex-sm=100 flex-md=100 flex-lg=95 flex-xl=40]
+
+        h4 [hide-gt-xs layout layout-align-xs='center start' ng-bind='product.name']
+
+        div [flex-xs=90 flex=45 layout-align='center center' layout]
+          img [ng-src='{{product.img_src}}']
+
+        div layout='column'
+          h4 [hide-xs ng-bind='product.name']
+          h6.md-body-2 layout=true layout-align-xs='center start' от {{ product.price | currency }}
+          div.md-caption [hide-xs ng-repeat='attr in product.attrs'] {{attr.name}}: {{attr.value}}{{attr.unit}}
+
+    div [layout='column' flex=30]
+      = render partial: 'filter'

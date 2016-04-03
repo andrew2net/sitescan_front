@@ -8,7 +8,8 @@ Rails.application.routes.draw do
 
   scope :api do
     get :popular_categories, to: 'main#categories'
-    get 'catalog', to: 'main#catalog'
+    get :catalog, to: 'main#catalog'
+    get :filter, to: 'main#filter'
   end
 
   get 'views/:template', to: 'main#view'

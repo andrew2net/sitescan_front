@@ -3,7 +3,6 @@ md-whiteframe img {
 }
 
 .product-line md-whiteframe {
-  margin-top: 20px;
   margin-bottom: 30px;
   div {
     h4 {
@@ -20,4 +19,36 @@ md-whiteframe img {
 
 md-input-container.search .md-errors-spacer {
   display: none;
+}
+
+.filter-item{
+  > div{
+    &:nth-child(1){
+      font-weight: bold;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    &:nth-child(2){
+      &.ng-hide{
+        opacity: 0;
+        max-height: 0 !important;
+      }
+      padding-left: 10px;
+      overflow-y: hidden;
+      -webkit-transition: all 0.5s linear;
+      transition: all linear 0.5s;
+    }
+  }
+}
+
+.catalog-product{
+  &.ng-move, &.ng-leave, &.ng-enter{
+    transition: all linear 0.3s;
+  }
+  &.ng-leave.ng-leave-active, &.ng-move, &.ng-enter{
+    opacity: 0;
+  }
+  &.ng-leave, &.ng-move.ng-move-active, &.ng-enter.ng-enter-active{
+    opacity: 1;
+  }
 }

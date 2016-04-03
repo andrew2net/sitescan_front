@@ -30,8 +30,10 @@ gem 'sitescan_common', path: '../sitescan_common', git: 'https://github.com/andr
 
 group :test, :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  # gem 'byebug'
-
+  gem 'byebug'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-rails'
