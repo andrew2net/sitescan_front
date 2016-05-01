@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get :popular_categories, to: 'main#categories'
     get :catalog, to: 'main#catalog'
     get :filter, to: 'main#filter'
+    get :filter_constraints, to: 'main#filter_constraints'
   end
 
   get 'views/:template', to: 'main#view'

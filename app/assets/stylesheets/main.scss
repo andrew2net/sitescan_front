@@ -1,3 +1,11 @@
+@mixin transition($params){
+  -webkit-transition: $params;
+  transition: $params;
+}
+
+*{
+  outline: none;
+}
 md-whiteframe img {
   max-height: 100px;
 }
@@ -24,31 +32,54 @@ md-input-container.search .md-errors-spacer {
 .filter-item{
   > div{
     &:nth-child(1){
-      font-weight: bold;
       margin-bottom: 10px;
       cursor: pointer;
+      &.active-filter-item{
+        font-weight: bold;
+      }
     }
     &:nth-child(2){
       &.ng-hide{
         opacity: 0;
         max-height: 0 !important;
       }
-      padding-left: 10px;
+      input[type='text']{
+        width: 70px;
+      }
+      > div:last-child{
+        width: 30px;
+        height: 10px;
+        border-top: 1px dashed;
+      }
+      padding-left: 4px;
       overflow-y: hidden;
-      -webkit-transition: all 0.5s linear;
-      transition: all linear 0.5s;
+      @include transition(all linear 0.5s);
     }
+  }
+  > md-checkbox{
+    margin-left: 4px;
+    margin-top: 4px;
   }
 }
 
 .catalog-product{
-  &.ng-move, &.ng-leave, &.ng-enter{
-    transition: all linear 0.3s;
+  &.ng-enter, &.ng-leave{
+    @include transition(all linear 0.3s);
   }
-  &.ng-leave.ng-leave-active, &.ng-move, &.ng-enter{
+  &.ng-leave.ng-leave-active, &.ng-enter{
     opacity: 0;
   }
-  &.ng-leave, &.ng-move.ng-move-active, &.ng-enter.ng-enter-active{
+  &.ng-leave, &.ng-enter.ng-enter-active{
     opacity: 1;
+  }
+}
+
+.product-not-found{
+  opacity: 1;
+  &.ng-hide-remove{
+    @include transition(0.3s linear opacity);
+  }
+  &.ng-hide{
+    opacity: 0;
   }
 }
