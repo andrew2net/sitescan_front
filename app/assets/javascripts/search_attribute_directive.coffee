@@ -3,20 +3,28 @@ angular.module 'app'
   ($compile, $location, $routeParams)->
     {
       controller: ['$scope', ($scope)->
-        if $routeParams.o
-          optsFromUrl = $routeParams.o.toString().split ','
-          for opt in $scope.attr.options
-            idx = optsFromUrl.indexOf opt.id.toString()
-            if idx > -1
-              $scope.currentOption = opt.id
-              break
+        if $routeParams.p
+          optsFromUrl = JSON.parse $routeParams.p
+          $scope.currentOption = optsFromUrl[$scope.attr.id]
 
         $scope.setCurrentOption = (id)->
           if id == $scope.currentOption
             $scope.currentOption = null
           else
             $scope.currentOption = id
-          $location.search 'o', $scope.currentOption
+          p = $routeParams.p
+          p = JSON.parse p if p
+          if p
+            if $scope.currentOption
+              p[$scope.attr.id] = id
+            else
+              delete p[$scope.attr.id]
+              p = null if angular.equals {}, p
+          else if $scope.currentOption
+            p = {}
+            p[$scope.attr.id] = id
+          p = JSON.stringify p if p
+          $location.search 'p', p
           return
         return
       ]

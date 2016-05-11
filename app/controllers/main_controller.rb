@@ -22,7 +22,7 @@ class MainController < ApplicationController
 
   def product
     product = SitescanCommon::Product.find_by path: params[:path]
-    render json: { product: product.product_data(filter_params[:o]) }
+    render json: { product: product.product_data(filter_params[:p]) }
   end
 
   # Render filter options for current category.
@@ -48,6 +48,7 @@ class MainController < ApplicationController
     end
     p[:o] = params[:o].split(',').map{|e| e.to_i} if params[:o]
     p[:b] = params[:b].split(',').map{|e| e.to_i} if params[:b]
+    p[:p] = JSON.parse params[:p] if params[:p]
     p
   end
 
