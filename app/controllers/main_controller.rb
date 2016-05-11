@@ -20,6 +20,11 @@ class MainController < ApplicationController
     render json: category.catalog(filter_params)
   end
 
+  def product
+    product = SitescanCommon::Product.find_by path: params[:path]
+    render json: { product: product.product_data(filter_params[:o]) }
+  end
+
   # Render filter options for current category.
   def filter
     category = category_by_path

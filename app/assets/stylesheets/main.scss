@@ -13,7 +13,7 @@ md-whiteframe img {
 .product-line md-whiteframe {
   margin-bottom: 30px;
   div {
-    h4 {
+    h2 {
       margin: 5px 0
     }
     h6 {
@@ -82,4 +82,73 @@ md-input-container.search .md-errors-spacer {
   &.ng-hide{
     opacity: 0;
   }
+}
+
+.subcategory-links h3{
+  margin-top: 0;
+}
+
+.product-thumb{
+  width: 60px;
+  height: 60px;
+  margin: 5px 0;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid white;
+  transition: border-color linear 0.3s;
+  &.selected-thumb{
+    border-color: black;
+  }
+  img{
+    max-width: 50px;
+    max-height: 50px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+}
+
+.product-img{
+  width: 340px;
+  height: 340px;
+  position: relative;
+  img{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    opacity: 1;
+    transition: opacity linear 0.3s;
+    &.ng-hide{
+      opacity: 0;
+    }
+  }
+}
+
+.thumbs-list-wrapper{
+  height: 292px;
+  overflow: hidden;
+  > div{
+    position: relative;
+    top: 0;
+    transition: top ease 0.5s;
+  }
+}
+
+.btn-thumbs-move{
+  height: 24px;
+  margin: 2px 0;
+  cursor: pointer;
+  &.btn-thumbs-move-active:hover{
+    background: rgba(158, 158, 158, 0.2);
+  }
+}
+
+.search-attr-active{
+  background: rgba(158,158,158,0.2);
 }

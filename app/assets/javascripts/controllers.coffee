@@ -14,7 +14,8 @@ angular.module 'app'
   '$routeParams'
   '$animate'
   '$timeout'
-  ($scope, $http, $routeParams, $animate, $timeout)->
+  '$location'
+  ($scope, $http, $routeParams, $animate, $timeout, $location)->
     loadCatalog = ->
       $scope.notFound = false
       $scope.products = []
@@ -24,6 +25,7 @@ angular.module 'app'
       .then (response)->
         $scope.products = response.data.products
         $scope.category = response.data.category
+        $scope.subcategories = response.data.subcategories
         $timeout ->
           $scope.notFound = $scope.products.length == 0
           return
@@ -32,10 +34,12 @@ angular.module 'app'
       return
 
     $scope.clearFilter = ->
-      $scope.$broadcast 'clearFilter'
+      $location.search 'o', null
+      $location.search 'n', null
+      $location.search 'b', null
       return
 
-    $scope.$on 'reloadCatalog', ->
+    $scope.$on '$locationChangeSuccess', ->
       loadCatalog()
       return
 

@@ -10,27 +10,6 @@ angular.module 'app'
   ($scope, $http, $routeParams, $location, $timeout, $filter)->
 
     ###
-    Update filter's option.
-    @param value - new value to set.
-    @param id - attribute's id.
-    ###
-    updateOption = (value, id)->
-      idx = optionsChecked.indexOf(id)
-      if value
-        optionsChecked.push id if idx == -1
-      else
-        optionsChecked.splice idx, 1 if idx != -1
-      if optionsChecked.length
-        $location.search('o', optionsChecked.join ',')
-      else
-        $location.search('o', null)
-      $timeout ->
-        $scope.$emit 'reloadCatalog'
-        getConstraints()
-        return
-      return
-
-    ###
     Retrieve filter attribute's constraints from server.
     ###
     getConstraints = ->
@@ -77,10 +56,6 @@ angular.module 'app'
       else
         n = angular.toJson n, false
       $location.search 'n', n
-      $timeout ->
-        $scope.$emit 'reloadCatalog'
-        getConstraints()
-        return
       return
 
     ###
@@ -96,7 +71,7 @@ angular.module 'app'
         this._val_min
 
     ###
-    Setter/getter for maximum value of filter's number attribute.
+    Getter/setter for maximum value of filter's number attribute.
     ###
     getSetNumValMax = (newValue)->
       if arguments.length
@@ -107,6 +82,33 @@ angular.module 'app'
       else
         this._val_max
 
+    ###
+    Getter/setter for filter's option and list of options attributes.
+    @param newValue - new value to set.
+    ###
+    updateOption = (newValue)->
+      if arguments.length
+        if $routeParams.o
+          optionsChecked = $routeParams.o.split ','
+        else
+          optionsChecked = []
+        idx = optionsChecked.indexOf(this.id.toString())
+        if newValue
+          optionsChecked.push this.id if idx == -1
+        else
+          optionsChecked.splice idx, 1 if idx != -1
+        if optionsChecked.length
+          $location.search('o', optionsChecked.join ',')
+        else
+          $location.search('o', null)
+        this._checked = newValue
+      else
+        this._checked
+
+    ###
+    Getter/setter for bollean filter's attribute.
+    @param newValue - new value to set.
+    ###
     getSetBool = (newValue)->
       if arguments.length
         if $routeParams.b
@@ -123,59 +125,46 @@ angular.module 'app'
         else
           null
         $location.search 'b', b
-        $timeout ->
-          $scope.$emit 'reloadCatalog'
-          getConstraints()
-          return
         this._val = newValue
       else
         this._val
         
+    ###
+    Retrive attribute from url and set filter parametrs.
+    ###
     setFilterFromUrl = ->
-      if $routeParams.n
-        n = angular.fromJson $routeParams.n
-        angular.forEach n, (v, k)->
-          item = $filter('filter')($scope.filter_items, {id: parseInt(k)}, true)
-          if item.length
-            item[0]._val_min = v.min
-            item[0]._val_max = v.max
-          return
-      if $routeParams.b
-        b = $routeParams.b.split ','
-        angular.forEach b, (v)->
-          item = $filter('filter')($scope.filter_items, {id: parseInt(v)})
-          if item.length
-            item[0]._val = true
-      return
-
-    $scope.$on 'clearFilter', ->
-      $location.search 'o', null
-      $location.search 'n', null
-      $location.search 'b', null
-      optionsChecked = []
-      $timeout ->
-        angular.forEach $scope.filter_items, (v)->
-          switch v.type
-            when 1
-              v._val_min = v._val_max = null
-            when 4
-              v._val = false
-            when 3, 5
-              angular.forEach v.options, (o)->
-                o._checked = false
+      n = angular.fromJson $routeParams.n if $routeParams.n
+      o = $routeParams.o.split(',').map((id)-> parseInt id) if $routeParams.o
+      b = $routeParams.b.split(',').map((id)-> parseInt id) if $routeParams.b
+      angular.forEach $scope.filter_items, (item)->
+        switch item.type
+          when 1
+            if n and ( v = n[item.id] )
+              item._val_min = v.min
+              item._val_max = v.max
+            else
+              item._val_min = item._val_max = null
+          when 3,5
+            if o
+              angular.forEach item.options, (option)->
+                option._checked = o.indexOf(option.id) > -1
                 return
-          return
-        $scope.$emit 'reloadCatalog'
-        getConstraints()
+            else
+              angular.forEach item.options, (option)->
+                option._checked = false
+          when 4
+            if b
+              item._val = b.indexOf(item.id) > - 1
+            else
+              item._val = false
         return
       return
 
-    # Get checked filter's options from url.
-    if $routeParams.o
-      optionsChecked = $routeParams.o.split(',').map (id)-> parseInt id
-    else
-      optionsChecked = []
-  
+    $scope.$on '$locationChangeSuccess', ->
+      setFilterFromUrl()
+      getConstraints()
+      false
+
     $http.get '/api/filter', params: {path: $routeParams.path}
     .then (response)->
       angular.forEach response.data, (attr)->
@@ -185,16 +174,8 @@ angular.module 'app'
             attr.val_max = getSetNumValMax
           when 3, 5
             angular.forEach attr.options, (opt)->
-              opt._checked = optionsChecked.indexOf(opt.id) != -1
-              opt.checked = (newValue)->
-                if arguments.length
-                  updateOption newValue, opt.id
-                  this._checked = newValue
-                else
-                  this._checked
-              return
+              opt.checked = updateOption
           when 4
-            attr._val = false
             attr.val = getSetBool
         return
       $scope.filter_items = response.data

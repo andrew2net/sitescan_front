@@ -7,10 +7,13 @@ Rails.application.routes.draw do
   root 'main#index'
 
   scope :api do
-    get :popular_categories, to: 'main#categories'
-    get :catalog, to: 'main#catalog'
-    get :filter, to: 'main#filter'
-    get :filter_constraints, to: 'main#filter_constraints'
+    controller :main do
+      get :popular_categories, action: 'categories'
+      get :catalog
+      get :filter
+      get :filter_constraints
+      get :product
+    end
   end
 
   get 'views/:template', to: 'main#view'
