@@ -39,8 +39,9 @@ angular.module 'app'
       getProduct()
         .then (response)->
           $scope.product.price = response.data.product.price
-          $scope.product.options = response.data.product.options
-      false
+          $scope.product.search_attrs = response.data.product.search_attrs
+          return
+      return
 
     getProduct()
       .then (response)->

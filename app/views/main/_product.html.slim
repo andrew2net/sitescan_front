@@ -28,7 +28,7 @@ div [layout='column' flex=80 flex-offset=10 ]
 
         / Thumbs move down button.
         .btn-thumbs-move [layout='row' ng-click='thumbsMove(1)'
-          ng-class='{"btn-thumbs-move-active":product.images.length-thumbsPosition>4}']
+        ng-class='{"btn-thumbs-move-active":product.images.length-thumbsPosition>4}']
           md-icon [ng-show='product.images.length-thumbsPosition>4'] expand_more
 
       / Middle image block.
@@ -39,7 +39,8 @@ div [layout='column' flex=80 flex-offset=10 ]
     / Product block.
     div [flex=100]
       h1 [ ng-bind='product.name' ]
-      div [ng-repeat='attr in product.search_attrs' search-attribute='attr']
+      div ng-repeat='attr in product.search_attrs'
+        div search-attribute='attr'
       div Средняя цена
       .md-display-1
         |{{ product.price.average | currency:'р.':0 }}
