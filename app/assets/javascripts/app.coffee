@@ -6,7 +6,7 @@ angular.module 'app', ['ngRoute' , 'ngMaterial', 'ngMessages', 'ngAnimate']
         templateUrl: '/views/main'
         controller: 'MainCtrl'
       }
-      .when '/catalog/:path', {
+      .when '/catalog/:path?', {
         templateUrl: '/views/catalog'
         controller: 'CatalogCtrl'
         reloadOnSearch: false

@@ -91,8 +91,8 @@ angular.module 'app'
           <div ng-style='style' ng-show='expand=="expand_less"'>
             <div ng-repeat='option in ngModel.options'>
               <md-checkbox class='md-body-1' ng-model='option.checked'
-                ng-disabled='option.disabled' ng-model-options={getterSetter:true}
-                ng-click='clear()'>
+              ng-disabled='option.disabled' ng-model-options={getterSetter:true}
+              ng-click='clear()'>
                 {{option.value}}
               </md-checkbox>
             </div>
@@ -101,9 +101,9 @@ angular.module 'app'
           """
         when 4
           h += """
-          <md-checkbox ng-repeat='option in [ngModel]' ng-model='option.val'
-            ng-disabled='option.disabled' ng-model-options='{getterSetter:true}'
-            ng-click='clear()'>
+          <md-checkbox class="md-body-2" ng-repeat='option in [ngModel]'
+          ng-model='option.val' ng-disabled='option.disabled'
+          ng-model-options='{getterSetter:true}' ng-click='clear()'>
             {{option.name.join(', ')}}
           </md-checkbox>
           """

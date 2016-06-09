@@ -1,9 +1,10 @@
 doctype html
-html
+html ng-app='app'
   head
-    title SitescanFront
+    title n4-title='title'
     link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css'
     link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'
+    link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic'
     script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js'
     script src='https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.8/angular-locale_ru-ru.min.js'
     script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js'
@@ -16,5 +17,5 @@ html
     = csrf_meta_tags
     base href='/'
   body
-    div ng-app='app'
+    div
       = yield

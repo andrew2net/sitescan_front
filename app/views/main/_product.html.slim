@@ -1,5 +1,5 @@
-div [layout='column' flex=80 flex-offset=10 ]
-  diw [layout='row']
+div layout='column'
+  div [layout='row']
 
     / Image block.
     div [layout='row' flex]
@@ -37,12 +37,50 @@ div [layout='column' flex=80 flex-offset=10 ]
         ng-hide='hideImg']
 
     / Product block.
-    div [flex=100]
-      h1 [ ng-bind='product.name' ]
+    div [flex=60]
+      h1 [ ng-bind="product.name.join(' ')" ]
       div ng-repeat='attr in product.search_attrs'
-        div search-attribute='attr'
+        div [search-attribute]
       div Средняя цена
-      .md-display-1
-        |{{ product.price.average | currency:'р.':0 }}
+      .md-display-1 [ng-bind="price.avr| currency:'р.':0"]
       div
-        |{{product.price.minimum | currency:'':0}} - {{product.price.maximum | currency:'р.':0}}
+        |{{price.min | currency:'':0}}
+        | - {{price.max| currency:'р.':0}}
+  md-content
+    md-tabs [md-dynamic-height]
+      md-tab
+        md-tab-label Цены
+        md-tab-body
+          section
+            md-subheader.md-primary
+              div [layout='row']
+                div flex=20 Сайт
+                div [flex=20 ng-repeat='attr in product.search_attrs'
+                  ng-bind='attr.name.join(", ")']
+                div [flex=20 layout layout-align='center none'] Цена
+                div [flex=20]
+            md-list.product-links
+              md-list-item [ng-repeat='link in product.links | filter:filterLinks']
+                md-divider
+                a [ng-href='/api/link_url/{{link.id}}' target='_blank' flex=100]
+                  div layout='row' layout-align='none center' flex=100
+                    div.md-body-2 [ flex=20 ng-bind='link.domain' ]
+                    div [flex=20 ng-repeat='attr in product.search_attrs'
+                      ng-bind='attrValue(link, attr)']
+                    div [layout layout-align='center none'flex=20
+                      ng-bind='link.price | currency']
+                    div [flex=20 layout layout-align='center none']
+                      md-button.md-raised [ng-href='/api/link_url/{{link.id}}'
+                      target='_blank'] В магазин
+      md-tab
+        md-tab-label Характеристики
+        md-tab-body
+          div [layout='row' layout-wrap]
+            div [layout='column' flex=50 ng-repeat='group in product.attr_groups']
+              h4.md-headline ng-bind='group.name']
+              .md-body-1 [layout='row'
+                  ng-repeat="attr in product.attrs | filter:{group_id: group.id}"]
+                div [flex=50 layout='row']
+                  div [ng-bind='attr.name']
+                  .dotted-filler [flex]
+                .md-body-2 [flex=50 ng-bind='attr.value']

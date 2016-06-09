@@ -1,14 +1,29 @@
-div layout='column'
+div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
+  flex-xs='100' flex-sm='100' flex='80' ]
 
-  div layout='row' layout-align='center start'
-    md-input-container.md-block.search flex-xs='70' flex-sm='60' flex-md='50' flex-lg='45' flex-xl='40'
-      input type='text' placeholder='Поиск...'
-    md-button.md-icon-button style='top:15px'
-      md-icon.material-icons search
+    div layout='row' layout-align='center start' ng-controller='HeaderCtrl'
+      a href='/' style='margin:25px 15px 0'
+        md-icon home
+      form [ng-submit='findProducts(searchText)' flex-xs='70' flex-sm='60'
+        flex-md='50' flex-lg='45' flex-xl='40' style='position:relative']
+        md-autocomplete.search [md-input-name='searchField' md-input-minlength=1
+          md-search-text='searchText' md-items='item in getMatches(searchText)'
+          md-item-text='item' md-selected-item='searchItem' md-delay=500
+          md-selected-item-change='findProducts(searchItem)' md-no-cache='true'
+          md-input-id='search-text' md-floating-label='Поиск...' ]
+          md-item-template
+            span md-highlight-text='searchText' md-highlight-flags='gi'
+              |{{item}}
+        md-button.md-icon-button [ng-click='clearSearch()' ng-show='searchText'
+          style='top:14px; position: absolute; right:-15px; z-index:100']
+          md-icon.material-icons close
+      md-button.md-icon-button [style='top:15px'
+          ng-click='findProducts(searchText)']
+        md-icon.material-icons search
 
-  div [ng-view]
+    .md-body-2.breadcrumbs layout='row' breadcrumbs='breadcrumbs'
+    div [ng-view]
 
-footer layout='row'
-  div.md-body-1 flex='80' flex-offset='10'
-    md-divider
-    div layout='column' &copy; 2016
+    footer layout='column'
+      md-divider
+      div.md-body-1 layout='column' &copy; 2016

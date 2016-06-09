@@ -6,12 +6,18 @@
 *{
   outline: none;
 }
+
+footer{
+  margin-top: 20px;
+}
+
 md-whiteframe img {
   max-height: 100px;
 }
 
 .product-line md-whiteframe {
   margin-bottom: 30px;
+  margin-left: 0;
   div {
     h2 {
       margin: 5px 0
@@ -25,7 +31,7 @@ md-whiteframe img {
   }
 }
 
-md-input-container.search .md-errors-spacer {
+.search .md-errors-spacer {
   display: none;
 }
 
@@ -151,4 +157,56 @@ md-input-container.search .md-errors-spacer {
 
 .search-attr-active{
   background: rgba(158,158,158,0.2);
+}
+
+.breadcrumbs{
+  i.material-icons{
+    margin-top: 5px;
+    font-size: 17px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.5s;
+  &:hover{
+    color: rgb(0, 0, 238);
+    text-decoration: underline;
+  }
+}
+
+button.color-widget{
+  i{
+    vertical-align: middle;
+    margin-bottom: 2px;
+  }
+}
+
+.product-links{
+  md-list-item{
+    border-radius: 4px;
+    &:hover{
+      background: rgba(158, 158, 158, 0.2);
+    }
+    a:hover {
+      text-decoration: none;
+    }
+    > a{
+      padding: 5px 10px;
+      > div{
+        height: 48px;
+      }
+    }
+  }
+}
+
+.dotted-filler{
+  border-bottom: 1px dotted rgba(158, 158, 158, 0.5);
+  margin: 6px;
+  height: 12px;
+}
+
+#search-text{
+  padding-right: 22px;
 }

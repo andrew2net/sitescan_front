@@ -1,7 +1,9 @@
-div layout='row' layout-align='center start'
+div layout='row' layout-align='start start'
   h1.md-headline Популярные категории
-div layout='row' layout-padding=true layout-margin=true layout-wrap=true layout-align='center stretch'
-  a [ng-href='/catalog/{{category.path}}' ng-repeat='category in categories' flex-xs='65' flex-sm='30' flex-md='20'
+div [ layout='row' layout-padding=true layout-margin=true layout-wrap=true
+  layout-align='start stretch' ]
+  a [ng-href='/catalog/{{category.path}}' ng-repeat='category in categories'
+  flex-xs='65' flex-sm='30' flex-md='20'
       flex-lg='15' flex-xl='10' layout='column']
     md-whiteframe.md-whiteframe-2dp
       div style='height:140px' layout='row' layout-align='center center'

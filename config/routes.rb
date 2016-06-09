@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       get :filter
       get :filter_constraints
       get :product
+      get 'link_url/:id', action: :link_url
+      post :suggest_products
     end
   end
 

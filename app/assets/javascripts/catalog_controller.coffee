@@ -1,21 +1,15 @@
 angular.module 'app'
-.controller 'MainCtrl', ['$scope', '$http', ($scope, $http)->
-
-  $http.get '/api/popular_categories'
-  .then (response)->
-    $scope.categories = response.data
-    return
-
-  return
-]
 .controller 'CatalogCtrl', [
   '$scope'
+  '$rootScope'
   '$http'
   '$routeParams'
   '$animate'
   '$timeout'
   '$location'
-  ($scope, $http, $routeParams, $animate, $timeout, $location)->
+  ($scope, $rootScope, $http, $routeParams, $animate, $timeout, $location)->
+    $scope.search = ''
+
     loadCatalog = ->
       $scope.notFound = false
       $scope.products = []
@@ -25,6 +19,8 @@ angular.module 'app'
       .then (response)->
         $scope.products = response.data.products
         $scope.category = response.data.category
+        $rootScope.title = response.data.category
+        $rootScope.breadcrumbs = response.data.breadcrumbs
         $scope.subcategories = response.data.subcategories
         $timeout ->
           $scope.notFound = $scope.products.length == 0
@@ -37,12 +33,21 @@ angular.module 'app'
       $location.search 'o', null
       $location.search 'n', null
       $location.search 'b', null
+      $location.search 'search', null
       return
 
-    $scope.$on '$locationChangeSuccess', ->
+    setSearchForLinks = (url)->
+      $scope.searchText = $routeParams.search
+      search = url.match /\?.*$/
+      $scope.search = if search then search[0] else ''
+      return
+
+    $scope.$on '$locationChangeSuccess', (ev, url)->
+      setSearchForLinks(url)
       loadCatalog()
       return
 
+    setSearchForLinks($location.url())
     loadCatalog()
     return
 ]
