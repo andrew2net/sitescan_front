@@ -18,7 +18,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'angular_rails_csrf'
 gem 'slim'
-gem 'sitescan_common', path: '../sitescan_common', git: 'https://github.com/andrew2net/sitescan_common'
+gem 'sitescan_common', git: 'https://github.com/andrew2net/sitescan_common'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

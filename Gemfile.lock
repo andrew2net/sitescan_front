@@ -6,11 +6,11 @@ GIT
 PATH
   remote: ../sitescan_common
   specs:
-    sitescan_common (0.0.2)
+    sitescan_common (0.0.6)
       acts_as_list
       awesome_nested_set
-      aws-sdk (>= 2.0.34)
-      paperclip (~> 4.3)
+      aws-sdk
+      paperclip (~> 5.0.0.beta1)
       rails (~> 4.2.1)
       searchkick
 
@@ -59,12 +59,12 @@ GEM
     arel (6.0.3)
     awesome_nested_set (3.1.1)
       activerecord (>= 4.0.0, < 5.1)
-    aws-sdk (2.3.14)
-      aws-sdk-resources (= 2.3.14)
-    aws-sdk-core (2.3.14)
+    aws-sdk (2.3.15)
+      aws-sdk-resources (= 2.3.15)
+    aws-sdk-core (2.3.15)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.3.14)
-      aws-sdk-core (= 2.3.14)
+    aws-sdk-resources (2.3.15)
+      aws-sdk-core (= 2.3.15)
     builder (3.2.2)
     byebug (8.2.2)
     capybara (2.5.0)
@@ -89,12 +89,12 @@ GEM
     concurrent-ruby (1.0.0)
     database_cleaner (1.5.0)
     diff-lcs (1.2.5)
-    elasticsearch (1.0.17)
-      elasticsearch-api (= 1.0.17)
-      elasticsearch-transport (= 1.0.17)
-    elasticsearch-api (1.0.17)
+    elasticsearch (1.0.18)
+      elasticsearch-api (= 1.0.18)
+      elasticsearch-transport (= 1.0.18)
+    elasticsearch-api (1.0.18)
       multi_json
-    elasticsearch-transport (1.0.17)
+    elasticsearch-transport (1.0.18)
       faraday
       multi_json
     erubis (2.7.0)
@@ -123,19 +123,19 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.99.1)
-    mimemagic (0.3.0)
+    mimemagic (0.3.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
     multipart-post (2.0.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    paperclip (4.3.6)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
+    paperclip (5.0.0.beta2)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
       cocaine (~> 0.5.5)
       mime-types
-      mimemagic (= 0.3.0)
+      mimemagic (~> 0.3.0)
     pg (0.18.4)
     poltergeist (1.9.0)
       capybara (~> 2.1)
