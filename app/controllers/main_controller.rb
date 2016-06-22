@@ -54,13 +54,14 @@ class MainController < ApplicationController
 
   def product
     product = SitescanCommon::Product.find_by path: params[:path]
+    raise ActiveRecord::RecordNotFound unless product
     render json: product.product_data(filter_params[:p])
   end
 
   # Render filter options for current category.
   def filter
-    category = category_by_path
-    if category
+    if params[:path]
+      category = category_by_path
       render json: category.filter
     else
       render json: SitescanCommon::AttributeClass.filter
@@ -69,8 +70,8 @@ class MainController < ApplicationController
 
   # Render constraints for filter attributes.
   def filter_constraints
-    category = category_by_path
-    if category
+    if params[:path]
+      category = category_by_path
       render json: category.filter_constraints(filter_params)
     else
       render json: SitescanCommon::Category.constraints(filter_params) 
@@ -98,7 +99,7 @@ class MainController < ApplicationController
   end
 
   private
-
+  
   # Return hash of filter params.
   def filter_params
     p ={}
@@ -117,13 +118,15 @@ class MainController < ApplicationController
   def symbolize(obj)
     obj.reduce({}) do |memo, (key, val)|
       memo.tap do |m|
-      m[key.to_i] = val.reduce({}){|hash, (k, v)| hash.tap{|h| h[k.to_sym] = v}}
-    end
+        m[key.to_i] = val.reduce({}){|hash, (k, v)| hash.tap{|h| h[k.to_sym] = v}}
+      end
     end
   end
 
   # Find category by path.
   def category_by_path
-    SitescanCommon::Category.find_by path: params[:path]
+    category = SitescanCommon::Category.find_by path: params[:path]
+    raise ActiveRecord::RecordNotFound unless category
+    category
   end
 end

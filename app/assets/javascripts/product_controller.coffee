@@ -7,7 +7,8 @@ angular.module 'app'
   '$animate'
   '$timeout'
   '$filter'
-($scope, $rootScope, $http, $routeParams, $animate, $timeout, $filter)->
+  'response'
+($scope, $rootScope, $http, $routeParams, $animate, $timeout, $filter, response)->
   $scope.selectedImg = nextImgIdx = $scope.thumbsPosition = 0
   $scope.price = {}
 
@@ -39,8 +40,18 @@ angular.module 'app'
     opts = $filter('filter')(attr.options, { id: link.attrs[attr.id]}, true)
     opts[0].value
 
+  assignData = (resp)->
+    $scope.product = resp.data
+    calcPrice()
+    $rootScope.title = resp.data.name.join ' '
+    $rootScope.breadcrumbs = resp.data.breadcrumbs
+    return
+
   getProduct = ->
     $http.get '/api/product', params: $routeParams
+    .then (resp)->
+      assignData resp
+      return
 
   $scope.filterLinks = (link)->
     ret = true
@@ -68,13 +79,7 @@ angular.module 'app'
     calcPrice()
     return
 
-  getProduct()
-    .then (response)->
-      $scope.product = response.data
-      calcPrice()
-      $rootScope.title = response.data.name.join ' '
-      $rootScope.breadcrumbs = response.data.breadcrumbs
-      return
+  assignData response
 
   return
 ]

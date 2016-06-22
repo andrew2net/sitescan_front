@@ -4,7 +4,7 @@ angular.module 'app'
   ($scope, $http, $q, $location, $routeParams, $timeout)->
     $scope.searchText = null
     $scope.searchItem = null
-    $scope.routeParams = $routeParams
+    # $scope.routeParams = $routeParams
 
     $scope.getMatches = (searchText)->
       deferred = $q.defer()

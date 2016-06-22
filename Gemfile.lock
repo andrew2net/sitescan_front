@@ -6,9 +6,10 @@ GIT
 PATH
   remote: ../sitescan_common
   specs:
-    sitescan_common (0.0.1)
+    sitescan_common (0.0.2)
       acts_as_list
       awesome_nested_set
+      aws-sdk (>= 2.0.34)
       paperclip (~> 4.3)
       rails (~> 4.2.1)
       searchkick
@@ -51,13 +52,19 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_list (0.7.2)
+    acts_as_list (0.7.4)
       activerecord (>= 3.0)
     angular_rails_csrf (1.0.4)
       rails (>= 3, < 5)
     arel (6.0.3)
-    awesome_nested_set (3.0.2)
-      activerecord (>= 4.0.0, < 5)
+    awesome_nested_set (3.1.1)
+      activerecord (>= 4.0.0, < 5.1)
+    aws-sdk (2.3.14)
+      aws-sdk-resources (= 2.3.14)
+    aws-sdk-core (2.3.14)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.3.14)
+      aws-sdk-core (= 2.3.14)
     builder (3.2.2)
     byebug (8.2.2)
     capybara (2.5.0)
@@ -82,12 +89,12 @@ GEM
     concurrent-ruby (1.0.0)
     database_cleaner (1.5.0)
     diff-lcs (1.2.5)
-    elasticsearch (1.0.15)
-      elasticsearch-api (= 1.0.15)
-      elasticsearch-transport (= 1.0.15)
-    elasticsearch-api (1.0.15)
+    elasticsearch (1.0.17)
+      elasticsearch-api (= 1.0.17)
+      elasticsearch-transport (= 1.0.17)
+    elasticsearch-api (1.0.17)
       multi_json
-    elasticsearch-transport (1.0.15)
+    elasticsearch-transport (1.0.17)
       faraday
       multi_json
     erubis (2.7.0)
@@ -101,12 +108,15 @@ GEM
       multipart-post (>= 1.2, < 3)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
-    hashie (3.4.3)
+    hashie (3.4.4)
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
+    jmespath (1.2.4)
+      json_pure (>= 1.8.1)
     json (1.8.3)
+    json_pure (1.8.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -120,7 +130,7 @@ GEM
     multipart-post (2.0.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    paperclip (4.3.5)
+    paperclip (4.3.6)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       cocaine (~> 0.5.5)
@@ -198,7 +208,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    searchkick (1.2.1)
+    searchkick (1.3.0)
       activemodel
       elasticsearch (>= 1)
       hashie
