@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/andrew2net/sitescan_common
-  revision: 68d6a5dd5c702c5c09f784439f82b4f4f6174c3a
+  revision: 9b8af88dfb5dc5e1656665914ed4b9355cb93bc9
   branch: master
   specs:
     sitescan_common (0.0.6)
