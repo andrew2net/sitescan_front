@@ -20,6 +20,7 @@ gem 'angular_rails_csrf'
 gem 'slim'
 gem 'sitescan_common', git: 'https://github.com/andrew2net/sitescan_common',
   branch: 'master'
+gem "elasticsearch", ">= 1.0.15"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -32,10 +33,6 @@ gem 'sitescan_common', git: 'https://github.com/andrew2net/sitescan_common',
 
 group :test, :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem 'pry'
-  gem 'pry-rails'
-  gem 'pry-byebug'
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-rails'
@@ -50,6 +47,10 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'byebug'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 

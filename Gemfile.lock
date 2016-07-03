@@ -254,6 +254,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
+  elasticsearch (>= 1.0.15)
   factory_girl_rails
   jbuilder (~> 2.0)
   pg
