@@ -22,7 +22,7 @@ class MainController < ApplicationController
       breadcrumbs = category.breadcrumbs
       category_children = category.descendants.where depth: (category.depth + 1)
       result = category.catalog(filter_params)
-    else
+    else # All products.
       name = ''
       breadcrumbs = []
       category_children = SitescanCommon::Category.roots
@@ -52,6 +52,7 @@ class MainController < ApplicationController
     render json: cat
   end
 
+  # Render product's page.
   def product
     product = SitescanCommon::Product.find_by path: params[:path]
     raise ActiveRecord::RecordNotFound unless product
