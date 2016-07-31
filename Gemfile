@@ -29,6 +29,7 @@ gem "elasticsearch", ">= 1.0.15"
 # gem 'unicorn'
 
 gem 'puma'
+gem 'mina-puma', :require => false
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
