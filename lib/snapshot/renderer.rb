@@ -48,7 +48,14 @@ module Snapshot
       url += "?#{ fragment[:query] }" if fragment[:query].present?
 
       # Run PhantomJS
-      body = `phantomjs lib/snapshot/phantom-seo.js #{ url }`
+      # body = `phantomjs lib/snapshot/phantom-seo.js #{ url }`
+      body = ''
+      Tempfile.open 'page' do |temp|
+        %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
+        body = temp.read.gsub(/\\"/, '"')
+        temp.close
+        temp.unlink
+      end
 
       # Output pre-rendered response
       status, headers = @app.call(env)
