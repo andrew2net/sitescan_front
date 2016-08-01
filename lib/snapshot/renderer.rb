@@ -52,7 +52,7 @@ module Snapshot
       body = ''
       Tempfile.open 'page' do |temp|
         %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
-        body = temp.read.gsub(/\\"/, '"')
+        body = temp.read.gsub(/\\"/, '"').gsub(/\\n/, '')
         temp.close
         temp.unlink
       end
