@@ -62,7 +62,8 @@ div layout='column'
             md-list.product-links
               md-list-item [ng-repeat='link in product.links | filter:filterLinks']
                 md-divider
-                a [ng-href='/api/link_url/{{link.id}}' target='_blank' flex=100]
+                a [ng-href='/api/link_url/{{link.id}}' target='_blank' flex=100
+                rel='nofollow']
                   div layout='row' layout-align='none center' flex=100
                     div.md-body-2 [ flex=20 ng-bind='link.domain' ]
                     div [flex=20 ng-repeat='attr in product.search_attrs'
