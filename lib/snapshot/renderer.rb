@@ -43,12 +43,13 @@ module Snapshot
       # Interpret _escaped_fragment_ and figure out which page needs to be rendered
       { path: URI.unescape(match[1]), query: query.sub(regexp, '') } if match
     end
+
     def render_fragment(env, fragment)
       url = "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}#{fragment[:path]}"
       url += "?#{ fragment[:query] }" if fragment[:query].present?
 
       # Run PhantomJS
-      body = Rails.cache.fetch url, expires_in: 1.day do
+      body = Rails.cache.fetch fragment, expires_in: 1.day do
         Tempfile.open 'page' do |temp|
           # body = `phantomjs lib/snapshot/phantom-seo.js #{ url }`
           %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
