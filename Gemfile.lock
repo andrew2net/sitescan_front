@@ -227,6 +227,8 @@ GEM
       activemodel
       elasticsearch (>= 1)
       hashie
+    sitemap_generator (5.1.0)
+      builder
     slim (3.0.7)
       temple (~> 0.7.6)
       tilt (>= 1.3.3, < 2.1)
@@ -276,6 +278,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  sitemap_generator
   sitescan_common!
   slim
   spring

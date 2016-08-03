@@ -34,6 +34,8 @@ gem 'mina-puma', :require => false
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'sitemap_generator'
+
 group :test, :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'database_cleaner'
