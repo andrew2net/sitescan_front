@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: http://sitscan.com/sitemap.xml.gz
+Host: www.sitscan.com
