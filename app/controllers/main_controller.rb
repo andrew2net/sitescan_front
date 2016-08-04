@@ -1,5 +1,4 @@
 class MainController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   # Render layout.
   def index
@@ -19,9 +18,4 @@ class MainController < ApplicationController
   def view
     render partial: params[:template]
   end
-
-  def not_found
-    render :index, status: 404
-  end
-
 end

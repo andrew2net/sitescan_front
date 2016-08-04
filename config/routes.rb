@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
     get 'catalog/:category_path', action: :catalog
     get 'product/:product_path', action: :product
-    match '*path', action: :not_found, via: :all
+    # match '*path', action: :not_found, via: :all
   end
 
   # scope :views do
