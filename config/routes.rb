@@ -26,7 +26,6 @@ Rails.application.routes.draw do
     match '*path', action: :not_found, via: :all
   end
 
-
   # scope :views do
   #   get 'main', to: 'main#main'
   # end

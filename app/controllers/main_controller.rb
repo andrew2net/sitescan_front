@@ -11,7 +11,7 @@ class MainController < ApplicationController
   end
 
   def product
-    SitescanCommon::Product.find_by path: params[:product_path]
+    SitescanCommon::Product.find_by! path: params[:product_path]
     render :index
   end
 
