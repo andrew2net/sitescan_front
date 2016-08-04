@@ -5,5 +5,7 @@ angular.module 'app'
       $http.get '/api/search_product', params: $routeParams
         .then (resp)->
           $scope.products = resp.data.products
+          return
+        return
     return
 ]

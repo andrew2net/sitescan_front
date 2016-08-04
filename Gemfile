@@ -35,6 +35,7 @@ gem 'mina-puma', :require => false
 # gem 'capistrano-rails', group: :development
 
 gem 'sitemap_generator'
+gem 'whenever', :require => false
 
 group :test, :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

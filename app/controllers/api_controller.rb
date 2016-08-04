@@ -8,7 +8,7 @@ class ApiController < ApplicationController
   # Render products in current category.
   def catalog
     if params[:path]
-      category = category_by_path
+      category = SitescanCommon::Category.find_by! path: params[:path]
       name = category.name
       breadcrumbs = category.breadcrumbs
       category_children = category.descendants.where depth: (category.depth + 1)
@@ -45,8 +45,7 @@ class ApiController < ApplicationController
 
   # Render product's page.
   def product
-    product = SitescanCommon::Product.find_by path: params[:path]
-    raise ActiveRecord::RecordNotFound unless product
+    product = SitescanCommon::Product.find_by! path: params[:path]
     render json: product.product_data(filter_params[:p])
   end
 
@@ -118,7 +117,6 @@ class ApiController < ApplicationController
   # Find category by path.
   def category_by_path
     category = SitescanCommon::Category.find_by path: params[:path]
-    raise ActiveRecord::RecordNotFound unless category
     category
   end
 end

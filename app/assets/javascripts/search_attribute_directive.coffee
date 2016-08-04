@@ -79,7 +79,7 @@ angular.module 'app'
       link: (scope, element, attrs)->
         h = """
         <div layout='row' layout-align='start center'>
-          <div flex=30>
+          <div flex=35>
             {{attr.name.join(', ')}}
             <span class='md-body-2' style='margin-left: 20px'>
               {{colorName}}

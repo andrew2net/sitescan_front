@@ -41,11 +41,12 @@ div layout='column'
       h1 [ ng-bind="product.name.join(' ')" ]
       div ng-repeat='attr in product.search_attrs'
         div [search-attribute]
-      div Средняя цена
-      .md-display-1 [ng-bind="price.avr| currency:'р.':0"]
-      div
-        |{{price.min | currency:'':0}}
-        | - {{price.max| currency:'р.':0}}
+      div ng-show='price.avr > 0'
+        div Средняя цена
+        .md-display-1 [ng-bind="price.avr| currency:'р.':0"]
+        div
+          |{{price.min | currency:'':0}}
+          | - {{price.max| currency:'р.':0}}
   md-content
     md-tabs [md-dynamic-height]
       md-tab

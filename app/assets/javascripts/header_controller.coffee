@@ -21,7 +21,7 @@ angular.module 'app'
         $location.search search: null
         return
       document.getElementById('search-text').blur()
-      unless $location.path().match /^\/catalog/
+      unless $location.path().match /^\/catalog(\/|$)/
         $location.path '/catalog'
       $location.search {search: searchText}
       return
