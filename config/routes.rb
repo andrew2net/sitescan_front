@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   root 'main#index'
 
   scope :api do
-    controller :main do
+    controller :api do
       get :popular_categories, action: 'categories'
       get :catalog
       get :filter
@@ -18,9 +18,14 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'views/:template', to: 'main#view'
+  controller :main do
+    get 'views/:template', action: :view
 
-  match '*path', to: 'main#index', via: :all
+    get 'catalog/:category_path', action: :catalog
+    get 'product/:product_path', action: :product
+    match '*path', action: :not_found, via: :all
+  end
+
 
   # scope :views do
   #   get 'main', to: 'main#main'
