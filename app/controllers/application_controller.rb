@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   rescue_from ActiveRecord::RecordNotFound, with: :page_not_found
   rescue_from ActionController::RoutingError, with: :page_not_found
-  rescue_from ActionController::UncnownController, with: :page_not_found
+  rescue_from ActionController::UnknownController, with: :page_not_found
 
   private
 
