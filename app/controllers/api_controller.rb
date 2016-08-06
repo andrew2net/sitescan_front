@@ -1,4 +1,5 @@
 class ApiController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :data_not_found
 
   # Render popular categories.
   def categories
@@ -52,7 +53,7 @@ class ApiController < ApplicationController
   # Render filter options for current category.
   def filter
     if params[:path]
-      category = category_by_path
+      category = SitescanCommon::Category.find_by! path: params[:path]
       render json: category.filter
     else
       render json: SitescanCommon::AttributeClass.filter
@@ -87,6 +88,10 @@ class ApiController < ApplicationController
       p.name
     end
     render json: products
+  end
+
+  def data_not_found
+    head :not_found
   end
 
   private

@@ -12,12 +12,12 @@ angular.module 'app'
   response)->
     $scope.search = ''
 
-    assignData = (response)->
-      $scope.products = response.data.products
-      $scope.category = response.data.category
-      $rootScope.title = response.data.category
-      $rootScope.breadcrumbs = response.data.breadcrumbs
-      $scope.subcategories = response.data.subcategories
+    assignData = (resp)->
+      $scope.products = resp.data.products
+      $scope.category = resp.data.category
+      $rootScope.title = resp.data.category
+      $rootScope.breadcrumbs = resp.data.breadcrumbs
+      $scope.subcategories = resp.data.subcategories
       $timeout ->
         $scope.notFound = $scope.products.length == 0
         return
@@ -30,8 +30,8 @@ angular.module 'app'
       products = document.querySelector('.catalog-product')
       $animate.leave products if products
       $http.get '/api/catalog', params: $routeParams
-      .then (response)->
-        assignData response
+      .then (resp)->
+        assignData resp
         return
       return
 
@@ -49,8 +49,9 @@ angular.module 'app'
       return
 
     $scope.$on '$locationChangeSuccess', (ev, url)->
-      setSearchForLinks(url)
-      loadCatalog()
+      if url.match /\/catalog(\/|$)/
+        setSearchForLinks(url)
+        loadCatalog()
       return
 
     setSearchForLinks($location.url())
