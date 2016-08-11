@@ -36,9 +36,9 @@ angular.module 'app'
       return
 
     $scope.clearFilter = ->
-      $location.search 'o', null
-      $location.search 'n', null
-      $location.search 'b', null
+      $location.search 'o', null # options
+      $location.search 'n', null # numerics
+      $location.search 'b', null # boolean
       $location.search 'search', null
       return
 

@@ -1,5 +1,5 @@
 div layout='row' layout-align='start start'
-  h1.md-headline Популярные категории
+  h1.md-headline =t(:most_viewed_categories)
 div [ layout='row' layout-padding=true layout-margin=true layout-wrap=true
   layout-align='start stretch' ]
   a [ng-href='/catalog/{{category.path}}' ng-repeat='category in categories'

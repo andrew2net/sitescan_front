@@ -28,7 +28,7 @@ SitemapGenerator::Sitemap.create do
     add "/catalog/#{cat.path}"
   end
 
-  SitescanCommon::Product.find_each do |prod|
+  SitescanCommon::Product.not_disabled.find_each do |prod|
     add "/product/#{prod.path}"
   end
 end

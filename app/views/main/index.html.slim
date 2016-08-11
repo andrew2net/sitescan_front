@@ -10,7 +10,7 @@ div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
           md-search-text='searchText' md-items='item in getMatches(searchText)'
           md-item-text='item' md-selected-item='searchItem' md-delay=500
           md-selected-item-change='findProducts(searchItem)' md-no-cache='true'
-          md-input-id='search-text' md-floating-label='Поиск...' ]
+          md-input-id='search-text' md-floating-label="#{I18n.t('search')}..." ]
           md-item-template
             span md-highlight-text='searchText' md-highlight-flags='gi'
               |{{item}}
