@@ -42,23 +42,23 @@ div layout='column'
       div ng-repeat='attr in product.search_attrs'
         div [search-attribute]
       div ng-show='price.avr > 0'
-        div Средняя цена
-        .md-display-1 [ng-bind="price.avr| currency:'р.':0"]
+        div Average price
+        .md-display-1 [ng-bind="price.avr| currency"]
         div
-          |{{price.min | currency:'':0}}
-          | - {{price.max| currency:'р.':0}}
+          |{{price.min | currency}}
+          | - {{price.max| currency:''}}
   md-content
     md-tabs [md-dynamic-height]
       md-tab
-        md-tab-label Цены
+        md-tab-label Prices
         md-tab-body
           section
             md-subheader.md-primary
               div [layout='row']
-                div flex=20 Сайт
+                div flex=20 Site
                 div [flex=20 ng-repeat='attr in product.search_attrs'
                   ng-bind='attr.name.join(", ")']
-                div [flex=20 layout layout-align='center none'] Цена
+                div [flex=20 layout layout-align='center none'] Price
                 div [flex=20]
             md-list.product-links
               md-list-item [ng-repeat='link in product.links | filter:filterLinks']
@@ -73,9 +73,9 @@ div layout='column'
                       ng-bind='link.price | currency']
                     div [flex=20 layout layout-align='center none']
                       md-button.md-raised [ng-href='/api/link_url/{{link.id}}'
-                      target='_blank'] В магазин
+                      target='_blank'] Store
       md-tab
-        md-tab-label Характеристики
+        md-tab-label Features
         md-tab-body
           div [layout='row' layout-wrap]
             div [layout='column' flex=50 ng-repeat='group in product.attr_groups']

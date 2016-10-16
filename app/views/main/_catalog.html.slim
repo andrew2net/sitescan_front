@@ -1,9 +1,9 @@
 div
   div layout='row' layout-align='start center'
     .md-title ng-if='searchText'
-      span Поиск&nbsp;
+      span Search&nbsp;
       span.md-headline ng-bind='searchText'
-      span ng-if='category' &nbsp;в категории&nbsp;
+      span ng-if='category' &nbsp;in category&nbsp;
     h1.md-headline [layout layout-align-xs='center start' ng-bind='category']
   div.subcategory-links [ layout='row' layout-wrap
     ng-show='subcategories && subcategories.length > 0' ]
@@ -29,16 +29,16 @@ div [layout='row']
         div layout='column'
           a [ng-href='/product/{{product.path}}']
             h2.md-headline [hide-xs ng-bind='product.name']
-            h6.md-body-2 [ layout=true layout-align-xs='center start' ]
-              |от {{ product.price | currency }}
+            h6.md-body-2 [ layout=true layout-align-xs='center start'
+            ng-if='product.price' ] from {{ product.price | currency }}
           div.md-caption [hide-xs ng-repeat='attr in product.attrs']
             |{{attr.name}}: {{attr.value}}{{attr.unit}}
 
     div.product-not-found [ flex=40 layout='column' layout-align='center center'
       ng-show='notFound']
-      div.md-display-1 Нет подходящих товаров
-      div [style='margin-top: 10px'] Попробуйте изменить условия поиска
-      md-button ng-click='clearFilter()' Сбросить фильтр
+      div.md-display-1 No matching items
+      div [style='margin-top: 10px'] Try to change the filter conditions
+      md-button ng-click='clearFilter()' Reset filter
 
   div [layout='column' flex=30]
     = render partial: 'filter'

@@ -39,7 +39,7 @@ angular.module 'app'
       $location.search 'o', null # options
       $location.search 'n', null # numerics
       $location.search 'b', null # boolean
-      $location.search 'search', null
+      # $location.search 'search', null
       return
 
     setSearchForLinks = (url)->

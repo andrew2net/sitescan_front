@@ -67,7 +67,7 @@ angular.module 'app'
 
     s = 0
     prices = $scope.filteredLinks.map (l)->
-        s += parseInt l.price
+        s += parseFloat l.price
         l.price
 
     $scope.price.min = Math.min.apply(null, prices)
