@@ -3,7 +3,6 @@ angular.module 'app', [
   'ngMaterial'
   'ngMessages'
   'ngAnimate'
-  'angularUtils.directives.dirPagination'
 ]
   .controller 'NotFoundCtrl', ['$rootScope', ($rootScope)->
     $rootScope.title = '404'
