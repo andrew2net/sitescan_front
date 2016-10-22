@@ -77,7 +77,7 @@ div layout='column'
       md-tab
         md-tab-label Features
         md-tab-body
-          div [layout='row' layout-wrap]
+          div.features-block [layout='row' layout-wrap]
             div [layout='column' flex=50 ng-repeat='group in product.attr_groups']
               h4.md-headline ng-bind='group.name']
               .md-body-1 [layout='row'

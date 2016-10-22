@@ -20,7 +20,7 @@ angular.module 'app'
           $scope.style.maxHeight = '52px'
         when 3, 5
           $scope.style.maxHeight = $scope.ngModel.options.length * 39 + 10 + 'px'
-      
+
       $scope.hasValue = hasValue $scope.ngModel
       $scope.expand = 'expand_less' if $scope.hasValue or $scope.ngModel.id == 0
 

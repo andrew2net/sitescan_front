@@ -1,4 +1,10 @@
-angular.module 'app', ['ngRoute' , 'ngMaterial', 'ngMessages', 'ngAnimate']
+angular.module 'app', [
+  'ngRoute'
+  'ngMaterial'
+  'ngMessages'
+  'ngAnimate'
+  'angularUtils.directives.dirPagination'
+]
   .controller 'NotFoundCtrl', ['$rootScope', ($rootScope)->
     $rootScope.title = '404'
     $rootScope.breadcrumbs = []

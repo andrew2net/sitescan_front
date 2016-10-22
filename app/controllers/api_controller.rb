@@ -39,7 +39,8 @@ class ApiController < ApplicationController
       category: name,
       breadcrumbs: breadcrumbs,
       subcategories: subcategories,
-      products: prods
+      products: prods,
+      total_items: result.total_count
     }
     render json: cat
   end
@@ -107,6 +108,7 @@ class ApiController < ApplicationController
     p[:b] = params[:b].split(',').map{|e| e.to_i} if params[:b]
     p[:p] = JSON.parse params[:p] if params[:p]
     p[:search] = params[:search] if params[:search]
+    p[:page] = params[:page]
     p
   end
 

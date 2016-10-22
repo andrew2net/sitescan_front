@@ -128,7 +128,7 @@ angular.module 'app'
         this._val = newValue
       else
         this._val
-        
+
     ###
     Retrive attribute from url and set filter parametrs.
     ###
