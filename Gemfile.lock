@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/andrew2net/sitescan_common
-  revision: 8d3add5f2207b8af44d86b4c6b182cdc1a027cca
+  revision: 64bb006b7dc8240bd462c1ef99df65c050a5427c
   branch: master
   specs:
     sitescan_common (0.0.7)
@@ -59,12 +59,12 @@ GEM
     arel (6.0.3)
     awesome_nested_set (3.1.1)
       activerecord (>= 4.0.0, < 5.1)
-    aws-sdk (2.6.9)
-      aws-sdk-resources (= 2.6.9)
-    aws-sdk-core (2.6.9)
+    aws-sdk (2.6.12)
+      aws-sdk-resources (= 2.6.12)
+    aws-sdk-core (2.6.12)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.6.9)
-      aws-sdk-core (= 2.6.9)
+    aws-sdk-resources (2.6.12)
+      aws-sdk-core (= 2.6.12)
     builder (3.2.2)
     byebug (9.0.5)
     capybara (2.7.1)
