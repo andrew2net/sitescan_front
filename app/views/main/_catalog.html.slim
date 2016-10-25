@@ -8,8 +8,8 @@ div
   div.subcategory-links [ layout='row' layout-wrap
     ng-show='subcategories && subcategories.length > 0' ]
     div flex=20 ng-repeat='subcat in subcategories'
-      md-button [ng-href='{{subcatUrl(subcat.path)}}'
-        ng-bind='subcat.name+" ("+subcat.items+")"']
+      md-button [ui-sref='catalog({path: subcat.path, page: null})'
+      aria-label='{{subcat.name}}' ng-bind='subcat.name+" ("+subcat.items+")"']
 
 div [layout='row']
   div layout='column' flex=70
@@ -35,24 +35,26 @@ div [layout='row']
             |{{attr.name}}: {{attr.value}}{{attr.unit}}
       div [ng-if='pager.pages.length - 1' layout='row' layout-align='center none'
         flex]
-        md-button.md-icon-button.md-raised [ng-href='{{pageUrl(1)}}'
+        md-button.md-icon-button.md-raised [ui-sref='catalog({path: path, page:1})'
           ng-click='setPage(1, $event)' aria-label='First page'
           ng-disabled='pager.currentPage === 1']
           md-icon.material-icon first_page
         md-button.md-icon-button.md-raised [ ng-disabled='pager.currentPage === 1'
-          ng-href='{{pageUrl(pager.currentPage - 1)}}' aria-label='Previous page'
+          ui-sref='catalog({path: path, page: pager.currentPage - 1})'
+          aria-label='Previous page'
           ng-click='setPage(pager.currentPage - 1, $event)']
           md-icon.material-icon navigate_before
-        md-button.md-icon-button.md-raised [ng-href='{{pageUrl(page)}}'
-          ng-repeat='page in pager.pages' aria-label='Page {{page}}'
-          ng-disabled='pager.currentPage === page'
-          ng-click='setPage(page, $event)'] {{page}}
         md-button.md-icon-button.md-raised [
-          ng-href='{{pageUrl(pager.currentPage + 1)}}' aria-label='Next page'
+          ui-sref='catalog({path: path, page: page})' aria-label='Page {{page}}'
+          ng-repeat='page in pager.pages' ng-disabled='pager.currentPage === page'
+          ng-click='setPage(page, $event)'] {{page}}
+        md-button.md-icon-button.md-raised [ aria-label='Next page'
+          ui-sref='catalog({path: pathf, page: pager.currentPage + 1})'
           ng-disabled='pager.currentPage === pager.totalPages'
           ng-click='setPage(pager.currentPage + 1, $event)']
           md-icon.material-icon navigate_next
-        md-button.md-icon-button.md-raised [ng-href='{{pageUrl(pager.totalPages)}}'
+        md-button.md-icon-button.md-raised [
+          ui-sref='catalog({path: pasth, page: pager.totalPages})'
           ng-disabled='pager.currentPage === pager.totalPages'
           ng-click='setPage(pager.totalPages, $event)' aria-label='Last page']
           md-icon.material-icon last_page

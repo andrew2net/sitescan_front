@@ -1,15 +1,16 @@
 angular.module 'app'
 .controller 'HeaderCtrl', [
-  '$scope', '$http', '$q', '$location', '$routeParams', '$timeout',
-  ($scope, $http, $q, $location, $routeParams, $timeout)->
+  '$scope', '$http', '$q', '$state', '$stateParams', '$timeout',
+  ($scope, $http, $q, $state, $stateParams, $timeout)->
     $scope.searchText = null
     $scope.searchItem = null
     # $scope.routeParams = $routeParams
+    searchChanged = new Event 'searchChanged'
 
     $scope.getMatches = (searchText)->
       deferred = $q.defer()
       $http.post '/api/suggest_products', {
-        text: searchText, path: $routeParams.path
+        text: searchText, path: $stateParams.path
       }
         .then (resp)->
           deferred.resolve resp.data
@@ -17,32 +18,23 @@ angular.module 'app'
       deferred.promise
 
     $scope.findProducts = (searchText)->
-      unless searchText
-        $location.search search: null
-        return
+      st = if searchText then searchText else null
       document.getElementById('search-text').blur()
-      unless $location.path().match /^\/catalog(\/|$)/
-        $location.path '/catalog'
-      $location.search {search: searchText}
+      $state.go 'catalog', search: st
+      document.dispatchEvent searchChanged if $state.current.name == 'catalog'
       return
 
     $scope.clearSearch = ->
       $scope.searchText = ''
-      $location.search search: null
+      $state.go '.', search: null
+      document.dispatchEvent searchChanged
       return
 
     getSearchTextFromUrl = ->
-      $timeout ->
-        $scope.searchText = $routeParams.search
-        return
-      , 100
+      $scope.searchText = $stateParams.search
       return
 
-    $scope.$on '$routeChangeSuccess', ->
-      getSearchTextFromUrl()
-      return
-
-    getSearchTextFromUrl()
+    $scope.$on '$stateChangeSuccess', getSearchTextFromUrl
 
     return
   ]

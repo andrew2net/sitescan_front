@@ -3,21 +3,23 @@ angular.module 'app'
 [
   '$scope',
   '$http',
-  '$routeParams',
-  '$location',
+  '$stateParams',
+  '$state',
   '$timeout',
   '$filter',
-  ($scope, $http, $routeParams, $location, $timeout, $filter)->
+  ($scope, $http, $stateParams, $state, $timeout, $filter)->
+
+    filterChanged = new Event 'filterChanged'
 
     ###
     Retrieve filter attribute's constraints from server.
     ###
     getConstraints = ->
-      $http.get '/api/filter_constraints', params: $routeParams
+      $http.get '/api/filter_constraints', params: $stateParams
         .then (response)->
           angular.forEach response.data, (constraint)->
             item = $filter('filter')($scope.filter_items, {id: constraint.id}, true)
-            if item.length
+            if item and item.length
               switch item[0].type
                 when 1
                   item[0].min = constraint.min
@@ -36,7 +38,7 @@ angular.module 'app'
     Set number attribute parametrs in url.
     ###
     updateNumberLocation = (id, name, value)->
-      n = angular.fromJson $routeParams.n
+      n = angular.fromJson $stateParams.n
       if n and n[id]
         if isFinite value
           n[id][name] = value
@@ -55,7 +57,8 @@ angular.module 'app'
         n = null
       else
         n = angular.toJson n, false
-      $location.search 'n', n
+      $state.go '.', {n: n}, {notify: false}
+      document.dispatchEvent filterChanged
       return
 
     ###
@@ -88,8 +91,8 @@ angular.module 'app'
     ###
     updateOption = (newValue)->
       if arguments.length
-        if $routeParams.o
-          optionsChecked = $routeParams.o.split ','
+        if $stateParams.o
+          optionsChecked = $stateParams.o.split ','
         else
           optionsChecked = []
         idx = optionsChecked.indexOf(this.id.toString())
@@ -98,9 +101,10 @@ angular.module 'app'
         else
           optionsChecked.splice idx, 1 if idx != -1
         if optionsChecked.length
-          $location.search('o', optionsChecked.join ',')
+          $state.go('.', o: optionsChecked.join ',', {notify: false})
         else
-          $location.search('o', null)
+          $state.go('.', o: null, {notify: false})
+        document.dispatchEvent filterChanged
         this._checked = newValue
       else
         this._checked
@@ -111,8 +115,8 @@ angular.module 'app'
     ###
     getSetBool = (newValue)->
       if arguments.length
-        if $routeParams.b
-          b = $routeParams.b.split ','
+        if $stateParams.b
+          b = $stateParams.b.split ','
         else
           b = []
         i = b.indexOf this.id.toString()
@@ -124,7 +128,8 @@ angular.module 'app'
           b.join ','
         else
           null
-        $location.search 'b', b
+        $state.go '.', b: b, {notify: false}
+        document.dispatchEvent filterChanged
         this._val = newValue
       else
         this._val
@@ -133,9 +138,9 @@ angular.module 'app'
     Retrive attribute from url and set filter parametrs.
     ###
     setFilterFromUrl = ->
-      n = angular.fromJson $routeParams.n if $routeParams.n
-      o = $routeParams.o.split(',').map((id)-> parseInt id) if $routeParams.o
-      b = $routeParams.b.split(',').map((id)-> parseInt id) if $routeParams.b
+      n = angular.fromJson $stateParams.n if $stateParams.n
+      o = $stateParams.o.split(',').map((id)-> parseInt id) if $stateParams.o
+      b = $stateParams.b.split(',').map((id)-> parseInt id) if $stateParams.b
       angular.forEach $scope.filter_items, (item)->
         switch item.type
           when 1
@@ -165,7 +170,7 @@ angular.module 'app'
       getConstraints()
       false
 
-    $http.get '/api/filter', params: {path: $routeParams.path}
+    $http.get '/api/filter', params: {path: $stateParams.path}
     .then (response)->
       angular.forEach response.data, (attr)->
         switch attr.type

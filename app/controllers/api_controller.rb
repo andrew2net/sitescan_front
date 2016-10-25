@@ -8,7 +8,7 @@ class ApiController < ApplicationController
 
   # Render products in current category.
   def catalog
-    if params[:path]
+    unless params[:path].blank?
       category = SitescanCommon::Category.find_by! path: params[:path]
       name = category.name
       breadcrumbs = category.breadcrumbs

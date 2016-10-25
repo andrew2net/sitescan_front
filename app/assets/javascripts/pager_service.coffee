@@ -7,7 +7,7 @@ angular.module 'app'
         totalPages = Math.ceil totalItems / pageSize
         if totalPages < 11
           startPage = 1
-          endPage = totalPages
+          endPage = totalPages || startPage
         else
           if currentPage < 7
             startPage = 1

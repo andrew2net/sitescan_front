@@ -6,7 +6,9 @@ class MainController < ApplicationController
   end
 
   def catalog
-    SitescanCommon::Category.find_by! path: params[:category_path]
+    if params[:category_path]
+      SitescanCommon::Category.find_by! path: params[:category_path]
+    end
     render :index
   end
 

@@ -3,17 +3,18 @@ angular.module 'app'
   '$scope'
   '$rootScope'
   '$http'
-  '$route'
-  '$routeParams'
+  '$state'
+  '$stateParams'
   '$animate'
   '$timeout'
-  '$location'
   'PagerService'
   'response'
-  ($scope, $rootScope, $http, $route, $routeParams, $animate, $timeout, $location,
+  ($scope, $rootScope, $http, $state, $stateParams, $animate, $timeout,
   PagerService, response)->
+    $scope.path = $stateParams.path
     $scope.pager = {}
-    $scope.pager.currentPage = parseInt($routeParams.page) or 1
+    $scope.pager.currentPage = parseInt($stateParams.page) or 1
+    $scope.searchText = $stateParams.search
 
     assignData = (resp)->
       $scope.products = resp.data.products
@@ -21,8 +22,6 @@ angular.module 'app'
       $rootScope.title = resp.data.category
       $rootScope.breadcrumbs = resp.data.breadcrumbs
       $scope.subcategories = resp.data.subcategories
-      # $scope.pager.totalItems = resp.data.total_items
-      # page = parseInt $location.search().page
       $scope.pager = PagerService.GetPager resp.data.total_items,
         $scope.pager.currentPage
       $timeout ->
@@ -36,7 +35,7 @@ angular.module 'app'
       $scope.products = []
       products = document.querySelector('.catalog-product')
       $animate.leave products if products
-      params = $routeParams
+      params = $state.params
       params.page = $scope.pager.currentPage
       $http.get '/api/catalog', params: params
       .then (resp)->
@@ -45,21 +44,9 @@ angular.module 'app'
       return
 
     $scope.clearFilter = ->
-      $location.search 'o', null # options
-      $location.search 'n', null # numerics
-      $location.search 'b', null # boolean
-      # $location.search 'search', null
+      $state.go '.', {o: null, n: null, b: null}, {notify: false}
+      loadCatalog()
       return
-
-    # Returns serch path of url for links.
-    searchParamsStr = (search)->
-      delete search.path
-      params = for key, val of search
-        "#{key}=#{val}"
-      if params.length
-        "?#{params.join '&'}"
-      else
-        ''
 
     pageCheck = (page)->
       if page < 1
@@ -72,28 +59,26 @@ angular.module 'app'
     $scope.setPage = (page, ev)->
       page = pageCheck page
       ev.preventDefault()
-      $location.search 'page', page
+      $state.go '.', {page: page}, {notify: false}
       $scope.pager.currentPage = page
+      loadCatalog()
       return
-
-    # Returns page's url.
-    $scope.pageUrl = (page)->
-      page = pageCheck page
-      search = $location.search()
-      search.page = page
-      "/catalog/#{$routeParams.path}#{searchParamsStr search}"
-
-    # Returns subcategory's url.
-    $scope.subcatUrl = (path)->
-      search = $location.search()
-      delete search.page
-      "/catalog/#{path}#{searchParamsStr search}"
 
     # Listen to filter's changes.
-    $scope.$on '$locationChangeSuccess', (ev, url)->
-      if $route.current.controller == 'CatalogCtrl'
-        loadCatalog()
+    # $scope.$on '$stateChangeSuccess', (ev, toSt, toPar, frSt, frPar)->
+    #   if toSt.controller == 'CatalogCtrl'
+    #     loadCatalog()
+    #   return
+
+    reloadOnChangeCondotion = (ev)->
+      $scope.searchText = $stateParams.search
+      $scope.pager.currentPage = 1
+      $state.go '.', {page: 1}, {notify: false}
+      loadCatalog()
       return
+
+    document.addEventListener 'filterChanged', reloadOnChangeCondotion
+    document.addEventListener 'searchChanged', reloadOnChangeCondotion
 
     assignData response
     return

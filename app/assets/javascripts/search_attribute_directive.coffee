@@ -1,10 +1,11 @@
 angular.module 'app'
 .directive 'searchAttribute',
-[ '$compile', '$location', '$routeParams', '$filter',
-  ($compile, $location, $routeParams, $filter)->
+[ '$compile', '$state', '$stateParams', '$filter',
+  ($compile, $state, $stateParams, $filter)->
     {
       controller: ['$scope', ($scope)->
         $scope.colorName = ''
+        attributeChanged = new Event 'attributeChanged'
 
         calcColor = (hexcolor)->
           r = parseInt hexcolor.substr(0,2), 16
@@ -23,7 +24,7 @@ angular.module 'app'
             if $scope.attr.widget == 1
               calcColor(opt.clr)
               $scope.colorName = opt.value
-          p = $routeParams.p
+          p = $stateParams.p
           p = JSON.parse p if p
           if p
             if $scope.currentOption
@@ -35,11 +36,12 @@ angular.module 'app'
             p = {}
             p[$scope.attr.id] = opt.id
           p = JSON.stringify p if p
-          $location.search 'p', p
+          $state.go 'product', p: p
+          document.dispatchEvent attributeChanged
           return
 
         getFilteredLinks = ->
-          optsFromUrl = angular.fromJson $routeParams.p
+          optsFromUrl = angular.fromJson $stateParams.p
           delete optsFromUrl[$scope.attr.id] if optsFromUrl
           $filter('filter')($scope.product.links, (link)->
             ret = true
@@ -62,8 +64,7 @@ angular.module 'app'
           $scope.filteredOptions = getFilteredOptions()
           return
 
-        # if $routeParams.p
-        optsFromUrl = angular.fromJson $routeParams.p
+        optsFromUrl = angular.fromJson $stateParams.p
         $scope.currentOption = optsFromUrl[$scope.attr.id] if optsFromUrl
         if $scope.attr.widget == 1 and $scope.currentOption
           opt = $filter('filter')($scope.attr.options,

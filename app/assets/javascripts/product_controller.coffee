@@ -3,12 +3,12 @@ angular.module 'app'
   '$scope'
   '$rootScope'
   '$http'
-  '$routeParams'
+  '$stateParams'
   '$animate'
   '$timeout'
   '$filter'
   'response'
-($scope, $rootScope, $http, $routeParams, $animate, $timeout, $filter, response)->
+($scope, $rootScope, $http, $stateParams, $animate, $timeout, $filter, response)->
   $scope.selectedImg = nextImgIdx = $scope.thumbsPosition = 0
   $scope.price = {}
 
@@ -48,7 +48,7 @@ angular.module 'app'
     return
 
   getProduct = ->
-    $http.get '/api/product', params: $routeParams
+    $http.get '/api/product', params: $stateParams
     .then (resp)->
       assignData resp
       return
@@ -61,7 +61,7 @@ angular.module 'app'
     ret
 
   calcPrice = ->
-    $scope.selectedAttrs = angular.fromJson $routeParams.p
+    $scope.selectedAttrs = angular.fromJson $stateParams.p
     $scope.filteredLinks = $filter('filter')($scope.product.links,
       $scope.filterLinks)
 
@@ -75,9 +75,7 @@ angular.module 'app'
     $scope.price.avr = prices.length and (s / prices.length)
     return
 
-  $scope.$on '$routeUpdate', ->
-    calcPrice()
-    return
+  document.addEventListener 'attributeChanged', calcPrice
 
   assignData response
 
