@@ -9,8 +9,8 @@ angular.module 'app', [
     $rootScope.breadcrumbs = []
     return
   ]
-  .config ['$stateProvider', '$locationProvider',
-  ($stateProvider, $locationProvider)->
+  .config ['$stateProvider', '$locationProvider', '$urlRouterProvider',
+  ($stateProvider, $locationProvider, $urlRouterProvider)->
     mainState = {
       name: 'main'
       url: '/'
@@ -46,52 +46,33 @@ angular.module 'app', [
       templateUrl: '/views/product'
       reloadOnSearch: false
       resolve: {
-        response: ['$stateParams', '$http', ($stateParams, $http)->
+        response: ['$state', '$stateParams', '$http',
+        ($state, $stateParams, $http)->
           $http.get '/api/product', params: $stateParams
         ]
       }
     }
+    notFoundState = {
+      name: '404'
+      templateUrl: '/views/not_found'
+      controller: 'NotFoundCtrl'
+    }
     $stateProvider.state mainState
     $stateProvider.state catalogState
     $stateProvider.state productState
-    # $routeProvider
-    #   .when '/', {
-    #     templateUrl: '/views/main'
-    #     controller: 'MainCtrl'
-    #   }
-    #   .when '/catalog/:path?', {
-    #     templateUrl: '/views/catalog'
-    #     controller: 'CatalogCtrl'
-    #     reloadOnSearch: false
-    #     resolve: {
-    #       response: ['$route', '$http', ($route, $http)->
-    #         $http.get '/api/catalog', params: $route.current.params
-    #       ]
-    #     }
-    #   }
-    #   .when '/product/:path', {
-    #     templateUrl: '/views/product'
-    #     controller: 'ProductCtrl'
-    #     reloadOnSearch: false
-    #     resolve: {
-    #       response: ['$route', '$http', ($route, $http)->
-    #         $http.get '/api/product', params: $route.current.params
-    #       ]
-    #     }
-    #   }
-    #   .when '/not_found', {
-    #     templateUrl: '/views/not_found'
-    #     controller: 'NotFoundCtrl'
-    #   }
-    #   .otherwise {
-    #     templateUrl: '/views/not_found'
-    #     controller: 'NotFoundCtrl'
-    #   }
+    $stateProvider.state notFoundState
+
+    $urlRouterProvider.otherwise ($injector, $location)->
+      state = $injector.get '$state'
+      state.go '404'
+      $location.path()
+
     $locationProvider.html5Mode(true)
     return
 ]
-  .run ['$rootScope', '$location', ($rootScope, $location)->
-    $rootScope.$on '$routeChangeError', (event, current, previous, error)->
-      $location.path('/not_found').replace() if error.status == 404
+  .run ['$rootScope', '$state', ($rootScope, $state)->
+    $rootScope.$on '$stateChangeError',
+    (event, toState, toParams, fromState, fromParams, error)->
+      $state.go('404') if error.status == 404
       return
   ]
