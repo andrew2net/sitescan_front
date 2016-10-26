@@ -37,8 +37,8 @@ angular.module 'app'
     return
 
   $scope.attrValue = (link, attr)->
-    opts = $filter('filter')(attr.options, { id: link.attrs[attr.id]}, true)
-    opts[0].value
+    opts = $filter('filter')(attr.options, (v)-> v.id == link.attrs[attr.id])
+    if opts[0] then opts[0].value else ''
 
   assignData = (resp)->
     $scope.product = resp.data
