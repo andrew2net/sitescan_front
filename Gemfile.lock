@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/andrew2net/sitescan_common
-  revision: 359f536dfa51b88a63f73e96fde9677ffe2ed6e0
+  revision: 2f75e4194f8f34dc6dcd1c99247d676fddb51132
   branch: master
   specs:
-    sitescan_common (0.0.9)
+    sitescan_common (0.0.8)
       acts_as_list
       awesome_nested_set
       aws-sdk
