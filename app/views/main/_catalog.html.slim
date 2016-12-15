@@ -33,31 +33,31 @@ div [layout='row']
             ng-if='product.price' ] from {{ product.price | currency }}
           div.md-caption [hide-xs ng-repeat='attr in product.attrs']
             |{{attr.name}}: {{attr.value}}{{attr.unit}}
-      div [ng-if='pager.pages.length - 1' layout='row' layout-align='center none'
-        flex]
-        md-button.md-icon-button.md-raised [ui-sref='catalog({path: path, page:1})'
-          ng-click='setPage(1, $event)' aria-label='First page'
-          ng-disabled='pager.currentPage === 1']
-          md-icon.material-icon first_page
-        md-button.md-icon-button.md-raised [ ng-disabled='pager.currentPage === 1'
-          ui-sref='catalog({path: path, page: pager.currentPage - 1})'
-          aria-label='Previous page'
-          ng-click='setPage(pager.currentPage - 1, $event)']
-          md-icon.material-icon navigate_before
-        md-button.md-icon-button.md-raised [
-          ui-sref='catalog({path: path, page: page})' aria-label='Page {{page}}'
-          ng-repeat='page in pager.pages' ng-disabled='pager.currentPage === page'
-          ng-click='setPage(page, $event)'] {{page}}
-        md-button.md-icon-button.md-raised [ aria-label='Next page'
-          ui-sref='catalog({path: pathf, page: pager.currentPage + 1})'
-          ng-disabled='pager.currentPage === pager.totalPages'
-          ng-click='setPage(pager.currentPage + 1, $event)']
-          md-icon.material-icon navigate_next
-        md-button.md-icon-button.md-raised [
-          ui-sref='catalog({path: pasth, page: pager.totalPages})'
-          ng-disabled='pager.currentPage === pager.totalPages'
-          ng-click='setPage(pager.totalPages, $event)' aria-label='Last page']
-          md-icon.material-icon last_page
+    div [ng-if='pager.pages.length - 1' layout='row' layout-align='center none'
+      flex]
+      md-button.md-icon-button.md-raised [ui-sref='catalog({path: path, page:1})'
+        ng-click='setPage(1, $event)' aria-label='First page'
+        ng-disabled='pager.currentPage === 1']
+        md-icon.material-icon first_page
+      md-button.md-icon-button.md-raised [ ng-disabled='pager.currentPage === 1'
+        ui-sref='catalog({path: path, page: pager.currentPage - 1})'
+        aria-label='Previous page'
+        ng-click='setPage(pager.currentPage - 1, $event)']
+        md-icon.material-icon navigate_before
+      md-button.md-icon-button.md-raised [
+        ui-sref='catalog({path: path, page: page})' aria-label='Page {{page}}'
+        ng-repeat='page in pager.pages' ng-disabled='pager.currentPage === page'
+        ng-click='setPage(page, $event)'] {{page}}
+      md-button.md-icon-button.md-raised [ aria-label='Next page'
+        ui-sref='catalog({path: pathf, page: pager.currentPage + 1})'
+        ng-disabled='pager.currentPage === pager.totalPages'
+        ng-click='setPage(pager.currentPage + 1, $event)']
+        md-icon.material-icon navigate_next
+      md-button.md-icon-button.md-raised [
+        ui-sref='catalog({path: pasth, page: pager.totalPages})'
+        ng-disabled='pager.currentPage === pager.totalPages'
+        ng-click='setPage(pager.totalPages, $event)' aria-label='Last page']
+        md-icon.material-icon last_page
 
     div.product-not-found [ flex=40 layout='column' layout-align='center center'
       ng-show='notFound']
