@@ -20,7 +20,7 @@ gem 'angular_rails_csrf'
 gem 'slim'
 gem 'sitescan_common', git: 'https://github.com/andrew2net/sitescan_common',
   branch: 'master'
-gem "elasticsearch", ">= 1.0.15"
+# gem "elasticsearch", ">= 1.0.15"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

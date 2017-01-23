@@ -1,17 +1,17 @@
 GIT
   remote: https://github.com/andrew2net/sitescan_common
-  revision: 7fe952b49f2c04bcdd1194f1598874b86d4c3733
+  revision: 7f9113bcbd48be11590a1d875df9a88d3071ee9d
   branch: master
   specs:
     sitescan_common (0.0.8)
       acts_as_list
       awesome_nested_set
       aws-sdk
-      elasticsearch (>= 1.0.15)
+      elasticsearch (~> 1.1)
       globalize (~> 5.0.1)
       paperclip (~> 5.0.0.beta1)
       rails (~> 4.2.1)
-      searchkick
+      searchkick (~> 1.5.1)
 
 GEM
   remote: https://rubygems.org/
@@ -92,12 +92,12 @@ GEM
     concurrent-ruby (1.0.4)
     database_cleaner (1.5.3)
     diff-lcs (1.2.5)
-    elasticsearch (5.0.1)
-      elasticsearch-api (= 5.0.1)
-      elasticsearch-transport (= 5.0.1)
-    elasticsearch-api (5.0.1)
+    elasticsearch (1.1.2)
+      elasticsearch-api (= 1.1.2)
+      elasticsearch-transport (= 1.1.2)
+    elasticsearch-api (1.1.2)
       multi_json
-    elasticsearch-transport (5.0.1)
+    elasticsearch-transport (1.1.2)
       faraday
       multi_json
     erubis (2.7.0)
@@ -222,8 +222,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    searchkick (2.1.1)
-      activemodel (>= 4.1)
+    searchkick (1.5.1)
+      activemodel
       elasticsearch (>= 1)
       hashie
     sitemap_generator (5.1.0)
@@ -265,7 +265,6 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
-  elasticsearch (>= 1.0.15)
   factory_girl_rails
   jbuilder (~> 2.0)
   mina-puma
