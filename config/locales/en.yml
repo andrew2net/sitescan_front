@@ -22,5 +22,6 @@
 en:
   search: Search
   most_viewed_categories: Most viewed categories
+  search_by_brand: Search by brand
   error_404: Error 404
   page_not_found: Page not found

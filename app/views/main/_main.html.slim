@@ -1,6 +1,16 @@
+div layout='row' layout-align='center center'
+  h1.md-display-1 Find your smartphone here
 div layout='row' layout-align='start start'
+  h1.md-headline =t(:search_by_brand)
+div [ layout='row' layout-wrap=true
+  layout-align='space-around stretch' ]
+  .logo [ng-repeat='brand in brands']
+    a [ ui-sref='catalog({o: brand.opt_id})' layout='column' ]
+      img ng-src='{{brand.logo_url}}'
+
+/div layout='row' layout-align='start start'
   h1.md-headline =t(:most_viewed_categories)
-div [ layout='row' layout-padding=true layout-margin=true layout-wrap=true
+/div [ layout='row' layout-padding=true layout-margin=true layout-wrap=true
   layout-align='start stretch' ]
   a [ui-sref='catalog({path: category.path})' ng-repeat='category in categories'
   flex-xs='65' flex-sm='30' flex-md='20'

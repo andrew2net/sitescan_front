@@ -91,6 +91,11 @@ class ApiController < ApplicationController
     render json: products
   end
 
+  def brands
+    @brands = SitescanCommon::Brand.all
+    render formats: :json
+  end
+
   def data_not_found
     head :not_found
   end

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   scope :api do
     controller :api do
       get :popular_categories, action: 'categories'
+      get :brands
       get :catalog
       get :filter
       get :filter_constraints
