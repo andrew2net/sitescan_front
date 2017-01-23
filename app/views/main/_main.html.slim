@@ -5,8 +5,9 @@ div layout='row' layout-align='start start'
 div [ layout='row' layout-wrap=true
   layout-align='space-around stretch' ]
   .logo [ng-repeat='brand in brands']
-    a [ ui-sref='catalog({o: brand.opt_id})' layout='column' ]
-      img ng-src='{{brand.logo_url}}'
+    a [ ui-sref='catalog({o: brand.opt_id})' layout='column'
+      title='{{brand.name}}']
+      img ng-src='{{brand.logo_url}}' alt='{{brand.name}} logo'
 
 /div layout='row' layout-align='start start'
   h1.md-headline =t(:most_viewed_categories)

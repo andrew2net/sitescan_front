@@ -92,7 +92,7 @@ class ApiController < ApplicationController
   end
 
   def brands
-    @brands = SitescanCommon::Brand.all
+    @brands = SitescanCommon::Brand.joins :attribute_class_option
     render formats: :json
   end
 
