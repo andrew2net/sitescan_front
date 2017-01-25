@@ -7,6 +7,7 @@ angular.module 'app'
         $scope.colorName = ''
         attributeChanged = new Event 'attributeChanged'
 
+        # Calc color for check symbol.
         calcColor = (hexcolor)->
           r = parseInt hexcolor.substr(0,2), 16
           g = parseInt hexcolor.substr(2,2), 16
@@ -60,7 +61,7 @@ angular.module 'app'
             linkOpt.length > 0
           )
 
-        $scope.$on '$routeUpdate', ->
+        $scope.$on '$locationChangeSuccess', ->
           $scope.filteredOptions = getFilteredOptions()
           return
 
