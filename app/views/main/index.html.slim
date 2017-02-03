@@ -24,6 +24,10 @@ div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
     .md-body-2.breadcrumbs layout='row' breadcrumbs='breadcrumbs'
     div [ui-view]
 
-    footer layout='column'
+    footer layout='column' ng-controller='footerCtrl'
       md-divider
-      div.md-body-1 layout='column' &copy; 2016
+      div.md-body-1 layout='row' layout-align='space-between center'
+        div &copy; 2016
+        div
+          a style='cursor:pointer'ng-hide='em' ng-click='showem()' {{promt}}
+          a ng-href='mailto:{{em}}' ng-show='em' {{em}}
