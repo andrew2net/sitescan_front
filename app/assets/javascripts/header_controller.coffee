@@ -17,21 +17,29 @@ angular.module 'app'
           return
       deferred.promise
 
+    goToCatalog = true
     $scope.findProducts = (searchText)->
-      st = if searchText then searchText else null
-      document.getElementById('search-text').blur()
-      $state.go 'catalog', search: st
-      document.dispatchEvent searchChanged if $state.current.name == 'catalog'
+      if goToCatalog
+        st = if searchText then searchText else null
+        document.getElementById('search-text').blur()
+        $state.go 'catalog', search: st
+        document.dispatchEvent searchChanged if $state.current.name == 'catalog'
+      else
+        goToCatalog = true
       return
 
     $scope.clearSearch = ->
-      $scope.searchText = ''
+      $scope.searchText = null
       $state.go '.', search: null
       document.dispatchEvent searchChanged
       return
 
     getSearchTextFromUrl = ->
-      $scope.searchText = $stateParams.search
+      if $state.current.name == 'catalog'
+        $scope.searchText = $stateParams.search
+      else
+        goToCatalog = $scope.searchItem == null
+        $scope.searchText = $scope.searchItem = null
       return
 
     $scope.$on '$stateChangeSuccess', getSearchTextFromUrl
