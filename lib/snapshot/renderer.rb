@@ -50,17 +50,18 @@ module Snapshot
       url += "?#{ fragment[:query] }" if fragment[:query].present?
 
       # Run PhantomJS
-      body = Rails.cache.fetch fragment, expires_in: 1.day do
-        if Rails.env == 'development'
-          %x{phantomjs lib/snapshot/phantom-seo.js #{ url }}
-        else
-          Tempfile.open 'page' do |temp|
+      body = Rails.cache.fetch fragment, expires_in: 1.minute do
+        Tempfile.open 'page' do |temp|
+          if Rails.env == 'development'
+            # %x{phantomjs lib/snapshot/phantom-script.js #{ url }}
+            %x{phantomjs lib/snapshot/phantom-script.js #{url} > #{temp.path}}
+          else
             %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
-            resp = temp.read.gsub(/\\"/, '"').gsub(/\\n/, '')
-            temp.close
-            temp.unlink
-            resp
           end
+          resp = temp.read.gsub(/\\"/, '"').gsub(/\\n/, '')
+          temp.close
+          temp.unlink
+          resp
         end
       end
 
