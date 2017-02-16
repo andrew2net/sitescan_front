@@ -41,7 +41,8 @@ module Snapshot
       match = regexp.match(query)
 
       # Interpret _escaped_fragment_ and figure out which page needs to be rendered
-      { path: URI.unescape(match[1]), query: query.sub(regexp, '') } if match
+      # { path: URI.unescape(match[1]), query: query.sub(regexp, '') } if match
+      { path: URI.unescape(env['REQUEST_PATH']), query: query.sub(regexp, '') } if match
     end
 
     def render_fragment(env, fragment)
@@ -51,7 +52,7 @@ module Snapshot
       # Run PhantomJS
       body = Rails.cache.fetch fragment, expires_in: 1.day do
         if Rails.env == 'development'
-          `phantomjs lib/snapshot/phantom-seo.js #{ url }`
+          %x{phantomjs lib/snapshot/phantom-seo.js #{ url }}
         else
           Tempfile.open 'page' do |temp|
             %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
