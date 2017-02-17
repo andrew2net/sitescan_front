@@ -36,13 +36,18 @@ module Snapshot
     private
 
     def parse_fragment(env)
-      regexp = /(?:&?_escaped_fragment_=)([^&]*&?)/
-      query = env['QUERY_STRING']
-      match = regexp.match(query)
+      # regexp = /(?:&?_escaped_fragment_=)([^&]*&?)/
+      # require 'pry'; binding.pry
+      query = Rack::Utils.parse_nested_query(env['QUERY_STRING'])
+      match = query.delete '_escaped_fragment_'
+      # match = regexp.match(query)
 
       # Interpret _escaped_fragment_ and figure out which page needs to be rendered
       # { path: URI.unescape(match[1]), query: query.sub(regexp, '') } if match
-      { path: URI.unescape(env['REQUEST_PATH']), query: query.sub(regexp, '') } if match
+      {
+        path: URI.unescape(env['REQUEST_PATH']),
+        query: query.map{|k,v| "#{k}=#{v}"}.join('&')
+      } if match
     end
 
     def render_fragment(env, fragment)
@@ -52,12 +57,12 @@ module Snapshot
       # Run PhantomJS
       body = Rails.cache.fetch fragment, expires_in: 1.minute do
         Tempfile.open 'page' do |temp|
-          # if Rails.env == 'development'
+          if Rails.env == 'development'
             # %x{phantomjs lib/snapshot/phantom-script.js #{ url }}
             %x{phantomjs lib/snapshot/phantom-script.js #{url} > #{temp.path}}
-          # else
-            # %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
-          # end
+          else
+            %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
+          end
           resp = temp.read.gsub(/\\"/, '"').gsub(/\\n/, '')
           temp.close
           temp.unlink
