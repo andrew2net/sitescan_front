@@ -36,7 +36,7 @@ module Snapshot
     private
 
     def parse_fragment(env)
-      regexp = /(?:_escaped_fragment_=)([^&]*)/
+      regexp = /(?:&?_escaped_fragment_=)([^&]*&?)/
       query = env['QUERY_STRING']
       match = regexp.match(query)
 
