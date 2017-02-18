@@ -70,9 +70,23 @@ angular.module 'app', [
     $locationProvider.html5Mode(true)
     return
 ]
-  .run ['$rootScope', '$state', ($rootScope, $state)->
+.run ['$rootScope', '$state', '$window', '$timeout',
+  ($rootScope, $state, $window, $timeoutu)->
     $rootScope.$on '$stateChangeError',
     (event, toState, toParams, fromState, fromParams, error)->
       $state.go('404') if error.status == 404
       return
-  ]
+
+    if $window.ga
+      newUrl = oldUrl = ''
+      $rootScope.$on '$locationChangeStart',
+      (event, newurl, oldurl, newState, oldState)->
+        newUrl = newurl
+        oldUrl = oldurl
+
+      $timeoutu ->
+        $rootScope.$on '$locationChangeSuccess',
+        (event, toSatae, toParams, fromState, fromParams)->
+          $window.ga 'set', 'page', newUrl
+          $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
+]

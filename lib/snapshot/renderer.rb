@@ -37,7 +37,6 @@ module Snapshot
 
     def parse_fragment(env)
       # regexp = /(?:&?_escaped_fragment_=)([^&]*&?)/
-      # require 'pry'; binding.pry
       query = Rack::Utils.parse_nested_query(env['QUERY_STRING'])
       match = query.delete '_escaped_fragment_'
       # match = regexp.match(query)
