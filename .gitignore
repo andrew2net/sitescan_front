@@ -14,3 +14,10 @@
 /.idea
 /config/database.yml
 /config/secrets.yml
+/config/deploy.rb
+/config/puma/
+/config/s3.yml
+/config/unicorn.rb
+/public/sitemap.xml.gz
+/public/system
+/vendor/assets/javascripts/

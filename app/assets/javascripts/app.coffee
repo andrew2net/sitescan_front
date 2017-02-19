@@ -75,6 +75,7 @@ angular.module 'app', [
     $rootScope.$on '$stateChangeError',
     (event, toState, toParams, fromState, fromParams, error)->
       $state.go('404') if error.status == 404
+      $rootScope.loader = false
       return
 
     loaders = document.querySelectorAll '.loader-container'
