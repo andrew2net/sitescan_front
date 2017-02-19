@@ -91,7 +91,8 @@ angular.module 'app', [
         $rootScope.loader = false
       if $window.ga and newUrl
         $window.ga 'set', 'page', newUrl
-        $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
+        if $window.yaCounter42739879
+          $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
 
     # $rootScope.$on '$locationChangeSuccess',
     # (event, toSatae, toParams, fromState, fromParams)->
