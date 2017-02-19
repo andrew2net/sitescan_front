@@ -89,7 +89,7 @@ angular.module 'app', [
     (event, newurl, oldurl, newState, oldState)->
       $timeout ->
         $rootScope.loader = false
-      if $window.ga
+      if $window.ga and newUrl
         $window.ga 'set', 'page', newUrl
         $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
 
