@@ -6,7 +6,7 @@ div [ layout='row' layout-wrap=true
   layout-align='space-around stretch' ]
   .logo [ng-repeat='brand in brands']
     a [ ui-sref='catalog({o: brand.opt_id})' layout='column'
-      title='{{brand.name}}']
+      title='{{brand.name}}' ng-click='showLoader()']
       img ng-src='{{brand.logo_url}}' alt='{{brand.name}} logo'
 
 /div layout='row' layout-align='start start'

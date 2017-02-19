@@ -8,7 +8,7 @@ div
   div.subcategory-links [ layout='row' layout-wrap
     ng-show='subcategories && subcategories.length > 0' ]
     div flex=20 ng-repeat='subcat in subcategories'
-      md-button [ui-sref='catalog({path: subcat.path, page: null})'
+      md-button [ui-sref='catalog({path: subcat.path, page: null})' ng-click='showLoader()'
       aria-label='{{subcat.name}}' ng-bind='subcat.name+" ("+subcat.items+")"']
 
 div [layout='row']
@@ -16,22 +16,22 @@ div [layout='row']
     div.product-line [layout='row' layout-align='start start' layout-wrap ]
 
       md-whiteframe.md-whiteframe-1dp.catalog-product [layout-xs='column'
-          layout='row' ng-repeat='product in products' layout-margin
+          layout='row' ng-repeat='prod in products' layout-margin
           flex-xs=100 flex-sm=100 flex-md=100 flex-lg=95 flex-xl=40]
 
-        a [ng-href='/product/{{product.path}}']
+        a [ui-sref='product({path: prod.path})' ng-click='showLoader()']
           h2 [hide-gt-xs layout layout-align-xs='center start'
-          ng-bind='product.name']
+          ng-bind='prod.name']
 
         div [flex-xs=90 flex=45 layout-align='center center' layout]
-          img [ng-src='{{product.img_src}}']
+          img [ng-src='{{prod.img_src}}']
 
         div layout='column'
-          a [ng-href='/product/{{product.path}}']
-            h2.md-headline [hide-xs ng-bind='product.name']
+          a [ui-sref='product({path: prod.path})' ng-click='showLoader()']
+            h2.md-headline [hide-xs ng-bind='prod.name']
             h6.md-body-2 [ layout=true layout-align-xs='center start'
-            ng-if='product.price' ] from {{ product.price | currency }}
-          div.md-caption [hide-xs ng-repeat='attr in product.attrs']
+            ng-if='prod.price' ] from {{ prod.price | currency }}
+          div.md-caption [hide-xs ng-repeat='attr in prod.attrs']
             |{{attr.name}}: {{attr.value}}{{attr.unit}}
     div [ng-if='pager.pages.length - 1' layout='row' layout-align='center none'
       flex]

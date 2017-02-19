@@ -2,7 +2,7 @@ div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
   flex-xs='100' flex-sm='100' flex='80' ]
 
     div layout='row' layout-align='center start' ng-controller='HeaderCtrl'
-      a href='/' style='margin:25px 15px 0'
+      a ui-sref='main' ng-click='showLoader()' style='margin:25px 15px 0'
         md-icon home
       form [ng-submit='findProducts(searchText)' flex-xs='70' flex-sm='60'
         flex-md='50' flex-lg='45' flex-xl='40' style='position:relative']
@@ -21,7 +21,7 @@ div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
           ng-click='findProducts(searchText)']
         md-icon.material-icons search
 
-    .md-body-2.breadcrumbs layout='row' breadcrumbs='breadcrumbs'
+    .md-body-2.breadcrumbs [ layout='row' breadcrumbs ]
     div [ui-view]
 
     footer layout='column' ng-controller='footerCtrl'
@@ -31,3 +31,6 @@ div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
         div
           a style='cursor:pointer'ng-hide='em' ng-click='showem()' {{promt}}
           a ng-href='mailto:{{em}}' ng-show='em' {{em}}
+
+    /loader ng-show='loader'
+    = render partial: 'loader', locals: { loader: 'loader' }

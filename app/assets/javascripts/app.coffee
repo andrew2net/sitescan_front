@@ -71,22 +71,28 @@ angular.module 'app', [
     return
 ]
 .run ['$rootScope', '$state', '$window', '$timeout',
-  ($rootScope, $state, $window, $timeoutu)->
+  ($rootScope, $state, $window, $timeout)->
     $rootScope.$on '$stateChangeError',
     (event, toState, toParams, fromState, fromParams, error)->
       $state.go('404') if error.status == 404
       return
 
-    if $window.ga
-      newUrl = oldUrl = ''
-      $rootScope.$on '$locationChangeStart',
-      (event, newurl, oldurl, newState, oldState)->
-        newUrl = newurl
-        oldUrl = oldurl
+    loaders = document.querySelectorAll '.loader-container'
+    for loader in loaders
+      loader.setAttribute 'ng-show', 'loader'
 
-      $timeoutu ->
-        $rootScope.$on '$locationChangeSuccess',
-        (event, toSatae, toParams, fromState, fromParams)->
-          $window.ga 'set', 'page', newUrl
-          $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
+    $rootScope.loader = true
+    $rootScope.showLoader = -> $rootScope.loader = true
+
+    $rootScope.$on '$locationChangeStart',
+    (event, newurl, oldurl, newState, oldState)->
+      $timeout ->
+        $rootScope.loader = false
+      if $window.ga
+        $window.ga 'set', 'page', newUrl
+        $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
+
+    # $rootScope.$on '$locationChangeSuccess',
+    # (event, toSatae, toParams, fromState, fromParams)->
+    #   $rootScope.loader = false
 ]

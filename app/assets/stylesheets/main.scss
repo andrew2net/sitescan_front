@@ -161,7 +161,8 @@ md-whiteframe img {
 
 .breadcrumbs{
   i.material-icons{
-    margin-top: 5px;
+    position: relative;
+    top: 5px;
     font-size: 17px;
   }
 }
