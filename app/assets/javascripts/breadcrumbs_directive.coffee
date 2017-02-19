@@ -18,7 +18,7 @@ angular.module 'app'
 .directive 'breadcrumb', [ ->
   {
     template: """
-    <a ui-sref='catalog({path: breadcrumb.path, o: breadcrumb.options})'
+    <a ui-sref='catalog({path: breadcrumb.path, o:breadcrumb.options})'
       ng-click='showLoader()'
       ng-if='breadcrumb.path'>{{breadcrumb.name}}</a>
     <span ng-if='!breadcrumb.path'>{{breadcrumb}}</span>

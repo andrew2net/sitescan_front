@@ -86,7 +86,7 @@ angular.module 'app', [
     $rootScope.showLoader = -> $rootScope.loader = true
 
     $rootScope.$on '$locationChangeStart',
-    (event, newurl, oldurl, newState, oldState)->
+    (event, newUrl, oldUrl, newState, oldState)->
       $timeout ->
         $rootScope.loader = false
       if $window.ga and newUrl
