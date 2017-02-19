@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/andrew2net/sitescan_common
-  revision: b5ee1b08bdb80ebfc59dec545fd4dc610c2dddba
+  revision: d57878bc1c5f522ac344d87cd316602f6c8883d6
   branch: master
   specs:
-    sitescan_common (0.0.8)
+    sitescan_common (0.0.9)
       acts_as_list
       awesome_nested_set
       aws-sdk
@@ -51,7 +51,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_list (0.9.0)
+    acts_as_list (0.9.2)
       activerecord (>= 3.0)
     addressable (2.4.0)
     angular_rails_csrf (1.0.4)
@@ -59,13 +59,13 @@ GEM
     arel (6.0.4)
     awesome_nested_set (3.1.1)
       activerecord (>= 4.0.0, < 5.1)
-    aws-sdk (2.7.0)
-      aws-sdk-resources (= 2.7.0)
-    aws-sdk-core (2.7.0)
+    aws-sdk (2.7.11)
+      aws-sdk-resources (= 2.7.11)
+    aws-sdk-core (2.7.11)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.7.0)
-      aws-sdk-core (= 2.7.0)
+    aws-sdk-resources (2.7.11)
+      aws-sdk-core (= 2.7.11)
     aws-sigv4 (1.0.0)
     builder (3.2.3)
     byebug (9.0.5)
@@ -92,12 +92,12 @@ GEM
     concurrent-ruby (1.0.4)
     database_cleaner (1.5.3)
     diff-lcs (1.2.5)
-    elasticsearch (5.0.1)
-      elasticsearch-api (= 5.0.1)
-      elasticsearch-transport (= 5.0.1)
-    elasticsearch-api (5.0.1)
+    elasticsearch (5.0.3)
+      elasticsearch-api (= 5.0.3)
+      elasticsearch-transport (= 5.0.3)
+    elasticsearch-api (5.0.3)
       multi_json
-    elasticsearch-transport (5.0.1)
+    elasticsearch-transport (5.0.3)
       faraday
       multi_json
     erubis (2.7.0)
@@ -114,8 +114,8 @@ GEM
     globalize (5.0.1)
       activemodel (>= 4.2.0, < 4.3)
       activerecord (>= 4.2.0, < 4.3)
-    hashie (3.4.6)
-    i18n (0.7.0)
+    hashie (3.5.3)
+    i18n (0.8.0)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
