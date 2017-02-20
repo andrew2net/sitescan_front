@@ -99,5 +99,8 @@ angular.module 'app', [
       if newUrl
         $window.ga 'set', 'page', newUrl if $window.ga
         if $window.yaCounter42739879
-          $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
+          $window.yaCounter42739879.hit newUrl, {
+            referer: oldUrl
+            callback: -> console.log 'Webvisor'
+          }
 ]
