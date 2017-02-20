@@ -22,8 +22,8 @@ angular.module 'app'
             if item and item.length
               switch item[0].type
                 when 1
-                  item[0].min = constraint.min
-                  item[0].max = constraint.max
+                  item[0].min = parseFloat constraint.min
+                  item[0].max = parseFloat constraint.max
                 when 3, 5
                   angular.forEach item[0].options, (opt)->
                     opt.disabled = constraint.options.indexOf(opt.id) > -1
@@ -66,9 +66,10 @@ angular.module 'app'
     ###
     getSetNumValMin = (newValue)->
       if arguments.length
+        newValue = parseFloat newValue
         if newValue > this._val_max and this._val_max or newValue > this.max
           return this._val_min
-        updateNumberLocation this.id, 'min', parseFloat newValue
+        updateNumberLocation this.id, 'min', newValue
         this._val_min = newValue
       else
         this._val_min
@@ -78,9 +79,10 @@ angular.module 'app'
     ###
     getSetNumValMax = (newValue)->
       if arguments.length
-        if ( newValue < this._val_min or newValue < this.min ) and newValue
+        newValue = parseFloat newValue
+        if ( this._val_min and newValue < this._val_min or newValue < this.min ) #and newValue
           return this._val_max
-        updateNumberLocation this.id, 'max', parseFloat newValue
+        updateNumberLocation this.id, 'max', newValue
         this._val_max = newValue
       else
         this._val_max
@@ -143,12 +145,16 @@ angular.module 'app'
       b = $stateParams.b.split(',').map((id)-> parseInt id) if $stateParams.b
       angular.forEach $scope.filter_items, (item)->
         switch item.type
+
+          # When it's number attribete.
           when 1
             if n and ( v = n[item.id] )
               item._val_min = v.min
               item._val_max = v.max
             else
               item._val_min = item._val_max = null
+
+          # When it's option or list of options
           when 3,5
             if o
               angular.forEach item.options, (option)->
@@ -157,6 +163,8 @@ angular.module 'app'
             else
               angular.forEach item.options, (option)->
                 option._checked = false
+
+          # When it's boolean attribute.
           when 4
             if b
               item._val = b.indexOf(item.id) > - 1

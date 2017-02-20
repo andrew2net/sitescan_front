@@ -50,9 +50,13 @@ angular.module 'app'
     link: (scope, element, attrs)->
       h = '<div class="filter-item" layout="column">'
       switch scope.ngModel.type
+
+        # When it's number trribute
         when 1
           mopts = "ng-model-options='{getterSetter: true,
-            debounce: {default: 500, blur: 0}}'"
+            debounce: {default: 1000, blur: 0}}'"
+
+          # If it's price
           if scope.ngModel.id == 0
             h += """
             <div class='md-body-2 active-filter-item' style='margin-left:5px'>
@@ -79,6 +83,8 @@ angular.module 'app'
             <div></div>
           </div>
           """
+
+        # When it's option or list of options.
         when 3,5
           h += """
           <div class='md-body-2' ng-class='{"active-filter-item": hasValue}'
@@ -99,6 +105,8 @@ angular.module 'app'
             <div></div>
           </div>
           """
+
+        # When it's boolean.
         when 4
           h += """
           <md-checkbox class="md-body-2" ng-repeat='option in [ngModel]'
