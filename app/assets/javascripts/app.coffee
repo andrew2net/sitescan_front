@@ -3,14 +3,19 @@ angular.module 'app', [
   'ngMaterial'
   'ngMessages'
   'ngAnimate'
+  'angular-loading-bar'
 ]
-  .controller 'NotFoundCtrl', ['$rootScope', ($rootScope)->
-    $rootScope.title = '404'
-    $rootScope.breadcrumbs = []
-    return
-  ]
-  .config ['$stateProvider', '$locationProvider', '$urlRouterProvider',
-  ($stateProvider, $locationProvider, $urlRouterProvider)->
+.controller 'NotFoundCtrl', ['$rootScope', ($rootScope)->
+  $rootScope.title = '404'
+  $rootScope.breadcrumbs = []
+  return
+]
+.config [
+  '$stateProvider'
+  '$locationProvider'
+  '$urlRouterProvider'
+  'cfpLoadingBarProvider'
+  ($stateProvider, $locationProvider, $urlRouterProvider, cfpLoadingBarProvider)->
     mainState = {
       name: 'main'
       url: '/'
@@ -68,6 +73,18 @@ angular.module 'app', [
       $location.path()
 
     $locationProvider.html5Mode(true)
+
+    cfpLoadingBarProvider.spinnerTemplate = """<div class='loader-container'>
+    <div class='uil-spin-css' style='-webkit-transform:scale(0.6)'>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+      <div><div></div></div>
+    </div></div>"""
     return
 ]
 .run ['$rootScope', '$state', '$window', '$timeout',
@@ -75,26 +92,12 @@ angular.module 'app', [
     $rootScope.$on '$stateChangeError',
     (event, toState, toParams, fromState, fromParams, error)->
       $state.go('404') if error.status == 404
-      $rootScope.loader = false
       return
-
-    loaders = document.querySelectorAll '.loader-container'
-    for loader in loaders
-      loader.setAttribute 'ng-show', 'loader'
-
-    $rootScope.loader = true
-    $rootScope.showLoader = -> $rootScope.loader = true
 
     $rootScope.$on '$locationChangeStart',
     (event, newUrl, oldUrl, newState, oldState)->
-      $timeout ->
-        $rootScope.loader = false
-      if $window.ga and newUrl
-        $window.ga 'set', 'page', newUrl
+      if newUrl
+        $window.ga 'set', 'page', newUrl if $window.ga
         if $window.yaCounter42739879
           $window.yaCounter42739879.hit newUrl, { referer: oldUrl }
-
-    # $rootScope.$on '$locationChangeSuccess',
-    # (event, toSatae, toParams, fromState, fromParams)->
-    #   $rootScope.loader = false
 ]
