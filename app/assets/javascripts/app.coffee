@@ -89,14 +89,27 @@ angular.module 'app', [
 ]
 .run ['$rootScope', '$state', '$window', '$timeout',
   ($rootScope, $state, $window, $timeout)->
+    newUrl = null
+    oldUrl = null
+
     $rootScope.$on '$stateChangeError',
     (event, toState, toParams, fromState, fromParams, error)->
       $state.go('404') if error.status == 404
       return
 
-    $rootScope.$on '$locationChangeStart',
-    (event, newUrl, oldUrl, newState, oldState)->
-      if newUrl
+    $rootScope.$on '$stateChangeStart',
+    (event, toState, toParams, fromState, fromParams)->
+      newUrl = $state.href toState, toParams
+      oldUrl = $state.href fromState, fromParams
+
+    $rootScope.$on '$stateChangeSuccess',
+    (event, toState, toParams, fromState, fromParams)->
+      changeState toState, toParams, fromState, fromParams
+
+    changeState = (toState, toParams, fromState, fromParams)->
+      newUrl = newUrl || $state.href toState, toParams
+      oldUrl = oldUrl || $state.href fromState, fromParams
+      $timeout ->
         $window.ga 'set', 'page', newUrl if $window.ga
         if $window.yaCounter42739879
           $window.yaCounter42739879.hit newUrl, {

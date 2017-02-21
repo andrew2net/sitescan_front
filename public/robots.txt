@@ -1,7 +1,7 @@
 User-agent: *
-Sitemap: http://sitscan.com/sitemap.xml.gz
+Sitemap: http://www.sitscan.com/sitemap.xml.gz
 Host: www.sitscan.com
 
 User-agent: Yandex
-Clean-param: n&o&b&_escaped_fragment_ /catalog/*
+Clean-param: n&o&b&page&_escaped_fragment_ /catalog/*
 Clean-param: p&_escaped_fragment_ /product/*
