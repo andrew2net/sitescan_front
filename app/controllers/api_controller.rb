@@ -11,11 +11,13 @@ class ApiController < ApplicationController
     unless params[:path].blank?
       category = SitescanCommon::Category.find_by! path: params[:path]
       name = category.name
+      description = category.description
       breadcrumbs = category.breadcrumbs
       category_children = category.descendants.where depth: (category.depth + 1)
       result = category.catalog(filter_params)
     else # All products.
-      name = ''
+      name = nil
+      description = nil
       breadcrumbs = []
       category_children = SitescanCommon::Category.roots
       result = SitescanCommon::Product.catalog_products filter_params
@@ -37,6 +39,7 @@ class ApiController < ApplicationController
     prods = result.map { |p| p.catalog_hash(filtered_search_product_ids)}
     cat = {
       category: name,
+      description: description,
       breadcrumbs: breadcrumbs,
       subcategories: subcategories,
       products: prods,

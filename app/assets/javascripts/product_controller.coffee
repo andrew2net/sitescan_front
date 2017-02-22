@@ -42,6 +42,7 @@ angular.module 'app'
 
   assignData = (resp)->
     $scope.product = resp.data
+    $rootScope.description = "Best prices for #{$scope.product.name.join ' '}"
     calcPrice()
     $rootScope.title = resp.data.name.join ' '
     $rootScope.breadcrumbs = resp.data.breadcrumbs

@@ -37,7 +37,7 @@ angular.module 'app'
             p = {}
             p[$scope.attr.id] = opt.id
           p = JSON.stringify p if p
-          $state.go 'product', p: p
+          $state.go 'product', p: p, { location: 'replace' }
           document.dispatchEvent attributeChanged
           return
 
