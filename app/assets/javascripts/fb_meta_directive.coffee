@@ -9,7 +9,7 @@ angular.module 'app'
 
       type = angular.element '<meta property="og:type" content="website" />'
       url.after type
-      scope.$watch 'fbType', (newVal)-> type.attr newVal
+      scope.$watch 'fbType', (newVal)-> type.attr 'content', newVal
 
       title = angular.element """<meta property="og:title"
       content="Best price search service."/>"""
