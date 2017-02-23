@@ -9,6 +9,8 @@ angular.module 'app'
   #   return
 
   $rootScope.description = 'Best price search service. Find where to buy cheap.'
+  $rootScope.fbType = 'website'
+
   $http.get '/api/brands'
   .then (response)->
     $rootScope.title = 'Find the best price for smartphones'

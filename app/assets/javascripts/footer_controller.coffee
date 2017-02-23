@@ -1,6 +1,6 @@
 angular.module 'app'
 .controller 'footerCtrl', ['$scope', ($scope)->
-  $scope.promt = 'Write us'
+  $scope.promt = 'Write us at ...'
   em = 'andriano'
   $scope.showem = ->
     $scope.em = em

@@ -11,6 +11,7 @@ angular.module 'app'
 ($scope, $rootScope, $http, $stateParams, $animate, $timeout, $filter, response)->
   $scope.selectedImg = nextImgIdx = $scope.thumbsPosition = 0
   $scope.price = {}
+  $rootScope.fbType = 'product.item'
 
   imgElm = document.getElementById 'product-img'
   $animate.on 'addClass', imgElm,

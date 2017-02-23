@@ -1,3 +1,14 @@
+/Load Facebook SDK for JavaScript
+#fb-root
+script
+  |(function(d, s, id) {
+  |var js, fjs = d.getElementsByTagName(s)[0];
+  |if (d.getElementById(id)) return;
+  |js = d.createElement(s); js.id = id;
+  |js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.8";
+  |fjs.parentNode.insertBefore(js, fjs);
+  |}(document, 'script', 'facebook-jssdk'));
+
 div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
   flex-xs='100' flex-sm='100' flex='80' ]
 
@@ -24,10 +35,16 @@ div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
     .md-body-2.breadcrumbs [ layout='row' breadcrumbs ]
     div [ui-view]
 
-    footer layout='column' ng-controller='footerCtrl'
-      md-divider
-      div.md-body-1 layout='row' layout-align='space-between center'
-        div &copy; 2016
+footer ng-controller='footerCtrl' style='background:rgba(23, 39, 54, 0.2)'
+  div layout='column' layout-align='space-between center' flex-offset=10 flex=80
+    div.md-body-1 layout='row'
+      div flex=33
+        p SiteScan is an Artificial Intelligence information service that uses machine algorithms to gathering data about goods and prices.
+        p We do not sell any goods and do not recommend any of them. We just compile data for your convenience.
+      div [flex=33 layout layout-align='center center'] Copyright &copy; 2017 SiteScan. All rights reserved.
+      div [flex=33 layout='column' layout-align='center center']
         div
-          a style='cursor:pointer'ng-hide='em' ng-click='showem()' {{promt}}
-          a ng-href='mailto:{{em}}' ng-show='em' {{em}}
+          div [n4-fb-like]
+          p
+            a style='cursor:pointer'ng-hide='em' ng-click='showem()' {{promt}}
+            a ng-href='mailto:{{em}}' ng-show='em' {{em}}

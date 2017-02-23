@@ -22,6 +22,7 @@ angular.module 'app'
       $rootScope.title = resp.data.category || 'Catalog'
       $rootScope.description = resp.data.description || 'Fid the lowest price here.'
       $rootScope.breadcrumbs = resp.data.breadcrumbs
+      $rootScope.fbType = 'product.group'
       $scope.subcategories = resp.data.subcategories
       $scope.pager = PagerService.GetPager resp.data.total_items,
         $scope.pager.currentPage
