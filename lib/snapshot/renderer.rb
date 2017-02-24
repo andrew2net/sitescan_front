@@ -56,13 +56,13 @@ module Snapshot
       # Run PhantomJS
       body = Rails.cache.fetch fragment, expires_in: 1.day do
         Tempfile.open 'page' do |temp|
-          if Rails.env == 'development'
+          # if Rails.env == 'development'
             # %x{phantomjs lib/snapshot/phantom-script.js #{ url }}
             %x{phantomjs lib/snapshot/phantom-script.js #{url} > #{temp.path}}
-          else
-            %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
-          end
-          resp = temp.read.gsub(/\\"/, '"').gsub(/\\n/, '')
+          # else
+          #   %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
+          # end
+          resp = temp.read #.gsub(/\\"/, '"').gsub(/\\n/, '')
           temp.close
           temp.unlink
           resp
