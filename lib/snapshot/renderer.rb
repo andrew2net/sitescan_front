@@ -33,6 +33,7 @@ module Snapshot
         fragment = { path: env['REQUEST_PATH'], query: env['QUERY_STRING'] }
         render_fragment(env, fragment)
       else
+        Rails.logger.info "It is not a bot"
         @app.call(env)
       end
     end
