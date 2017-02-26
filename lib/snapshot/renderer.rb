@@ -101,7 +101,7 @@ module Snapshot
       # Only return true if it is a GET request, accepting text/html response
       # not hitting API endpoint, and not requesting static asset
       method.upcase == 'GET' &&
-      accept =~ /text\/html/ &&
+      accept =~ /(text\/html|\*\/\*)/ &&
       !(path =~ /^\/(?:assets|api)/) &&
       !(path =~ /\.[a-z0-9]{2,4}$/i)
     end
