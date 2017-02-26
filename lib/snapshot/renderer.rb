@@ -25,9 +25,6 @@ module Snapshot
     def call(env)
       fragment = parse_fragment(env)
 
-      user_agent = env['HTTP_USER_AGENT']
-      Rails.logger.info "User agent: #{user_agent}"
-
       if fragment
         render_fragment(env, fragment)
       elsif bot_request?(env) && page_request?(env)
@@ -59,7 +56,7 @@ module Snapshot
       url += "?#{ fragment[:query] }" if fragment[:query].present?
 
       # Run PhantomJS
-      body = Rails.cache.fetch fragment, expires_in: 1.day do
+      body = Rails.cache.fetch fragment, expires_in: 1.second do
         Tempfile.open 'page' do |temp|
           # if Rails.env == 'development'
             # %x{phantomjs lib/snapshot/phantom-script.js #{ url }}
@@ -83,6 +80,8 @@ module Snapshot
     def bot_request?(env)
       user_agent = env['HTTP_USER_AGENT']
       buffer_agent = env['X-BUFFERBOT']
+
+      Rails.logger.info "User agent: #{buffer_agent || user_agent}"
 
       buffer_agent || (user_agent && BOTS.any? { |bot| user_agent.downcase.include? bot })
     end
