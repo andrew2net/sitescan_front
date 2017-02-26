@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Read FB Open Graph markers', type: :request do
-  it 'read FB OG on home page' do
+  it 'on home page' do
     # page.driver.add_headers 'User-Agent' => 'facebookexternalhit'
     Rails.cache.clear
     get 'http://localhost:3001/', nil,

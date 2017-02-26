@@ -67,6 +67,9 @@ module Snapshot
           resp = temp.read #.gsub(/\\"/, '"').gsub(/\\n/, '')
           temp.close
           temp.unlink
+          doc = Nokogiri::HTML resp
+          require 'pry'; binding.pry
+          Rails.logger.info "Render title: #{doc.xpath('//title').first.children.first.to_s}"
           resp
         end
       end
