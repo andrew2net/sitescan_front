@@ -96,7 +96,7 @@ module Snapshot
       accept = env['HTTP_ACCEPT']
       path = env['REQUEST_PATH']
 
-      Rails.logger.info "Method: #{method} Accept: #{accept} Path: #{path} 1: #{(path =~ /^\/(?:assets|api)/)} 2: #{(path =~ /\.[a-z0-9]{2,4}$/i)}"
+      # Rails.logger.info "Method: #{method} Accept: #{accept} Path: #{path}"
 
       # Only return true if it is a GET request, accepting text/html response
       # not hitting API endpoint, and not requesting static asset
