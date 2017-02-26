@@ -5,7 +5,7 @@ RSpec.describe 'Read FB Open Graph markers', type: :request do
     # page.driver.add_headers 'User-Agent' => 'facebookexternalhit'
     Rails.cache.clear
     get 'http://localhost:3001/', nil,
-      { 'HTTP_USER_AGENT' => 'Facebot' }
+      { 'HTTP_USER_AGENT' => 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)' }
     # require 'pry'; binding.pry
     expect(response.body).to include 'All rights reserved'
     doc = Nokogiri::HTML response.body

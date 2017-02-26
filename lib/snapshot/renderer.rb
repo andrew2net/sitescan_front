@@ -14,7 +14,8 @@ module Snapshot
       'outbrain',
       'pinterest',
       'developers.google.com/+/web/snippet',
-      'slackbot'
+      'slackbot',
+      'yandexbot'
     ]
 
     def initialize(app)
