@@ -3,6 +3,7 @@ module Snapshot
     BOTS = [
       'baiduspider',
       'facebookexternalhit',
+      'facebot',
       'twitterbot',
       'rogerbot',
       'linkedinbot',
@@ -79,7 +80,7 @@ module Snapshot
       user_agent = env['HTTP_USER_AGENT']
       buffer_agent = env['X-BUFFERBOT']
 
-      buffer_agent || (user_agent && BOTS.any? { |bot| bot.include?(user_agent.downcase) })
+      buffer_agent || (user_agent && BOTS.any? { |bot| user_agent.downcase.start_with? bot })
     end
 
     def page_request?(env)

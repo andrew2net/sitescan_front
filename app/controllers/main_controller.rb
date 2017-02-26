@@ -3,6 +3,10 @@ class MainController < ApplicationController
 
   # Render layout.
   def index
+    respond_to do |format|
+      format.html
+      format.any { head :ok }
+    end
   end
 
   def catalog

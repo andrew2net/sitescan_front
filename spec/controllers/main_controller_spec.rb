@@ -20,7 +20,7 @@ RSpec.describe MainController, type: :controller do
     it 'should return products in category' do
       create :category_with_products
       get :catalog, path: 'electronics'
-      expect(response.body).to have_content 'Iphone 6s'
+      expect(response).to have_http_status :success
     end
   end
 end
