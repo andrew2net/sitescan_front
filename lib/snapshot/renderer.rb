@@ -59,7 +59,7 @@ module Snapshot
       url += "?#{ fragment[:query] }" if fragment[:query].present?
 
       # Run PhantomJS
-      body = Rails.cache.fetch fragment, expires_in: 1.second do
+      body = Rails.cache.fetch fragment, expires_in: 1.day do
         Tempfile.open 'page' do |temp|
           # if Rails.env == 'development'
             # %x{phantomjs lib/snapshot/phantom-script.js #{ url }}

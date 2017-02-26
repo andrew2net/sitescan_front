@@ -19,5 +19,9 @@ angular.module 'app'
       description = angular.element '<meta property="og:description" />'
       title.after description
       scope.$watch 'description', (newVal)-> description.attr 'content', newVal
+
+      image = angular.element '<meta property="og:image" />'
+      image.attr 'content', attrs.n4FbMeta
+      description.after image
   }
 ]
