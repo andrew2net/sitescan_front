@@ -24,6 +24,9 @@ module Snapshot
     def call(env)
       fragment = parse_fragment(env)
 
+      user_agent = env['HTTP_USER_AGENT']
+      Rails.logger.info "User agent: #{user_agent}"
+
       if fragment
         render_fragment(env, fragment)
       elsif bot_request?(env) && page_request?(env)
@@ -80,7 +83,7 @@ module Snapshot
       user_agent = env['HTTP_USER_AGENT']
       buffer_agent = env['X-BUFFERBOT']
 
-      buffer_agent || (user_agent && BOTS.any? { |bot| user_agent.downcase.start_with? bot })
+      buffer_agent || (user_agent && BOTS.any? { |bot| user_agent.downcase.include? bot })
     end
 
     def page_request?(env)
