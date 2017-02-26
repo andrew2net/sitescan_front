@@ -14,6 +14,7 @@ module Snapshot
       'outbrain',
       'pinterest',
       'developers.google.com/+/web/snippet',
+      'googlebot',
       'slackbot',
       'yandexbot'
     ]
@@ -68,7 +69,6 @@ module Snapshot
           temp.close
           temp.unlink
           doc = Nokogiri::HTML resp
-          require 'pry'; binding.pry
           Rails.logger.info "Render title: #{doc.xpath('//title').first.children.first.to_s}"
           resp
         end
