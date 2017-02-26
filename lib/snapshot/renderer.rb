@@ -29,6 +29,7 @@ module Snapshot
       if fragment
         render_fragment(env, fragment)
       elsif bot_request?(env) && page_request?(env)
+        Rails.logger.info "Its a bot"
         fragment = { path: env['REQUEST_PATH'], query: env['QUERY_STRING'] }
         render_fragment(env, fragment)
       else
