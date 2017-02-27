@@ -1,6 +1,7 @@
 User-agent: *
 Sitemap: http://www.sitscan.com/sitemap.xml.gz
 Host: www.sitscan.com
+Disallow: /api/
 
 User-agent: Yandex
 Clean-param: n&o&b&_escaped_fragment_ /catalog/*
