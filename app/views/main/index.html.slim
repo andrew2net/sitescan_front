@@ -9,11 +9,36 @@ script
   |fjs.parentNode.insertBefore(js, fjs);
   |}(document, 'script', 'facebook-jssdk'));
 
-div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
-  flex-xs='100' flex-sm='100' flex='80' ]
+div style='background-color:cadetblue;color:white;'
+  .container
+    .row ng-controller='HeaderCtrl'
 
-    / Search input
-    div layout='row' layout-align='center start' ng-controller='HeaderCtrl'
+      .row.text-center
+        /ng-show='isHome'
+        .col-md-12
+          h2 style='margin-bottom:0;font-style:italic;font-size:22pt'
+            |Find the best prices for smartphones here
+
+      / Search input
+      .row style='margin-top:30px;margin-bottom:30px'
+        .col-ld-6.col-ld-offset-3.col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1.col-xs-12
+          .form-group.has-feedback
+            .input-group.input-group-lg
+              .input-group-btn
+                a.btn.btn-default href='/'
+                  i.glyphicon.glyphicon-home
+              input#search-text.form-control.input-lg [ng-model='searchText'
+              type='text' placeholder='Searh for...' typeahead-wait-ms=300
+              typeahead-on-select='findProducts($item)'
+              ng-keypress='keypress($event, searchText)'
+              uib-typeahead='text for text in getMatches($viewValue)']
+              .input-group-btn
+                /button.btn.btn-default ng-click='clearSearch()'
+                  span.glyphicon.glyphicon-remove
+                button.btn.btn-default ng-click='findProducts(searchText)'
+                  span.glyphicon.glyphicon-search
+
+    /div layout='row' layout-align='senter start'
       a ui-sref='main' ng-click='showLoader()' style='margin:25px 15px 0'
         md-icon home
       form [ng-submit='findProducts(searchText)' flex-xs='70' flex-sm='60'
@@ -33,19 +58,21 @@ div [layout='column' flex-offset-xs='0' flex-offset-sm='0' flex-offset='10'
           ng-click='findProducts(searchText)']
         md-icon.material-icons search
 
-    .md-body-2.breadcrumbs [ layout='row' breadcrumbs ]
-    div [ui-view]
+.container
+  .row ng-show='breadcrumbs.length' style='margin-top:5px'
+    .col-md-12.breadcrumbs [ breadcrumbs ]
+div [ui-view]
 
 footer ng-controller='footerCtrl' style='background:rgba(23, 39, 54, 0.2)'
-  div layout='column' layout-align='space-between center' flex-offset=10 flex=80
-    div.md-body-1 layout='row'
-      div flex=33
+  .container
+    .row style='margin-top:15px'
+      .col-md-4
         p SiteScan is an Artificial Intelligence information service that uses machine algorithms to gathering data about goods and prices.
+      .col-md-4
         p We do not sell any goods and do not recommend any of them. We just compile data for your convenience.
-      div [flex=33 layout layout-align='center center'] Copyright &copy; 2017 SiteScan. All rights reserved.
-      div [flex=33 layout='column' layout-align='center center']
-        div
-          div [n4-fb-like]
-          p
-            a style='cursor:pointer'ng-hide='em' ng-click='showem()' {{promt}}
-            a ng-href='mailto:{{em}}' ng-show='em' {{em}}
+      .col-md-4.text-center
+        p [n4-fb-like]
+        p
+          a style='cursor:pointer'ng-hide='em' ng-click='showem()' {{promt}}
+          a ng-href='mailto:{{em}}' ng-show='em' {{em}}
+        p Copyright &copy; 2017 SiteScan. All rights reserved.

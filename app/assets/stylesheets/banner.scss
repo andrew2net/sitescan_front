@@ -1,0 +1,60 @@
+.banner, .banner .container {
+  position: relative;
+  div.text-center, div.background {
+    position: absolute;
+    color: white;
+    &.background {
+      background-color: cadetblue;
+      height: 70px;
+      width: 100%;
+    }
+  }
+}
+// @media screen and (min-width: 1920px){
+//   .banner div.text-center {
+//     top: 60px;
+//     left: 80px;
+//     .header { font-size: 54pt; }
+//     .price { font-size: 68pt; }
+//   }
+// }
+// @media screen and (max-width: 1919px){
+//   .banner div.text-center {
+//     top: 40px;
+//     left: 55px;
+//     .header { font-size: 44pt; }
+//     .price { font-size: 58pt; }
+//   }
+// }
+// @media screen and (max-width: 1279px) {
+//   .banner div.text-center {
+//     top: 35px;
+//     left: 50px;
+//     .header {font-size: 32pt;}
+//     .price {font-size: 42pt;}
+//   }
+// }
+// @media screen and (max-width: 767px) {
+//   .banner div.text-center {
+//     top: 25px;
+//     left: 40px;
+//     .header {font-size: 24pt;}
+//     .price {font-size: 32pt;}
+//   }
+// }
+// @media screen and (max-width: 599px) {
+//   .banner div.text-center {
+//     top: 10px;
+//     left: 30px;
+//     .header {font-size: 20pt;}
+//     .price {font-size: 26pt;}
+//   }
+// }
+// @media screen and (max-width: 479px) {
+//   .banner div.text-center {
+//     top: 5px;
+//     left: 20px;
+//     .header {font-size: 14pt;}
+//     .price {font-size: 16pt;}
+//   }
+// }

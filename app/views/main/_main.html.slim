@@ -1,23 +1,40 @@
-div layout='row' layout-align='center center'
-  h1.md-display-1 Find the best prices for smartphone here
-div layout='row' layout-align='start start'
-  h1.md-headline =t(:search_by_brand)
-div [ layout='row' layout-wrap=true
-  layout-align='space-around stretch' ]
-  .logo [ng-repeat='brand in brands']
-    a [ ui-sref='catalog({o: brand.opt_id})' layout='column'
-      title='{{brand.name}}' ng-click='showLoader()']
-      img ng-src='{{brand.logo_url}}' alt='{{brand.name}} logo'
+.banner
+  .background
+  .container
+    /.text-center
+      .header All smartphones
+      .price Under $100
+      .row
+        .col-lg-offset-3.col-lg-6.col-xs-offset-2.col-xs-8
+          a.btn.btn-warning.btn-lg.btn-block.hidden-xs [
+          ui-sref='catalog({path:"smartphones", n:"{\"0\":{\"max\":100}}"})']
+            b WATCH
+          a.btn.btn-warning.btn-block.visible-xs [
+          ui-sref='catalog({path:"smartphones", n:"{\"0\":{\"max\":100}}"})']
+            b WATCH
+    a ui-sref='catalog({path:"smartphones", n:"{\"0\":{\"max\":100}}"})'
+      img.img-responsive src=image_path('smartphones.jpg')
 
-/div layout='row' layout-align='start start'
-  h1.md-headline =t(:most_viewed_categories)
-/div [ layout='row' layout-padding=true layout-margin=true layout-wrap=true
-  layout-align='start stretch' ]
-  a [ui-sref='catalog({path: category.path})' ng-repeat='category in categories'
-  flex-xs='65' flex-sm='30' flex-md='20'
-      flex-lg='15' flex-xl='10' layout='column']
-    md-whiteframe.md-whiteframe-2dp
-      div style='height:140px' layout='row' layout-align='center center'
-        img ng-src='{{category.img_src}}' alt='{{category.name}}'
-      div style='height:30px' layout='row' layout-align='center center'
-        h2.md-caption ng-bind='category.name'
+.container
+  .row
+    .col-md-12
+      h1.md-headline =t(:search_by_brand)
+  .row
+    .logo.center-block [ng-repeat='brand in brands']
+      a [ ui-sref='catalog({o: brand.opt_id})' layout='column'
+        title='{{brand.name}}' ng-click='showLoader()']
+        img.img-responsive [ng-src='{{brand.logo_url}}'
+        alt='{{brand.name}} logo']
+
+  /div layout='row' layout-align='start start'
+    h1.md-headline =t(:most_viewed_categories)
+  /div [ layout='row' layout-padding=true layout-margin=true layout-wrap=true
+    layout-align='start stretch' ]
+    a [ui-sref='catalog({path: category.path})' ng-repeat='category in categories'
+    flex-xs='65' flex-sm='30' flex-md='20'
+        flex-lg='15' flex-xl='10' layout='column']
+      md-whiteframe.md-whiteframe-2dp
+        div style='height:140px' layout='row' layout-align='center center'
+          img ng-src='{{category.img_src}}' alt='{{category.name}}'
+        div style='height:30px' layout='row' layout-align='center center'
+          h2.md-caption ng-bind='category.name'

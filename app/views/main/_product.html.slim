@@ -1,88 +1,89 @@
-div layout='column'
-  div [layout='row']
+.container
+  div layout='column'
+    div [layout='row']
 
-    / Image block.
-    div [layout='row' flex]
+      / Image block.
+      div [layout='row' flex]
 
-      / Thumbs block.
-      div [layout='column']
+        / Thumbs block.
+        div [layout='column']
 
-        / Thumbs move up button.
-        .btn-thumbs-move [layout='row', ng-click='thumbsMove(-1)'
-          ng-class='{"btn-thumbs-move-active":thumbsPosition>0}']
-          md-icon [ng-show='thumbsPosition>0'] expand_less
+          / Thumbs move up button.
+          .btn-thumbs-move [layout='row', ng-click='thumbsMove(-1)'
+            ng-class='{"btn-thumbs-move-active":thumbsPosition>0}']
+            md-icon [ng-show='thumbsPosition>0'] expand_less
 
-        / Thumbs wrapper.
-        .thumbs-list-wrapper
+          / Thumbs wrapper.
+          .thumbs-list-wrapper
 
-          / Thumbs movable block.
-          div [ng-style="thumbsStyle"]
+            / Thumbs movable block.
+            div [ng-style="thumbsStyle"]
 
-            / Thumb block.
-            .product-thumb [ng-repeat='img in product.images'
-              ng-class='{"selected-thumb": selectedImg==$index && !hideImg}'
-              ng-click='selectImg($index)']
+              / Thumb block.
+              .product-thumb [ng-repeat='img in product.images'
+                ng-class='{"selected-thumb": selectedImg==$index && !hideImg}'
+                ng-click='selectImg($index)']
 
-              / Thumb.
-              img [ng-src='{{img.thumb.src}}']
+                / Thumb.
+                img [ng-src='{{img.thumb.src}}']
 
-        / Thumbs move down button.
-        .btn-thumbs-move [layout='row' ng-click='thumbsMove(1)'
-        ng-class='{"btn-thumbs-move-active":product.images.length-thumbsPosition>4}']
-          md-icon [ng-show='product.images.length-thumbsPosition>4'] expand_more
+          / Thumbs move down button.
+          .btn-thumbs-move [layout='row' ng-click='thumbsMove(1)'
+          ng-class='{"btn-thumbs-move-active":product.images.length-thumbsPosition>4}']
+            md-icon [ng-show='product.images.length-thumbsPosition>4'] expand_more
 
-      / Middle image block.
-      .product-img
-        img#product-img [ng-src='{{product.images[selectedImg].medium.src}}'
-        ng-hide='hideImg']
+        / Middle image block.
+        .product-img
+          img#product-img [ng-src='{{product.images[selectedImg].medium.src}}'
+          ng-hide='hideImg']
 
-    / Product block.
-    div [flex=60]
-      h1 [ ng-bind="product.name.join(' ')" ]
-      div ng-repeat='attr in product.search_attrs'
-        div [search-attribute]
-      div ng-show='price.avr > 0'
-        div Average price
-        .md-display-1 [ng-bind="price.avr| currency"]
-        div
-          |{{price.min | currency}}
-          | - {{price.max| currency:''}}
-  md-content
-    md-tabs [md-dynamic-height]
-      md-tab
-        md-tab-label Prices
-        md-tab-body
-          section
-            md-subheader.md-primary
-              div [layout='row']
-                div flex=20 Site
-                div [flex=20 ng-repeat='attr in product.search_attrs'
-                  ng-bind='attr.name.join(", ")']
-                div [flex=20 layout layout-align='center none'] Price
-                div [flex=20]
-            md-list.product-links
-              md-list-item [ng-repeat='link in product.links | filter:filterLinks']
-                md-divider
-                a [ng-href='/api/link_url/{{link.id}}' target='_blank' flex=100
-                rel='nofollow']
-                  div layout='row' layout-align='none center' flex=100
-                    div.md-body-2 [ flex=20 ng-bind='link.domain' ]
-                    div [flex=20 ng-repeat='attr in product.search_attrs'
-                      ng-bind='attrValue(link, attr)']
-                    div [layout layout-align='center none'flex=20
-                      ng-bind='link.price | currency']
-                    div [flex=20 layout layout-align='center none']
-                      md-button.md-raised [ng-href='/api/link_url/{{link.id}}'
-                      target='_blank'] Store
-      md-tab
-        md-tab-label Features
-        md-tab-body
-          div.features-block [layout='row' layout-wrap]
-            div [layout='column' flex=50 ng-repeat='group in product.attr_groups']
-              h4.md-headline ng-bind='group.name']
-              .md-body-1 [layout='row'
-                  ng-repeat="attr in product.attrs | filter:{group_id: group.id}"]
-                div [flex=50 layout='row']
-                  div [ng-bind='attr.name']
-                  .dotted-filler [flex]
-                .md-body-2 [flex=50 ng-bind='attr.value']
+      / Product block.
+      div [flex=60]
+        h1 [ ng-bind="product.name.join(' ')" ]
+        div ng-repeat='attr in product.search_attrs'
+          div [search-attribute]
+        div ng-show='price.avr > 0'
+          div Average price
+          .md-display-1 [ng-bind="price.avr| currency"]
+          div
+            |{{price.min | currency}}
+            | - {{price.max| currency:''}}
+    md-content
+      md-tabs [md-dynamic-height]
+        md-tab
+          md-tab-label Prices
+          md-tab-body
+            section
+              md-subheader.md-primary
+                div [layout='row']
+                  div flex=20 Site
+                  div [flex=20 ng-repeat='attr in product.search_attrs'
+                    ng-bind='attr.name.join(", ")']
+                  div [flex=20 layout layout-align='center none'] Price
+                  div [flex=20]
+              md-list.product-links
+                md-list-item [ng-repeat='link in product.links | filter:filterLinks']
+                  md-divider
+                  a [ng-href='/api/link_url/{{link.id}}' target='_blank' flex=100
+                  rel='nofollow']
+                    div layout='row' layout-align='none center' flex=100
+                      div.md-body-2 [ flex=20 ng-bind='link.domain' ]
+                      div [flex=20 ng-repeat='attr in product.search_attrs'
+                        ng-bind='attrValue(link, attr)']
+                      div [layout layout-align='center none'flex=20
+                        ng-bind='link.price | currency']
+                      div [flex=20 layout layout-align='center none']
+                        md-button.md-raised [ng-href='/api/link_url/{{link.id}}'
+                        target='_blank'] Store
+        md-tab
+          md-tab-label Features
+          md-tab-body
+            div.features-block [layout='row' layout-wrap]
+              div [layout='column' flex=50 ng-repeat='group in product.attr_groups']
+                h4.md-headline ng-bind='group.name']
+                .md-body-1 [layout='row'
+                    ng-repeat="attr in product.attrs | filter:{group_id: group.id}"]
+                  div [flex=50 layout='row']
+                    div [ng-bind='attr.name']
+                    .dotted-filler [flex]
+                  .md-body-2 [flex=50 ng-bind='attr.value']

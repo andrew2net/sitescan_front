@@ -11,9 +11,9 @@ footer{
   margin-top: 20px;
 }
 
-md-whiteframe img {
-  max-height: 100px;
-}
+// md-whiteframe img {
+//   max-height: 100px;
+// }
 
 .product-line md-whiteframe {
   margin-bottom: 30px;
@@ -82,6 +82,8 @@ md-whiteframe img {
 
 .product-not-found{
   opacity: 1;
+  margin-top: 80px;
+  margin-bottom: 80px;
   &.ng-hide-remove{
     @include transition(0.3s linear opacity);
   }
@@ -217,5 +219,7 @@ div.features-block > div {
 }
 
 .logo{
-  margin: 30px;
+  margin: 40px;
+  display: inline-block;
+  vertical-align: middle;
 }

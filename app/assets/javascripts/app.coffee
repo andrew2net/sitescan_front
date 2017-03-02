@@ -4,6 +4,7 @@ angular.module 'app', [
   'ngMessages'
   'ngAnimate'
   'angular-loading-bar'
+  'ui.bootstrap'
 ]
 .controller 'NotFoundCtrl', ['$rootScope', ($rootScope)->
   $rootScope.title = '404'
