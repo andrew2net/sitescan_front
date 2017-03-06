@@ -60,16 +60,16 @@ module Snapshot
 
       # Run PhantomJS
       body = Rails.cache.fetch fragment, expires_in: 1.day do
-        Tempfile.open 'page' do |temp|
+        # Tempfile.open 'page' do |temp|
           # if Rails.env == 'development'
             # %x{phantomjs lib/snapshot/phantom-script.js #{ url }}
-            %x{phantomjs lib/snapshot/phantom-script.js #{url} > #{temp.path}}
+          resp = %x{phantomjs lib/snapshot/phantom-script.js #{url}}
           # else
           #   %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
           # end
-          resp = temp.read #.gsub(/\\"/, '"').gsub(/\\n/, '')
-          temp.close
-          temp.unlink
+          # resp = temp.read #.gsub(/\\"/, '"').gsub(/\\n/, '')
+          # temp.close
+          # temp.unlink
           doc = Nokogiri::HTML resp
           if (ttl = doc.xpath('//title').first)
             Rails.logger.info "Render title: #{ttl.children.first.to_s}"
@@ -77,7 +77,7 @@ module Snapshot
             Rails.logger.info 'Render title error: not found.'
           end
           resp
-        end
+        # end
       end
 
       # Output pre-rendered response
