@@ -63,7 +63,7 @@ module Snapshot
         # Tempfile.open 'page' do |temp|
           # if Rails.env == 'development'
             # %x{phantomjs lib/snapshot/phantom-script.js #{ url }}
-          resp = %x{phantomjs lib/snapshot/phantom-script.js #{url}}
+          resp = %x{phantomjs lib/snapshot/phantom-script.js '#{url}'}
           # else
           #   %x{aws lambda invoke --function-name seo-renderer --payload '{"page_url": "#{url}"}' #{temp.path}}
           # end
