@@ -71,7 +71,11 @@ module Snapshot
           temp.close
           temp.unlink
           doc = Nokogiri::HTML resp
-          Rails.logger.info "Render title: #{doc.xpath('//title').first.children.first.to_s}"
+          if (ttl = doc.xpath('//title').first)
+            Rails.logger.info "Render title: #{ttl.children.first.to_s}"
+          else
+            Rails.logger.info 'Render title error: not found.'
+          end
           resp
         end
       end
