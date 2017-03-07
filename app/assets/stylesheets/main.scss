@@ -9,6 +9,12 @@
 
 footer{
   margin-top: 20px;
+  background-color: #052954;
+  color: white;
+  a {
+    color: white;
+    &:hover { color: #d1d1d1; }
+  }
 }
 
 // md-whiteframe img {

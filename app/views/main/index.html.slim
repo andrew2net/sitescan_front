@@ -9,7 +9,7 @@ script
   |fjs.parentNode.insertBefore(js, fjs);
   |}(document, 'script', 'facebook-jssdk'));
 
-div style='background-color:cadetblue;color:white;'
+div style='background-color:#0F569B;color:white;'
   .container
     .row ng-controller='HeaderCtrl'
 
@@ -63,7 +63,7 @@ div style='background-color:cadetblue;color:white;'
     .col-md-12.breadcrumbs [ breadcrumbs ]
 div [ui-view]
 
-footer ng-controller='footerCtrl' style='background:rgba(23, 39, 54, 0.2)'
+footer ng-controller='footerCtrl'
   .container
     .row style='margin-top:15px'
       .col-md-4
@@ -75,4 +75,5 @@ footer ng-controller='footerCtrl' style='background:rgba(23, 39, 54, 0.2)'
         p
           a style='cursor:pointer'ng-hide='em' ng-click='showem()' {{promt}}
           a ng-href='mailto:{{em}}' ng-show='em' {{em}}
-        p Copyright &copy; 2017 SiteScan. All rights reserved.
+        p style='font-size:9pt'
+          |Copyright &copy; 2017 SiteScan. All rights reserved.
