@@ -4,5 +4,5 @@ Host: www.sitscan.com
 Disallow: /api/
 User-agent: Yandex
 Disallow: /api/
-Clean-param: n&o&b&_escaped_fragment_ /catalog/*
+Clean-param: n&o&b&_escaped_fragment_ /catalog*
 Clean-param: p&_escaped_fragment_ /product/*
