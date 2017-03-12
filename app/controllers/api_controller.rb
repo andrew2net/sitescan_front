@@ -17,10 +17,11 @@ class ApiController < ApplicationController
       result = category.catalog(filter_params)
     else # All products.
       name = nil
-      description = nil
+      description = nil # If nil ja add default description.
       breadcrumbs = []
       category_children = SitescanCommon::Category.roots
-      result = SitescanCommon::Product.catalog_products filter_params
+      result = SitescanCommon::Product
+        .catalog_products filter_params: filter_params
     end
 
     subcategories = result.aggs['categories_id']['buckets'].map do |c|

@@ -10,14 +10,14 @@ class MainController < ApplicationController
   end
 
   def catalog
-    if params[:category_path]
-      SitescanCommon::Category.find_by! path: params[:category_path]
-    end
+    # if params[:category_path]
+    #   SitescanCommon::Category.find_by! path: params[:category_path]
+    # end
     render :index
   end
 
   def product
-    SitescanCommon::Product.find_by! path: params[:product_path]
+    # SitescanCommon::Product.find_by! path: params[:product_path]
     render :index
   end
 

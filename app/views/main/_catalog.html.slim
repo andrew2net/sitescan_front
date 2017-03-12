@@ -7,7 +7,7 @@
         span ng-if='category' &nbsp;in category&nbsp;
       h1 [style='display:inline;font-size:18pt'ng-bind='category']
   .row.subcategory-links [ ng-show='subcategories && subcategories.length > 0' ]
-    .col-md-12 ng-repeat='subcat in subcategories'
+    .col-sm-2 ng-repeat='subcat in subcategories'
       a.text-uppercase [ui-sref='catalog({path: subcat.path, page: null})' ng-click='showLoader()'
       aria-label='{{subcat.name}}' ng-bind='subcat.name+" ("+subcat.items+")"']
 
