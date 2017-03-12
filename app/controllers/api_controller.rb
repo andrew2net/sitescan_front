@@ -88,6 +88,7 @@ class ApiController < ApplicationController
         {}, category.self_and_descendants.ids)
       search_params[:where] = {id: p_ids}
     end
+
     products = SitescanCommon::Product.search(params[:text], search_params)
       .map do |p|
       p.name
