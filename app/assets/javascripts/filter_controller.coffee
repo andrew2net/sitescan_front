@@ -26,7 +26,7 @@ angular.module 'app'
                   item[0].max = parseFloat constraint.max
                 when 3, 5
                   angular.forEach item[0].options, (opt)->
-                    opt.disabled = constraint.options.indexOf(opt.id) > -1
+                    opt.disabled = constraint.options.indexOf(opt.id) == -1
                     return
                 when 4
                   item[0].disabled = constraint.disabled
