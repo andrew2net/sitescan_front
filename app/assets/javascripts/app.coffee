@@ -1,7 +1,7 @@
 angular.module 'app', [
   'ui.router'
   'ngMaterial'
-  'ngMessages'
+  # 'ngMessages'
   'ngAnimate'
   'angular-loading-bar'
   'ui.bootstrap'
