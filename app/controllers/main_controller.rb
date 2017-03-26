@@ -11,6 +11,7 @@ class MainController < ApplicationController
   end
 
   def catalog
+    @bot = bot?
     # if params[:category_path]
     #   SitescanCommon::Category.find_by! path: params[:category_path]
     # end
@@ -18,6 +19,7 @@ class MainController < ApplicationController
   end
 
   def product
+    @bot = bot?
     # SitescanCommon::Product.find_by! path: params[:product_path]
     render :index
   end
@@ -28,6 +30,7 @@ class MainController < ApplicationController
   end
 
   def page_not_found
+    @bot = bot?
     render :index, status: :not_found
   end
 
