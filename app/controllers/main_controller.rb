@@ -3,6 +3,7 @@ class MainController < ApplicationController
 
   # Render layout.
   def index
+    @bot = bot?
     respond_to do |format|
       format.html
       format.any { head :ok }
@@ -30,4 +31,8 @@ class MainController < ApplicationController
     render :index, status: :not_found
   end
 
+  private
+  def bot?
+    params.key? :bot
+  end
 end

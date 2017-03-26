@@ -33,11 +33,11 @@ class ApiController < ApplicationController
       end
     end.select{|c| c}
 
-    # It's need to find min price for each product.
-    filtered_search_product_ids = SitescanCommon::ProductAttribute
-      .filtered_search_product_ids filter_params
-
-    prods = result.map { |p| p.catalog_hash(filtered_search_product_ids)}
+    prods = result.map do |p|
+      prod = SitescanCommon::Product.find p['_id']
+      min_price = p['0'].min
+      prod.catalog_hash.merge({ price: min_price })
+    end
     cat = {
       category: name,
       description: description,

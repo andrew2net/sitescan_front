@@ -56,7 +56,8 @@ module Snapshot
 
     def render_fragment(env, fragment)
       url = "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}#{fragment[:path]}"
-      url += "?#{ fragment[:query] }" if fragment[:query].present?
+      url += '?bot'
+      url += "&#{ fragment[:query] }" if fragment[:query].present?
 
       # Run PhantomJS
       body = Rails.cache.fetch fragment, expires_in: 1.day do

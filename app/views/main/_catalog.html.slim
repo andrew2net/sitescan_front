@@ -1,4 +1,6 @@
 .container
+
+  / Current category name and search text.
   .row style='margin-top:20px;margin-bottom:15px;'
     .col-md-12
       span.lead ng-if='searchText'
@@ -6,8 +8,10 @@
         strong ng-bind='searchText'
         span ng-if='category' &nbsp;in category&nbsp;
       h1 [style='display:inline;font-size:18pt'ng-bind='category']
+
+  / Subcategories links.
   .row.subcategory-links [ ng-show='subcategories && subcategories.length > 0' ]
-    .col-sm-2 ng-repeat='subcat in subcategories'
+    .col-sm-3 ng-repeat='subcat in subcategories'
       a.text-uppercase [ui-sref='catalog({path: subcat.path, page: null})' ng-click='showLoader()'
       aria-label='{{subcat.name}}' ng-bind='subcat.name+" ("+subcat.items+")"']
 
@@ -15,6 +19,7 @@
     .col-md-9
       div.product-line [layout='row' layout-align='start start' layout-wrap ]
 
+        / Product's block.
         md-whiteframe.md-whiteframe-1dp.catalog-product [layout-xs='column'
             layout='row' ng-repeat='prod in products' layout-margin
             flex-xs=100 flex-sm=100 flex-md=100 flex-lg=95 flex-xl=40]
