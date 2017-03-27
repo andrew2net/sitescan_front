@@ -8,7 +8,7 @@ angular.module 'app'
   #   $scope.categories = response.data
   #   return
 
-  $rootScope.description = 'Best mobile phone offers. Compare mobile phone deals. Smartphone best price.'
+  $rootScope.description = 'Best mobile phone offers. Smartphone brands. Cost of smartphones.'
   $rootScope.fbType = 'website'
 
   $http.get '/api/brands'
