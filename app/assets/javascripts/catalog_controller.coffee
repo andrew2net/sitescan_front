@@ -19,8 +19,8 @@ angular.module 'app'
     assignData = (resp)->
       $scope.products = resp.data.products
       $scope.category = resp.data.category
-      $rootScope.title = resp.data.category || 'Catalog'
-      $rootScope.description = resp.data.description || 'Fid the lowest price here.'
+      $rootScope.title = resp.data.category || 'Best offers catalog'
+      $rootScope.description = resp.data.description || 'Fid the best offers and the lowest prices here.'
       $rootScope.breadcrumbs = resp.data.breadcrumbs
       $rootScope.fbType = 'product.group'
       $scope.subcategories = resp.data.subcategories

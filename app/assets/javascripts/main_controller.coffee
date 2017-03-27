@@ -8,12 +8,12 @@ angular.module 'app'
   #   $scope.categories = response.data
   #   return
 
-  $rootScope.description = 'Best price search service. Find where to buy cheap.'
+  $rootScope.description = 'Best mobile phone offers. Compare mobile phone deals. Smartphone best price.'
   $rootScope.fbType = 'website'
 
   $http.get '/api/brands'
   .then (response)->
-    $rootScope.title = 'Find the best price for smartphones'
+    $rootScope.title = 'Best price search service.'
     $rootScope.breadcrumbs = []
     $scope.brands = response.data
 
