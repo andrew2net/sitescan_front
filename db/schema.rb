@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309110719) do
+ActiveRecord::Schema.define(version: 20170221231029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_products", force: :cascade do |t|
+    t.integer "admin_id"
+    t.integer "product_id"
+  end
+
+  add_index "admin_products", ["admin_id"], name: "index_admin_products_on_admin_id", using: :btree
+  add_index "admin_products", ["product_id"], name: "index_admin_products_on_product_id", using: :btree
 
   create_table "admins", force: :cascade do |t|
     t.string   "first_name"
@@ -44,6 +52,12 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   add_index "admins_roles", ["admin_id"], name: "index_admins_roles_on_admin_id", using: :btree
   add_index "admins_roles", ["role_id"], name: "index_admins_roles_on_role_id", using: :btree
 
+  create_table "attribute_booleans", force: :cascade do |t|
+    t.boolean  "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "attribute_class_groups", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -59,6 +73,14 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   end
 
   add_index "attribute_class_options", ["attribute_class_id"], name: "index_attribute_class_options_on_attribute_class_id", using: :btree
+
+  create_table "attribute_class_options_attribute_lists", id: false, force: :cascade do |t|
+    t.integer "attribute_class_option_id"
+    t.integer "attribute_list_id"
+  end
+
+  add_index "attribute_class_options_attribute_lists", ["attribute_class_option_id"], name: "index_acoao_on_attribute_class_option_id", using: :btree
+  add_index "attribute_class_options_attribute_lists", ["attribute_list_id"], name: "index_acoao_on_attribute_list_id", using: :btree
 
   create_table "attribute_classes", force: :cascade do |t|
     t.string   "name",                                                null: false
@@ -85,13 +107,34 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   add_index "attribute_classes_categories", ["attribute_class_id"], name: "index_attribute_classes_categories_on_attribute_class_id", using: :btree
   add_index "attribute_classes_categories", ["category_id"], name: "index_attribute_classes_categories_on_category_id", using: :btree
 
+  create_table "attribute_lists", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "attribute_numbers", force: :cascade do |t|
+    t.decimal  "value",      precision: 10, scale: 2
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
   create_table "attribute_options", force: :cascade do |t|
-    t.integer  "attribute_class_option_id"
+    t.integer  "attribute_class_option_id", null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
 
   add_index "attribute_options", ["attribute_class_option_id"], name: "index_attribute_options_on_attribute_class_option_id", using: :btree
+
+  create_table "attribute_paths", force: :cascade do |t|
+    t.integer  "type_id"
+    t.string   "value"
+    t.integer  "search_result_domain_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "attribute_paths", ["search_result_domain_id"], name: "index_attribute_paths_on_search_result_domain_id", using: :btree
 
   create_table "attribute_ranges", force: :cascade do |t|
     t.integer  "from"
@@ -100,11 +143,23 @@ ActiveRecord::Schema.define(version: 20160309110719) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "attribute_values", force: :cascade do |t|
+  create_table "attribute_strings", force: :cascade do |t|
     t.string   "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "brands", force: :cascade do |t|
+    t.integer  "attribute_class_option_id", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+  end
+
+  add_index "brands", ["attribute_class_option_id"], name: "index_brands_on_attribute_class_option_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -120,6 +175,7 @@ ActiveRecord::Schema.define(version: 20160309110719) do
     t.datetime "image_updated_at"
     t.boolean  "show_on_main"
     t.string   "path"
+    t.string   "description"
   end
 
   add_index "categories", ["lft"], name: "index_categories_on_lft", using: :btree
@@ -135,8 +191,44 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   add_index "categories_products", ["category_id"], name: "index_categories_products_on_category_id", using: :btree
   add_index "categories_products", ["product_id"], name: "index_categories_products_on_product_id", using: :btree
 
+  create_table "colors", force: :cascade do |t|
+    t.integer "attribute_class_option_id"
+    t.string  "value",                     limit: 6
+  end
+
+  add_index "colors", ["attribute_class_option_id"], name: "index_colors_on_attribute_class_option_id", using: :btree
+
   create_table "disabled_products", force: :cascade do |t|
     t.integer  "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "feature_source_attributes", force: :cascade do |t|
+    t.integer  "feature_source_id"
+    t.integer  "source_attribute_id"
+    t.string   "source_attribute_type"
+    t.string   "path",                  null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "feature_source_attributes", ["feature_source_id"], name: "index_feature_source_attributes_on_feature_source_id", using: :btree
+  add_index "feature_source_attributes", ["source_attribute_type", "source_attribute_id"], name: "feature_source_attribute", using: :btree
+
+  create_table "feature_source_options", force: :cascade do |t|
+    t.string   "path",                        null: false
+    t.integer  "feature_source_attribute_id", null: false
+    t.integer  "attribute_class_option_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "feature_source_options", ["attribute_class_option_id"], name: "index_feature_source_options_on_attribute_class_option_id", using: :btree
+  add_index "feature_source_options", ["feature_source_attribute_id"], name: "index_feature_source_options_on_feature_source_attribute_id", using: :btree
+
+  create_table "feature_sources", force: :cascade do |t|
+    t.string   "domain",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -160,8 +252,8 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   add_index "key_words", ["category_id"], name: "index_key_words_on_category_id", using: :btree
 
   create_table "key_words_search_results", id: false, force: :cascade do |t|
-    t.integer "key_word_id"
-    t.integer "search_result_id"
+    t.integer "key_word_id",      null: false
+    t.integer "search_result_id", null: false
   end
 
   add_index "key_words_search_results", ["key_word_id"], name: "index_key_words_search_results_on_key_word_id", using: :btree
@@ -210,8 +302,8 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   create_table "product_attributes", force: :cascade do |t|
     t.integer  "attributable_id"
     t.integer  "attribute_class_id"
-    t.integer  "value_id"
-    t.string   "value_type"
+    t.integer  "value_id",           null: false
+    t.string   "value_type",         null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "attributable_type"
@@ -220,6 +312,15 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   add_index "product_attributes", ["attributable_type", "attributable_id"], name: "index_product_attributes_attributable", using: :btree
   add_index "product_attributes", ["attribute_class_id"], name: "index_product_attributes_on_attribute_class_id", using: :btree
   add_index "product_attributes", ["value_type", "value_id"], name: "index_product_attributes_on_value_type_and_value_id", using: :btree
+
+  create_table "product_feature_sources", force: :cascade do |t|
+    t.string   "url"
+    t.integer  "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "product_feature_sources", ["product_id"], name: "index_product_feature_sources_on_product_id", using: :btree
 
   create_table "product_images", force: :cascade do |t|
     t.integer  "position"
@@ -235,8 +336,8 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   add_index "product_images", ["product_id"], name: "index_product_images_on_product_id", using: :btree
 
   create_table "product_search_products", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "search_product_id"
+    t.integer "product_id",        null: false
+    t.integer "search_product_id", null: false
   end
 
   add_index "product_search_products", ["product_id", "search_product_id"], name: "product_seatch_product_unique", unique: true, using: :btree
@@ -246,7 +347,10 @@ ActiveRecord::Schema.define(version: 20160309110719) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "path"
   end
+
+  add_index "products", ["path"], name: "index_products_on_path", unique: true, using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -255,7 +359,7 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   end
 
   create_table "search_attribute_paths", force: :cascade do |t|
-    t.integer  "type_id"
+    t.integer  "type_id",                 null: false
     t.string   "value"
     t.integer  "search_result_domain_id"
     t.datetime "created_at",              null: false
@@ -263,12 +367,12 @@ ActiveRecord::Schema.define(version: 20160309110719) do
     t.integer  "weight"
   end
 
-  add_index "search_attribute_paths", ["search_result_domain_id", "type_id", "weight"], name: "domain_type_weight", unique: true, using: :btree
   add_index "search_attribute_paths", ["search_result_domain_id"], name: "index_search_attribute_paths_on_search_result_domain_id", using: :btree
+  add_index "search_attribute_paths", ["type_id", "weight"], name: "index_search_attribute_paths_on_type_id_and_weight", using: :btree
 
   create_table "search_product_errors", force: :cascade do |t|
     t.integer  "type_id"
-    t.integer  "search_result_id"
+    t.integer  "search_result_id", null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
@@ -279,30 +383,56 @@ ActiveRecord::Schema.define(version: 20160309110719) do
   create_table "search_products", force: :cascade do |t|
     t.string   "name"
     t.decimal  "price",            precision: 12, scale: 2
-    t.integer  "search_result_id"
+    t.integer  "search_result_id",                          null: false
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
 
   add_index "search_products", ["search_result_id"], name: "index_search_products_on_search_result_id", using: :btree
 
-  create_table "search_result_domains", force: :cascade do |t|
-    t.string   "domain"
-    t.binary   "cookie"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "status_id",  default: 1
+  create_table "search_result_contents", force: :cascade do |t|
+    t.binary   "content"
+    t.integer  "search_result_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "keywords"
+    t.string   "description"
   end
+
+  add_index "search_result_contents", ["search_result_id"], name: "index_search_result_contents_on_search_result_id", using: :btree
+
+  create_table "search_result_domains", force: :cascade do |t|
+    t.string   "domain",                          null: false
+    t.binary   "cookie"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "status_id",           default: 1
+    t.string   "params_wipe_pattern"
+    t.integer  "counter",             default: 0, null: false
+    t.string   "price_pattern"
+  end
+
+  add_index "search_result_domains", ["domain"], name: "index_search_result_domains_on_domain", unique: true, using: :btree
+
+  create_table "search_result_statuses", force: :cascade do |t|
+    t.integer  "status_id"
+    t.integer  "search_result_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "search_result_statuses", ["search_result_id"], name: "index_search_result_statuses_on_search_result_id", using: :btree
 
   create_table "search_results", force: :cascade do |t|
     t.string   "title"
     t.string   "link"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.integer  "counter",                 default: 0
-    t.integer  "search_result_domain_id"
+    t.integer  "counter",                 default: 0, null: false
+    t.integer  "search_result_domain_id",             null: false
   end
 
+  add_index "search_results", ["counter"], name: "index_search_results_on_counter", using: :btree
   add_index "search_results", ["link"], name: "index_search_results_on_link", unique: true, using: :btree
   add_index "search_results", ["search_result_domain_id"], name: "index_search_results_on_search_result_domain_id", using: :btree
 
@@ -313,14 +443,37 @@ ActiveRecord::Schema.define(version: 20160309110719) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "url_params", force: :cascade do |t|
+    t.string   "name",                    null: false
+    t.integer  "search_result_domain_id", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "url_params", ["search_result_domain_id"], name: "index_url_params_on_search_result_domain_id", using: :btree
+
+  add_foreign_key "admin_products", "admins"
+  add_foreign_key "admin_products", "products"
   add_foreign_key "attribute_class_options", "attribute_classes"
+  add_foreign_key "attribute_class_options", "attribute_classes"
+  add_foreign_key "brands", "attribute_class_options"
+  add_foreign_key "colors", "attribute_class_options"
+  add_foreign_key "feature_source_attributes", "feature_sources"
+  add_foreign_key "feature_source_options", "attribute_class_options"
+  add_foreign_key "feature_source_options", "feature_source_attributes"
   add_foreign_key "fetch_ext_resources", "search_result_domains"
   add_foreign_key "key_words", "categories"
+  add_foreign_key "key_words", "categories"
+  add_foreign_key "key_words_search_results", "key_words", on_delete: :cascade
+  add_foreign_key "key_words_search_results", "search_results", on_delete: :cascade
+  add_foreign_key "product_feature_sources", "products"
   add_foreign_key "product_images", "products"
-  add_foreign_key "product_search_products", "products"
-  add_foreign_key "product_search_products", "search_products"
+  add_foreign_key "product_search_products", "products", on_delete: :cascade
+  add_foreign_key "product_search_products", "search_products", on_delete: :cascade
   add_foreign_key "search_attribute_paths", "search_result_domains"
-  add_foreign_key "search_product_errors", "search_results"
-  add_foreign_key "search_products", "search_results"
+  add_foreign_key "search_attribute_paths", "search_result_domains"
+  add_foreign_key "search_product_errors", "search_results", on_delete: :cascade
+  add_foreign_key "search_products", "search_results", on_delete: :cascade
   add_foreign_key "search_results", "search_result_domains"
+  add_foreign_key "url_params", "search_result_domains"
 end

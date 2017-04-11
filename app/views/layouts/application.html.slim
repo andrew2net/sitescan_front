@@ -29,6 +29,13 @@ html lang='en' ng-app='app'
     meta name='yandex-verification' content='42c2caee1e400b26'
     meta [n4-fb-meta=image_url('fb_image.jpg')]
 
+    script [src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async]
+    script
+      |(adsbygoogle = window.adsbygoogle || []).push({
+      |  google_ad_client: "ca-pub-5995052746994249",
+      |  enable_page_level_ads: true
+      |});
+
     - if Rails.env.production? and not @bot
       script type="text/javascript"
         |(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter42739879 = new Ya.Metrika({ id:42739879, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");
