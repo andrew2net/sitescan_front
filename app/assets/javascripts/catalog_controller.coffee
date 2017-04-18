@@ -7,10 +7,9 @@ angular.module 'app'
   '$stateParams'
   '$animate'
   '$timeout'
-  'PagerService'
   'response'
   ($scope, $rootScope, $http, $state, $stateParams, $animate, $timeout,
-  PagerService, response)->
+  response)->
     $scope.path = $stateParams.path
     $scope.pager = {}
     $scope.pager.currentPage = parseInt($stateParams.page) or 1
@@ -24,8 +23,7 @@ angular.module 'app'
       $rootScope.breadcrumbs = resp.data.breadcrumbs
       $rootScope.fbType = 'product.group'
       $scope.subcategories = resp.data.subcategories
-      $scope.pager = PagerService.GetPager resp.data.total_items,
-        $scope.pager.currentPage
+      $scope.pager.totalItems = resp.data.total_items
       $timeout ->
         $scope.notFound = $scope.products.length == 0
         return
@@ -38,7 +36,7 @@ angular.module 'app'
       products = document.querySelector('.catalog-product')
       $animate.leave products if products
       params = $state.params
-      params.page = $scope.pager.currentPage
+      $scope.pager.currentPage = params.page
       $http.get '/api/catalog', params: params
       .then (resp)->
         assignData resp
@@ -50,37 +48,21 @@ angular.module 'app'
       loadCatalog()
       return
 
-    pageCheck = (page)->
-      if page < 1
-        1
-      else if page > $scope.pager.totalPages
-        $scope.pager.totalPages
-      else
-        page
+    $scope.setPage = (page)-> $state.go '.', {page: page}, {notify: false}
 
-    $scope.setPage = (page, ev)->
-      page = pageCheck page
-      ev.preventDefault()
-      $state.go '.', {page: page}, {notify: false}
-      $scope.pager.currentPage = page
-      loadCatalog()
-      return
+    $scope.getPageHref = (page)-> $state.href($state.current, page: page)
 
-    # Listen to filter's changes.
-    # $scope.$on '$stateChangeSuccess', (ev, toSt, toPar, frSt, frPar)->
-    #   if toSt.controller == 'CatalogCtrl'
-    #     loadCatalog()
-    #   return
-
-    reloadOnChangeCondotion = (ev)->
+    reloadOnChangeCondition = (ev)->
       $scope.searchText = $stateParams.search
-      $scope.pager.currentPage = 1
       $state.go '.', {page: 1}, {notify: false}
-      loadCatalog()
       return
 
-    document.addEventListener 'filterChanged', reloadOnChangeCondotion
-    document.addEventListener 'searchChanged', reloadOnChangeCondotion
+    $scope.$on '$locationChangeSuccess',
+      (event, newUrl, oldUrl, newState, oldState)->
+        loadCatalog()
+
+    $scope.$on 'filterChanged', reloadOnChangeCondition
+    $scope.$on 'searchChanged', reloadOnChangeCondition
 
     assignData response
     return

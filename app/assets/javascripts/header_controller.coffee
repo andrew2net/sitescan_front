@@ -5,7 +5,6 @@ angular.module 'app'
     $scope.searchText = null
     $scope.searchItem = null
     # $scope.routeParams = $routeParams
-    searchChanged = new Event 'searchChanged'
 
     $scope.getMatches = (searchText)->
       # deferred = $q.defer()
@@ -26,7 +25,7 @@ angular.module 'app'
       st = if searchText then searchText else null
       # document.getElementById('search-text').blur()
       $state.go 'catalog', search: st
-      document.dispatchEvent searchChanged if $state.is 'catalog'
+      $scope.$emit 'searchChanged'
       # else
       #   goToCatalog = true
       # return
@@ -34,7 +33,7 @@ angular.module 'app'
     $scope.clearSearch = ->
       $scope.searchText = null
       $state.go '.', search: null
-      document.dispatchEvent searchChanged
+      $scope.$emit 'searchChanged'
       return
 
     getSearchTextFromUrl = ->

@@ -1,0 +1,23 @@
+/ Thumbs move left button.
+.btn-thumbs-move [ng-click='thumbsMove(-1)' ng-show='product.images.length>4'
+  ng-class='{"btn-thumbs-move-active":thumbsPosition>0}']
+  span.glyphicon.glyphicon-triangle-left
+
+/ Thumbs wrapper.
+.thumbs-list-wrapper
+
+  / Thumbs movable block.
+  div [ng-style="thumbsStyle"]
+
+    / Thumb block.
+    .product-thumb [ng-repeat='img in product.images'
+      ng-class='{"selected-thumb": selectedImg==$index && !hideImg}'
+      ng-click='selectImg($index)']
+
+      / Thumb.
+      img [ng-src='{{img.thumb.src}}']
+
+/ Thumbs move right button.
+.btn-thumbs-move [ng-click='thumbsMove(1)' ng-show='product.images.length>4'
+ng-class='{"btn-thumbs-move-active":product.images.length-thumbsPosition>4}']
+  span.glyphicon.glyphicon-triangle-right

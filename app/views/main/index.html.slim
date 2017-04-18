@@ -81,3 +81,35 @@ footer ng-controller='footerCtrl'
           a ng-href='mailto:{{em}}' ng-show='em' {{em}}
         p style='font-size:9pt'
           |Copyright &copy; 2017 SiteScan. All rights reserved.
+
+script type='text/ng-template' id='uib/template/pagination/pagination.html'
+  li [role="menuitem" ng-if="::boundaryLinks"
+  ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-first"]
+    a [ng-href="{{noPrevious() ? '' : getPageHref()(1)}}" uib-tabindex-toggle
+    ng-click="selectPage(1, $event)" ng-disabled="noPrevious()||ngDisabled"]
+      |{{::getText('first')}}
+  li [role="menuitem" ng-if="::directionLinks"
+  ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev"]
+    a [ng-href="{{noPrevious() ? '' : getPageHref()(page - 1)}}"
+    ng-click="selectPage(page - 1, $event)"
+    ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle]
+      |{{::getText('previous')}}
+  li [role="menuitem" ng-repeat="page in pages track by $index"
+  ng-class="{active: page.active,disabled: ngDisabled&&!page.active}"
+  class="pagination-page"]
+    a [ng-href='{{getPageHref()(page.number)}}'
+    ng-click="selectPage(page.number, $event)"
+    ng-disabled="ngDisabled&&!page.active" uib-tabindex-toggle]
+      |{{page.text}}</a></li>
+  li [role="menuitem" ng-if="::directionLinks"
+  ng-class="{disabled: noNext()||ngDisabled}" class="pagination-next"]
+    a [ng-href="{{noNext() ? '' : getPageHref()(page + 1)}}"
+    ng-click="selectPage(page + 1, $event)"
+    ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle]
+      |{{::getText('next')}}
+  li [role="menuitem" ng-if="::boundaryLinks"
+  ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last"]
+    a [ng-href="{{noNext() ? '' : getPageHref()(totalPages)}}"
+    ng-click="selectPage(totalPages, $event)"
+    ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle]
+      |{{::getText('last')}}

@@ -1,6 +1,6 @@
 angular.module 'app', [
   'ui.router'
-  'ngMaterial'
+  # 'ngMaterial'
   # 'ngMessages'
   'ngAnimate'
   'angular-loading-bar'
@@ -16,7 +16,9 @@ angular.module 'app', [
   '$locationProvider'
   '$urlRouterProvider'
   'cfpLoadingBarProvider'
-  ($stateProvider, $locationProvider, $urlRouterProvider, cfpLoadingBarProvider)->
+  '$provide'
+  ($stateProvider, $locationProvider, $urlRouterProvider, cfpLoadingBarProvider,
+  $provide)->
     mainState = {
       name: 'main'
       url: '/'
@@ -86,6 +88,12 @@ angular.module 'app', [
       <div><div></div></div>
       <div><div></div></div>
     </div></div>"""
+
+    $provide.decorator 'uibPaginationDirective', ['$delegate', ($delegate)->
+      directive = $delegate[0]
+      directive.scope.getPageHref = '&'
+      $delegate
+    ]
     return
 ]
 .run ['$rootScope', '$state', '$window', '$timeout',

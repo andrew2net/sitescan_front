@@ -1,89 +1,101 @@
 .container
-  div layout='column'
-    div [layout='row']
+  .row
 
-      / Image block.
-      div [layout='row' flex]
+    / Image block.
+    /.col-xs-12.col-sm-6
+    /  .row
 
-        / Thumbs block.
-        div [layout='column']
+    / Large image block.
+    .col-xs-12.visible-xs-block
+      h2 [ ng-bind="product.name.join(' ')" ]
+    .col-xs-12.col-sm-6
+      .product-img
+        img#product-img [ng-src='{{product.images[selectedImg].large.src}}'
+        ng-hide='hideImg']
 
-          / Thumbs move up button.
-          .btn-thumbs-move [layout='row', ng-click='thumbsMove(-1)'
-            ng-class='{"btn-thumbs-move-active":thumbsPosition>0}']
-            md-icon [ng-show='thumbsPosition>0'] expand_less
+    / Thumbs block xs.
+    .col-xs-12.hidden-sm.hidden-md.hidden-lg [
+      style='display:flex; justify-content:center']
+      = render partial: 'thumbs_block'
 
-          / Thumbs wrapper.
-          .thumbs-list-wrapper
+    / Product block.
+    .col-sm-6.hidden-xs
+      h2 [ ng-bind="product.name.join(' ')" ]
+    .col-xs-12.col-sm-6
+      div ng-show='price.avr > 0'
+        h4 Average price
+        .avr-price [ng-bind="price.avr| currency"]
+        div style='margin-bottom:25px'
+          |{{price.min | currency}}
+          | - {{price.max| currency:''}}
 
-            / Thumbs movable block.
-            div [ng-style="thumbsStyle"]
+      / Search atributes.
+      div [ng-repeat='searchAttribute in product.search_attrs'
+        style='margin-bottom:25px']
+        div [search-attribute='searchAttribute' product='product']
 
-              / Thumb block.
-              .product-thumb [ng-repeat='img in product.images'
-                ng-class='{"selected-thumb": selectedImg==$index && !hideImg}'
-                ng-click='selectImg($index)']
+    / Thumbs block not xs.
+    .col-sm-6.hidden-xs style='display:flex;justify-content:start;margin-top:25px'
+      = render partial: 'thumbs_block'
 
-                / Thumb.
-                img [ng-src='{{img.thumb.src}}']
-
-          / Thumbs move down button.
-          .btn-thumbs-move [layout='row' ng-click='thumbsMove(1)'
-          ng-class='{"btn-thumbs-move-active":product.images.length-thumbsPosition>4}']
-            md-icon [ng-show='product.images.length-thumbsPosition>4'] expand_more
-
-        / Middle image block.
-        .product-img
-          img#product-img [ng-src='{{product.images[selectedImg].medium.src}}'
-          ng-hide='hideImg']
-
-      / Product block.
-      div [flex=60]
-        h1 [ ng-bind="product.name.join(' ')" ]
-        div ng-repeat='attr in product.search_attrs'
-          div [search-attribute]
-        div ng-show='price.avr > 0'
-          div Average price
-          .md-display-1 [ng-bind="price.avr| currency"]
-          div
-            |{{price.min | currency}}
-            | - {{price.max| currency:''}}
-    md-content
-      md-tabs [md-dynamic-height]
-        md-tab
-          md-tab-label Deals
-          md-tab-body
-            section
-              md-subheader.md-primary
-                div [layout='row']
-                  div flex=20 Site
-                  div [flex=20 ng-repeat='attr in product.search_attrs'
-                    ng-bind='attr.name.join(", ")']
-                  div [flex=20 layout layout-align='center none'] Price
-                  div [flex=20]
-              md-list.product-links
-                md-list-item [ng-repeat='link in product.links | filter:filterLinks']
-                  md-divider
-                  a [ng-href='/api/link_url/{{link.id}}' target='_blank' flex=100
+  .row
+    .col-xs-12
+      uib-tabset style='font-size:12pt'
+        uib-tab heading='Offers'
+          table.table style='margin-top: 25px;font-size:12pt'
+            tr
+              th Site
+              th [ng-repeat='attr in product.search_attrs'
+                ng-bind='attr.name.join(", ")']
+              th Price
+              th
+            /md-list.product-links
+            tr.product-links [ng-click='openUrl(link)'
+              ng-repeat='link in product.links | filter:filterLinks']
+              td
+                a [ng-href='/api/link_url/{{link.id}}' target='_blank'
                   rel='nofollow']
-                    div layout='row' layout-align='none center' flex=100
-                      div.md-body-2 [ flex=20 ng-bind='link.domain' ]
-                      div [flex=20 ng-repeat='attr in product.search_attrs'
-                        ng-bind='attrValue(link, attr)']
-                      div [layout layout-align='center none'flex=20
-                        ng-bind='link.price | currency']
-                      div [flex=20 layout layout-align='center none']
-                        md-button.md-raised [ng-href='/api/link_url/{{link.id}}'
-                        target='_blank'] Store
-        md-tab
-          md-tab-label Features
-          md-tab-body
-            div.features-block [layout='row' layout-wrap]
-              div [layout='column' flex=50 ng-repeat='group in product.attr_groups']
-                h4.md-headline ng-bind='group.name']
-                .md-body-1 [layout='row'
-                    ng-repeat="attr in product.attrs | filter:{group_id: group.id}"]
-                  div [flex=50 layout='row']
-                    div [ng-bind='attr.name']
-                    .dotted-filler [flex]
-                  .md-body-2 [flex=50 ng-bind='attr.value']
+                  div ng-bind='link.domain'
+              td ng-repeat='attr in product.search_attrs'
+                a [ng-href='/api/link_url/{{link.id}}' target='_blank'
+                  rel='nofollow']
+                  div ng-bind='attrValue(link, attr)'
+              td
+                a [ng-href='/api/link_url/{{link.id}}' target='_blank'
+                  rel='nofollow']
+                  div ng-bind='link.price | currency'
+              td
+                a [ng-href='/api/link_url/{{link.id}}' target='_blank'
+                  rel='nofollow']
+                  .text-right
+                    button.btn.btn-warning [ng-href='/api/link_url/{{link.id}}'
+                      target='_blank' rel='nofollow'] Buy
+        uib-tab heading='Features'
+          .row style='display:flex;flex-wrap:wrap'
+            .col-xs-12.col-sm-6 [ng-repeat='group in product.attr_groups']
+              h4 ng-bind='group.name'
+              .row.feature-row [
+                  ng-repeat="attr in product.attrs | filter:{group_id: group.id}"]
+                .col-xs-6
+                  div
+                    span [ng-bind='attr.name']
+                  /.dotted-filler
+                .col-xs-6 [ng-bind='attr.value']
+
+script type='text/ng-template' id='searchAttribute.html'
+  .row.attr-widget
+    .col-xs-5
+      strong
+        |{{attr.name.join(', ')}}&nbsp;
+      span
+        |{{selectedValue}}
+    .col-xs-7
+      button.btn.btn-default.color-widget [ng-click='setCurrentOption(opt)'
+      title='opt.value' ng-style='{background:"#"+opt.clr,color:color}'
+      ng-repeat='opt in filteredOptions' ng-if='attr.widget===1']
+        span.glyphicon.glyphicon-ok ng-show='opt.id===currentOption'
+
+      button.btn.btn-default [ng-click='setCurrentOption(opt)'
+      ng-class='{"search-attr-active":opt.id===currentOption}'
+      ng-repeat='opt in filteredOptions' ng-if='attr.widget!==1']
+        |{{opt.value}}

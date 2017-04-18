@@ -9,7 +9,6 @@ angular.module 'app'
   '$filter',
   ($scope, $http, $stateParams, $state, $timeout, $filter)->
 
-    filterChanged = new Event 'filterChanged'
 
     ###
     Retrieve filter attribute's constraints from server.
@@ -22,8 +21,10 @@ angular.module 'app'
             if item and item.length
               switch item[0].type
                 when 1
-                  item[0].min = parseFloat constraint.min
-                  item[0].max = parseFloat constraint.max
+                  if isFinite constraint.min
+                    item[0].min = parseFloat constraint.min
+                  if isFinite constraint.max
+                    item[0].max = parseFloat constraint.max
                 when 3, 5
                   angular.forEach item[0].options, (opt)->
                     opt.disabled = constraint.options.indexOf(opt.id) == -1
@@ -58,7 +59,7 @@ angular.module 'app'
       else
         n = angular.toJson n, false
       $state.go '.', {n: n}, {notify: false}
-      document.dispatchEvent filterChanged
+      $scope.$emit 'filterChanged'
       return
 
     ###
@@ -106,7 +107,7 @@ angular.module 'app'
           $state.go('.', o: optionsChecked.join ',', {notify: false})
         else
           $state.go('.', o: null, {notify: false})
-        document.dispatchEvent filterChanged
+        $scope.$emit 'filterChanged'
         this._checked = newValue
       else
         this._checked
@@ -131,7 +132,7 @@ angular.module 'app'
         else
           null
         $state.go '.', b: b, {notify: false}
-        document.dispatchEvent filterChanged
+        $scope.$emit 'filterChanged'
         this._val = newValue
       else
         this._val

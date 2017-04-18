@@ -19,7 +19,7 @@
   .row
     .col-md-12
       h1.md-headline =t(:search_by_brand)
-  .row
+  .row.logos-container
     .logo.center-block [ng-repeat='brand in brands']
       a [ ui-sref='catalog({o: brand.opt_id})' layout='column'
         title='{{brand.name}}' ng-click='showLoader()']

@@ -34,7 +34,7 @@ angular.module 'app'
     if $scope.thumbsPosition > 0 and dir < 0 or
     $scope.thumbsPosition < $scope.product.images.length - 4 and dir > 0
       $scope.thumbsPosition += dir
-      $scope.thumbsStyle = {top: $scope.thumbsPosition * -67 + 'px'}
+      $scope.thumbsStyle = {left: $scope.thumbsPosition * -60 + 'px'}
     return
 
   $scope.attrValue = (link, attr)->
@@ -77,7 +77,8 @@ angular.module 'app'
     $scope.price.avr = prices.length and (s / prices.length)
     return
 
-  document.addEventListener 'attributeChanged', calcPrice
+  # document.addEventListener 'attributeChanged', calcPrice
+  $scope.$on 'attributeChanged', calcPrice
 
   assignData response
 

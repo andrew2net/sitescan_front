@@ -12,62 +12,46 @@
   / Subcategories links.
   .row.subcategory-links [ ng-show='subcategories && subcategories.length > 0' ]
     .col-sm-3 ng-repeat='subcat in subcategories'
-      a.text-uppercase [ui-sref='catalog({path: subcat.path, page: null})' ng-click='showLoader()'
-      aria-label='{{subcat.name}}' ng-bind='subcat.name+" ("+subcat.items+")"']
+      a.text-uppercase [ui-sref='catalog({path: subcat.path, page: null})'
+        ng-click='showLoader()' aria-label='{{subcat.name}}'
+        ng-bind='subcat.name+" ("+subcat.items+")"']
 
   .row
-    .col-md-9
-      div.product-line [layout='row' layout-align='start start' layout-wrap ]
 
-        / Product's block.
-        md-whiteframe.md-whiteframe-1dp.catalog-product [layout-xs='column'
-            layout='row' ng-repeat='prod in products' layout-margin
-            flex-xs=100 flex-sm=100 flex-md=100 flex-lg=95 flex-xl=40]
+    / Product block.
+    .col-xs-7.col-sm-9
+      .row.product-line
+        .col-md-6 [ng-repeat='prod in products']
+          .panel.panel-default
+            .panel-body
+              .row
+                / Product's block.
+                .col-xs-12.col-md-6.text-center
 
-          a [ui-sref='product({path: prod.path})' ng-click='showLoader()']
-            h2 [hide-gt-xs layout layout-align-xs='center start'
-            ng-bind='prod.name']
+                  a [ui-sref='product({path: prod.path})' ng-click='showLoader()']
+                    h4.visible-xs [ ng-bind='prod.name']
 
-          div [flex-xs=90 flex=45 layout-align='center center' layout]
-            img [ng-src='{{prod.img_src}}']
+                    div
+                      img [ng-src='{{prod.img_src}}']
 
-          div layout='column'
-            a [ui-sref='product({path: prod.path})' ng-click='showLoader()']
-              h2.md-headline [hide-xs ng-bind='prod.name']
-              h6.md-body-2 [ layout=true layout-align-xs='center start'
-              ng-if='prod.price' ] from {{ prod.price | currency }}
-            div.md-caption [hide-xs ng-repeat='attr in prod.attrs']
-              |{{attr.name}}: {{attr.value}}{{attr.unit}}
-      div [ng-if='pager.pages.length - 1' layout='row' layout-align='center none'
-        flex]
-        md-button.md-icon-button.md-raised [ui-sref='catalog({path: path, page:1})'
-          ng-click='setPage(1, $event)' aria-label='First page'
-          ng-disabled='pager.currentPage === 1']
-          md-icon.material-icon first_page
-        md-button.md-icon-button.md-raised [ ng-disabled='pager.currentPage === 1'
-          ui-sref='catalog({path: path, page: pager.currentPage - 1})'
-          aria-label='Previous page'
-          ng-click='setPage(pager.currentPage - 1, $event)']
-          md-icon.material-icon navigate_before
-        md-button.md-icon-button.md-raised [
-          ui-sref='catalog({path: path, page: page})' aria-label='Page {{page}}'
-          ng-repeat='page in pager.pages' ng-disabled='pager.currentPage === page'
-          ng-click='setPage(page, $event)'] {{page}}
-        md-button.md-icon-button.md-raised [ aria-label='Next page'
-          ui-sref='catalog({path: pathf, page: pager.currentPage + 1})'
-          ng-disabled='pager.currentPage === pager.totalPages'
-          ng-click='setPage(pager.currentPage + 1, $event)']
-          md-icon.material-icon navigate_next
-        md-button.md-icon-button.md-raised [
-          ui-sref='catalog({path: pasth, page: pager.totalPages})'
-          ng-disabled='pager.currentPage === pager.totalPages'
-          ng-click='setPage(pager.totalPages, $event)' aria-label='Last page']
-          md-icon.material-icon last_page
+                .col-xs-12.col-md-6
+                  a [ui-sref='product({path: prod.path})' ng-click='showLoader()']
+                    h4.hidden-xs [ ng-bind='prod.name']
+                    h6 [ ng-if='prod.price' ] from {{ prod.price | currency }}
+                  .hidden-xs [ ng-repeat='attr in prod.attrs']
+                    |{{attr.name}}: {{attr.value}}{{attr.unit}}
+
+      .row.text-center
+        .col-xs-12
+          ul.pagination-sm [uib-pagination total-items='pager.totalItems'
+          max-size='5' ng-model='pager.currentPage' boundary-links='true'
+          get-page-href='getPageHref' previous-text="‹" next-text="›"
+          first-text="«" last-text="»" ng-change='setPage(pager.currentPage)']
 
       div.product-not-found.text-center [ ng-show='notFound']
-        div.md-display-1 No matching items
-        div [style='margin-top: 10px'] Try to change the filter conditions
-        md-button ng-click='clearFilter()' Reset filter
+        div No matching items
+        div Try to change the filter conditions
+        button.btn.btn-default ng-click='clearFilter()' Reset filter
 
-    .col-md-3
+    .col-xs-5.col-sm-9
       = render partial: 'filter'
