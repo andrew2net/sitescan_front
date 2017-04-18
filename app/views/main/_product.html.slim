@@ -91,7 +91,7 @@ script type='text/ng-template' id='searchAttribute.html'
         |{{selectedValue}}
     .col-xs-7
       button.btn.btn-default.color-widget [ng-click='setCurrentOption(opt)'
-      title='opt.value' ng-style='{background:"#"+opt.clr,color:color}'
+      title='{{opt.value}}' ng-style='{background:"#"+opt.clr,color:color}'
       ng-repeat='opt in filteredOptions' ng-if='attr.widget===1']
         span.glyphicon.glyphicon-ok ng-show='opt.id===currentOption'
 
