@@ -11,27 +11,51 @@
     |}(document, 'script', 'facebook-jssdk'));
 
 div style='background-color:#0F569B;color:white;'
-  .container
-    .row ng-controller='HeaderCtrl'
 
-      .row.text-center
-        /ng-show='isHome'
-        .col-md-12
-          h2 style='margin-bottom:0;font-style:italic;font-size:22pt'
-            |Find the best smartphones offers
+  / .container
+  .row ng-controller='HeaderCtrl'
+
+    / .row.text-center
+    .col-xs-3
+      / <!-- Left middle square -->
+      / ins [class="adsbygoogle"
+           style="display:inline-block;width:300px;height:250px"
+           data-ad-client="ca-pub-5995052746994249"
+           data-ad-slot="4354374508"]
+      script
+        |(adsbygoogle = window.adsbygoogle || []).push({});
+
+      / <!-- Left responsive block -->
+      / ins [class="adsbygoogle" style="display:block"
+      /    data-ad-client="ca-pub-5995052746994249" data-ad-slot="3017242102"
+      /    data-ad-format="auto"]
+      / script
+      /   |(adsbygoogle = window.adsbygoogle || []).push({});
+
+    /ng-show='isHome'
+    .col-xs-6.text-center
+      / <!-- Header banner -->
+      / ins [class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
+        data-ad-client="ca-pub-5995052746994249" data-ad-slot="9482578105"]
+      script
+        |(adsbygoogle = window.adsbygoogle || []).push({});
+
+      h2 style='margin-bottom:0;font-style:italic;font-size:22pt'
+        |Find the best smartphones offers
 
       / Search input
       .row style='margin-top:30px;margin-bottom:30px'
-        .col-ld-6.col-ld-offset-3.col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1.col-xs-12
+        / .col-ld-6.col-ld-offset-3.col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1.col-xs-12
+        .col-xs-12
           .form-group.has-feedback
             .input-group.input-group-lg
               .input-group-btn
                 a.btn.btn-default href='/'
                   i.glyphicon.glyphicon-home
               input#search-text.form-control.input-lg [ng-model='searchText'
-              type='text' placeholder='Searh for...' typeahead-wait-ms=300
-              typeahead-on-select='findProducts($item)'
-              ng-keypress='keypress($event, searchText)'
+              type='text' placeholder="Searh for products"
+              typeahead-on-select="findProducts($item)" autocomplete="off"
+              ng-keypress='keypress($event, searchText)' typeahead-wait-ms="300"
               uib-typeahead='text for text in getMatches($viewValue)']
               .input-group-btn
                 /button.btn.btn-default ng-click='clearSearch()'
@@ -39,25 +63,21 @@ div style='background-color:#0F569B;color:white;'
                 button.btn.btn-default ng-click='findProducts(searchText)'
                   span.glyphicon.glyphicon-search
 
-    /div layout='row' layout-align='senter start'
-      a ui-sref='main' ng-click='showLoader()' style='margin:25px 15px 0'
-        md-icon home
-      form [ng-submit='findProducts(searchText)' flex-xs='70' flex-sm='60'
-        flex-md='50' flex-lg='45' flex-xl='40' style='position:relative']
-        md-autocomplete.search [md-input-name='searchField' md-input-minlength=1
-          md-search-text='searchText' md-items='item in getMatches(searchText)'
-          md-item-text='item' md-selected-item='searchItem' md-delay=500
-          md-selected-item-change='findProducts(searchItem)' md-no-cache='true'
-          md-input-id='search-text' md-floating-label="#{I18n.t('search')}..." ]
-          md-item-template
-            span md-highlight-text='searchText' md-highlight-flags='gi'
-              |{{item}}
-        md-button.md-icon-button [ng-click='clearSearch()' ng-show='searchText'
-          style='top:14px; position: absolute; right:-15px; z-index:100']
-          md-icon.material-icons close
-      md-button.md-icon-button [style='top:15px'
-          ng-click='findProducts(searchText)']
-        md-icon.material-icons search
+    .col-xs-3
+      / <!-- Right middle square -->
+      / ins [class="adsbygoogle"
+           style="display:inline-block;width:300px;height:250px"
+           data-ad-client="ca-pub-5995052746994249"
+           data-ad-slot="2877641304"]
+      script
+        |(adsbygoogle = window.adsbygoogle || []).push({});
+
+      / <!-- Right responsive block -->
+      / ins [class="adsbygoogle" style="display:block"
+      /      data-ad-client="ca-pub-5995052746994249" data-ad-slot="5970708507"
+      /      data-ad-format="auto"]
+      / script
+      /   |(adsbygoogle = window.adsbygoogle || []).push({});
 
 .container
   .row ng-show='breadcrumbs.length' style='margin-top:5px'
