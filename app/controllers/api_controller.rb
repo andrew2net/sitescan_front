@@ -103,8 +103,10 @@ class ApiController < ApplicationController
         ]
       ]]]).map do |b|
         attr_opts = b.attribute_class_option.attribute_options.find_all do |ao|
-          product = ao.product_attribute.attributable
-          product.product_images.first && product.product_search_products.first
+          if ao.product_attribute
+            product = ao.product_attribute.attributable
+            product.product_images.first && product.product_search_products.first
+          end
         end
       { brand: b, products: attr_opts }
     end
