@@ -10,74 +10,33 @@
     |fjs.parentNode.insertBefore(js, fjs);
     |}(document, 'script', 'facebook-jssdk'));
 
-div style='background-color:#0F569B;color:white;'
+div
+  #header
+    .container
+      .row ng-controller='HeaderCtrl'
+        .col-xs-12.col-sm-5.col-md-5.col-lg-4
 
-  / .container
-  .row ng-controller='HeaderCtrl'
+          a.logo href='/'
+            div
+              |SITE
+              span SCANNER
+            div compare prices
 
-    / .row.text-center
-    .col-xs-3
-      / <!-- Left middle square -->
-      / ins [class="adsbygoogle"
-           style="display:inline-block;width:300px;height:250px"
-           data-ad-client="ca-pub-5995052746994249"
-           data-ad-slot="4354374508"]
-      script
-        |(adsbygoogle = window.adsbygoogle || []).push({});
-
-      / <!-- Left responsive block -->
-      / ins [class="adsbygoogle" style="display:block"
-      /    data-ad-client="ca-pub-5995052746994249" data-ad-slot="3017242102"
-      /    data-ad-format="auto"]
-      / script
-      /   |(adsbygoogle = window.adsbygoogle || []).push({});
-
-    /ng-show='isHome'
-    .col-xs-6.text-center
-      / <!-- Header banner -->
-      / ins [class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
-        data-ad-client="ca-pub-5995052746994249" data-ad-slot="9482578105"]
-      script
-        |(adsbygoogle = window.adsbygoogle || []).push({});
-
-      h2 style='margin-bottom:0;font-style:italic;font-size:22pt'
-        |Find the best smartphones offers
-
-      / Search input
-      .row style='margin-top:30px;margin-bottom:30px'
-        / .col-ld-6.col-ld-offset-3.col-md-8.col-md-offset-2.col-sm-10.col-sm-offset-1.col-xs-12
-        .col-xs-12
-          .form-group.has-feedback
-            .input-group.input-group-lg
-              .input-group-btn
-                a.btn.btn-default href='/'
-                  i.glyphicon.glyphicon-home
-              input#search-text.form-control.input-lg [ng-model='searchText'
-              type='text' placeholder="Searh for products"
+        .col-xs-12.col-sm-6.col-md-6.col-lg-7
+          .form-group
+            .input-group
+              input#search-text.form-control [ng-model='searchText'
+              type='text' placeholder="Searh products"
               typeahead-on-select="findProducts($item)" autocomplete="off"
               ng-keypress='keypress($event, searchText)' typeahead-wait-ms="300"
               uib-typeahead='text for text in getMatches($viewValue)']
               .input-group-btn
                 /button.btn.btn-default ng-click='clearSearch()'
                   span.glyphicon.glyphicon-remove
-                button.btn.btn-default ng-click='findProducts(searchText)'
+                button.btn.btn-primary ng-click='findProducts(searchText)' style='width:50px'
                   span.glyphicon.glyphicon-search
 
-    .col-xs-3
-      / <!-- Right middle square -->
-      / ins [class="adsbygoogle"
-           style="display:inline-block;width:300px;height:250px"
-           data-ad-client="ca-pub-5995052746994249"
-           data-ad-slot="2877641304"]
-      script
-        |(adsbygoogle = window.adsbygoogle || []).push({});
-
-      / <!-- Right responsive block -->
-      / ins [class="adsbygoogle" style="display:block"
-      /      data-ad-client="ca-pub-5995052746994249" data-ad-slot="5970708507"
-      /      data-ad-format="auto"]
-      / script
-      /   |(adsbygoogle = window.adsbygoogle || []).push({});
+  #banner
 
 .container
   .row ng-show='breadcrumbs.length' style='margin-top:5px'

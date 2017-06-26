@@ -1,3 +1,12 @@
+$dark-red: #993300;
+$gray: #666;
+$border-radius-base: 0px;
+$brand-primary: $dark-red;
+$input-border: $dark-red;
+$input-border-focus: $dark-red;
+$text-color: $gray;
+$body-bg: #f2f2f2;
+
 @mixin transition($params){
   -webkit-transition: $params;
   transition: $params;
@@ -5,6 +14,56 @@
 
 *{
   outline: none;
+}
+
+// body{
+//   background-color: rgba(242, 242, 242, 1);
+// }
+
+a.logo {
+  color: $gray;
+  font-weight: bold;
+  &:hover {
+    text-decoration: none;
+  }
+  > div {
+    &:first-child{
+      font-family: 'GurmukhiMN-Bold', 'Gurmukhi MN Bold', 'Gurmukhi MN';
+      font-size: 29pt;
+      span {
+        color: $dark-red;
+      }
+    }
+    &:last-child {
+      margin-top: -15px;
+    }
+  }
+}
+
+#header{
+  position: sticky;
+  position: -webkit-sticky;
+  top: -1px;
+  // left: 0px;
+  // width: 100%;
+  background-color: #fff;
+  // z-index: 100;
+  > div > div{
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .form-group {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+#banner {
+  height: 150px;
+  // margin-top: 100px;
+  background-image: image-url('header_background.jpg');
+  background-size: cover;
 }
 
 footer{
@@ -223,7 +282,8 @@ button.color-widget{
 // }
 
 #search-text{
-  padding-right: 22px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .feature-row {
@@ -246,11 +306,25 @@ button.color-widget{
   }
 }
 
-.logos-container{
+.brands-container{
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-}
-.logo{
-  margin: 40px;
+  justify-content: space-between;
+  .brand{
+    width: 250px;
+    height: 250px;
+    background-color: #fff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s linear;
+    &.rotate{
+      transform: rotateY(90deg);
+    }
+    img {
+      max-height: 180px;
+    }
+  }
 }

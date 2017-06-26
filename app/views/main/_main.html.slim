@@ -1,30 +1,22 @@
-.banner
-  .background
-  .container style='padding-top:20px'
-    /.text-center
-      .header All smartphones
-      .price Under $100
-      .row
-        .col-lg-offset-3.col-lg-6.col-xs-offset-2.col-xs-8
-          a.btn.btn-warning.btn-lg.btn-block.hidden-xs [
-          ui-sref='catalog({path:"smartphones", n:"{\"0\":{\"max\":100}}"})']
-            b WATCH
-          a.btn.btn-warning.btn-block.visible-xs [
-          ui-sref='catalog({path:"smartphones", n:"{\"0\":{\"max\":100}}"})']
-            b WATCH
-    a ui-sref='catalog({path:"smartphones", n:"{\"0\":{\"max\":100}}"})'
-      img.img-responsive src=image_path('smartphones.jpg')
-
 .container
   .row
     .col-md-12
-      h1.md-headline =t(:search_by_brand)
-  .row.logos-container
-    .logo.center-block [ng-repeat='brand in brands']
-      a [ ui-sref='catalog({o: brand.opt_id})' layout='column'
-        title='{{brand.name}}' ng-click='showLoader()']
-        img.img-responsive [ng-src='{{brand.logo_url}}'
-        alt='{{brand.name}} logo']
+      h3
+        strong.text-uppercase =t(:search_by_brands)
+  .row
+    .col-xs-12.brands-container
+      .brand [ng-repeat='brand in brands']
+        a [ ui-sref='catalog({o: brand.opt_id})' title='{{brand.name}}'
+        ng-click='showLoader()' ]
+          img.img-responsive [ng-src='{{brand.logo_url}}'
+          alt='{{brand.name}} logo']
+        a [ ui-sref='product({path: product.path})' title='{{product.name}}'
+        ng-repeat='product in brand.products' style='display:none']
+          h5.text-center
+            |{{product.name}}
+          img.img-responsive [ ng-src='{{product.image_url}}']
+          h6.text-center
+            |from ${{product.min_price}}
 
   /div layout='row' layout-align='start start'
     h1.md-headline =t(:most_viewed_categories)

@@ -97,7 +97,17 @@ class ApiController < ApplicationController
   end
 
   def brands
-    @brands = SitescanCommon::Brand.joins :attribute_class_option
+    @brands = SitescanCommon::Brand.includes(attribute_class_option: [
+        attribute_options: [product_attribute: [attributable: [
+          :product_images, :search_products
+        ]
+      ]]]).map do |b|
+        attr_opts = b.attribute_class_option.attribute_options.find_all do |ao|
+          product = ao.product_attribute.attributable
+          product.product_images.first && product.product_search_products.first
+        end
+      { brand: b, products: attr_opts }
+    end
     render formats: :json
   end
 
